@@ -47,4 +47,9 @@ public class BackendDispatcher {
             e.printStackTrace();
         }
     }
+
+    public static void sendMessage(String message) {
+        Client.webSocket.send(message);
+    }
+
 }
