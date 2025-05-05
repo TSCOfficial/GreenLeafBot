@@ -1,0 +1,28 @@
+plugins {
+    id 'application'
+    id 'com.github.johnrengelman.shadow' version '8.1.1' // Shadow plugin for building fat JAR
+}
+
+application {
+    mainClass = 'ch.greenleaf.Client' // Fully qualified name of your main class
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation('net.dv8tion:JDA:5.2.2')
+    implementation('io.github.cdimascio:dotenv-java:3.1.0')
+    implementation('com.fasterxml.jackson.core:jackson-databind:2.15.2')
+}
+
+tasks.named('jar') {
+    enabled = false // Disable default jar task
+}
+
+tasks.named('shadowJar') {
+    archiveBaseName.set('discord-bot')
+    archiveClassifier.set('')
+    archiveVersion.set('')
+}
