@@ -26,13 +26,13 @@ public class BackendDispatcher {
 
     /**
      * Handles the incoming messages from the WebSocket.
-     * @param json WebSocket data
+     * @param message WebSocket message
      */
-    public static void handleMessage(String json) {
+    public static void handleMessage(String message) {
         try {
-            System.out.println(json);
-            JsonNode node = mapper.readTree(json);
-            String type = node.get("type").asText();
+            System.out.println(message);
+            JsonNode node = mapper.readTree(message);
+            String type = node.get("destination").asText();
             JsonNode payload = node.get("payload");
 
             Consumer<JsonNode> route = routes.get(type);

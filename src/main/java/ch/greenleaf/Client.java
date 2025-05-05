@@ -40,12 +40,6 @@ public class Client {
         webSocket = new WebSocketClientHandler(backendUri);
         webSocket.connectBlocking();
 
-        // Optional: Reagiere auf Befehle vom Backend
-        webSocket.setMessageListener(message -> {
-            // TODO: JSON parsen und z. B. in Dispatcher geben
-            System.out.println("[Client] Backend-Befehl empfangen: " + message);
-        });
-
         DefaultShardManagerBuilder builder = DefaultShardManagerBuilder.createDefault(config.get("TOKEN"));
 
         builder.setStatus(OnlineStatus.DO_NOT_DISTURB);

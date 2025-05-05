@@ -7,12 +7,6 @@ import java.net.URI;
 
 public class WebSocketClientHandler extends WebSocketClient {
 
-    public interface MessageListener {
-        void onMessage(String message);
-    }
-
-    private MessageListener listener;
-
     public WebSocketClientHandler(URI serverUri) {
         super(serverUri);
     }
@@ -22,12 +16,19 @@ public class WebSocketClientHandler extends WebSocketClient {
         System.out.println("[WebSocket] Verbunden mit Backend.");
     }
 
+    /**
+     * React on recieved messages.
+     * @param message
+     */
     @Override
     public void onMessage(String message) {
         System.out.println("[WebSocket] Nachricht erhalten: " + message);
-        if (listener != null) {
-            listener.onMessage(message);
-        }
+        BackendDispatcher.handleMessage(message);
+//        if (listener != null) {
+//            listener.onMessage(message);
+//            System.out.println("[WebSocket] " + message);
+//            BackendDispatcher.handleMessage(message);
+//        }
     }
 
     @Override
@@ -38,9 +39,5 @@ public class WebSocketClientHandler extends WebSocketClient {
     @Override
     public void onError(Exception ex) {
         ex.printStackTrace();
-    }
-
-    public void setMessageListener(MessageListener listener) {
-        this.listener = listener;
     }
 }

@@ -1,5 +1,6 @@
 package ch.greenleaf.features.commands;
 
+import ch.greenleaf.Client;
 import ch.greenleaf.ICommand;
 import com.fasterxml.jackson.databind.JsonNode;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
@@ -42,6 +43,10 @@ public class Message implements ICommand{
 
     @Override
     public void execute(@NotNull JsonNode payload) {
-
+        System.out.println(payload);
+        String message = payload.get("message").asText();
+        System.out.println(message);
+        Client.client.getShardManager().getGuildById("1228461292440780801").getTextChannelById("1231933541017845882").sendMessage(message).queue();
+        System.out.println(2);
     }
 }
