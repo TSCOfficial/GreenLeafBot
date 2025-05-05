@@ -33,7 +33,7 @@ public class Client {
 
     public static Client client;
 
-    public Client() throws LoginException, URISyntaxException {
+    public Client() throws LoginException, URISyntaxException, InterruptedException {
         config = Dotenv.configure().load();
 
         URI backendUri = new URI("ws://localhost:8080/ws/bot");
@@ -73,6 +73,8 @@ public class Client {
         manager.add(new UserInfo());
         manager.add(new TicketCommand());
 
+        BackendDispatcher.setCommandManager(manager);
+
         shardManager.addEventListener(manager);
 
         // Register Buttons
@@ -101,6 +103,8 @@ public class Client {
             client = new Client();
         } catch (LoginException e){
             System.out.println("Login error");
+        } catch (URISyntaxException | InterruptedException e) {
+            throw new RuntimeException(e);
         }
     }
 

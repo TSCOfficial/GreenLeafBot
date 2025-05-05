@@ -1,5 +1,6 @@
 package ch.greenleaf;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import net.dv8tion.jda.api.events.interaction.command.CommandAutoCompleteInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.session.ReadyEvent;
@@ -36,11 +37,29 @@ public class CommandManager extends ListenerAdapter {
 
     }
 
+    /**
+     * Gets triggered as soon as a Slashcommand got executed
+     * @param event SlashCommandInteractionEvent
+     */
     @Override
     public void onSlashCommandInteraction(@NotNull SlashCommandInteractionEvent event) {
         for (ICommand command : commands){
             if (command.getName().equals(event.getName())){
                 command.execute(event);
+                return;
+            }
+        }
+    }
+
+    /**
+     * Use for Backend Interaction.
+     * @param name Command name
+     * @param payload Command data
+     */
+    public void execute(String name, JsonNode payload) {
+        for (ICommand command : commands){
+            if (command.getName().equals(name)){
+                command.execute(payload);
                 return;
             }
         }

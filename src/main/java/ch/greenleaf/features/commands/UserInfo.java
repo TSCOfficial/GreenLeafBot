@@ -3,6 +3,7 @@ package ch.greenleaf.features.commands;
 import ch.greenleaf.ICommand;
 import ch.greenleaf.common.time.Timestamps;
 import ch.greenleaf.common.time.ToDiscordTimestamp;
+import com.fasterxml.jackson.databind.JsonNode;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
@@ -98,5 +99,10 @@ public class UserInfo implements ICommand {
 
         //event.getChannel().sendMessage("message").setEmbeds(embedUserInfo.build()).queue();
         event.reply("").setEmbeds(embedUserInfo.build()).queue();
+    }
+
+    @Override
+    public void execute(@NotNull JsonNode payload) {
+
     }
 }

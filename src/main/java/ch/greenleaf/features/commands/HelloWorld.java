@@ -1,6 +1,7 @@
 package ch.greenleaf.features.commands;
 
 import ch.greenleaf.ICommand;
+import com.fasterxml.jackson.databind.JsonNode;
 import net.dv8tion.jda.api.entities.channel.Channel;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
@@ -68,6 +69,11 @@ public class HelloWorld implements ICommand{
 //            event.reply(response).queue();
 //        }
         event.reply(response).queue();
+
+    }
+
+    @Override
+    public void execute(@NotNull JsonNode payload) {
 
     }
 }

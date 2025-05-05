@@ -1,6 +1,5 @@
 package ch.greenleaf;
 
-import ch.greenleaf.features.commands.Message;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -10,30 +9,37 @@ import java.util.function.Consumer;
 
 public class BackendDispatcher {
 
+    private static CommandManager commandManager;
+
+    public static void setCommandManager(CommandManager cm) {
+        commandManager = cm;
+    }
+
     private static final ObjectMapper mapper = new ObjectMapper();
 
     private static final Map<String, Consumer<JsonNode>> routes = new HashMap<>();
 
+    // Command connection, put(actionName, ... -> execute(registeredCommandName, ...)
     static {
-        routes.put("sendEmbed", BackendDispatcher::handleSendEmbed);
-        routes.put("sendMessage", Message::execute);
-        // Weitere Befehle wie nötig
+        routes.put("sendMessage", payload -> commandManager.execute("message", payload));
     }
 
     /**
-     *
-     * @param json
+     * Handles the incoming messages from the WebSocket.
+     * @param json WebSocket data
      */
     public static void handleMessage(String json) {
         try {
+            System.out.println(json);
             JsonNode node = mapper.readTree(json);
             String type = node.get("type").asText();
+            JsonNode payload = node.get("payload");
 
-            switch (type) {
-                case "sendEmbed" -> handleSendEmbed(node.get("payload"));
-                case "sendMessage" -> Message.handleFromBackend(node.get("payload"));
-                // Weitere cases: ticketOpen, userNotify, log, etc.
-                default -> System.out.println("Unbekannter Typ: " + type);
+            Consumer<JsonNode> route = routes.get(type);
+            if (route != null) {
+                route.accept(payload);
+            } else {
+                System.err.println("Unknown command type: " + type);
             }
 
         } catch (Exception e) {
