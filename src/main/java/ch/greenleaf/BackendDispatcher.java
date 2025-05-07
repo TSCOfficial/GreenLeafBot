@@ -52,4 +52,21 @@ public class BackendDispatcher {
         Client.webSocket.send(message);
     }
 
+    public static void responseSuccess(JsonNode payload) {
+        response("success", payload);
+    }
+
+    public static void responseError(JsonNode payload) {
+        response("error", payload);
+    }
+
+    private static void response(String status, JsonNode payload) {
+        JsonNode response = mapper.createObjectNode()
+                .put("type", "response")
+                .put("status", status)
+                .set("payload", payload);
+
+        BackendDispatcher.sendMessage(response.toString());
+    }
+
 }

@@ -3,8 +3,12 @@ package ch.greenleaf.features.commands;
 import ch.greenleaf.BackendDispatcher;
 import ch.greenleaf.Client;
 import ch.greenleaf.ICommand;
+import ch.greenleaf.WSresponseStatus;
+import ch.greenleaf.template.embed.Embed;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
@@ -48,35 +52,43 @@ public class Message implements ICommand{
         ObjectMapper mapper = new ObjectMapper();
 
         try {
-            System.out.println(payload);
             String message = payload.get("message").asText();
-            System.out.println(message);
-            net.dv8tion.jda.api.entities.Message sentMessage = Client.client.getShardManager().getGuildById("1228461292440780801").getTextChannelById("1231933541017845882").sendMessage(message).complete();
-            System.out.println(2);
+            boolean hasEmbed = payload.get("embeds") != null;
+
+            List<MessageEmbed> embeds = new ArrayList<>();
+
+            if (hasEmbed) {
+                payload.get("embeds").forEach(embedData -> {
+                    Embed embed = new Embed();
+                    embed.setTitle(embedData.get("title").asText());
+                    embed.setDescription(embedData.get("description").asText());
+                    EmbedBuilder convertedEmbed = embed.convert(embed);
+                    embeds.add(convertedEmbed.build());
+                });
+            }
+
+            net.dv8tion.jda.api.entities.Message sentMessage = null;
+
+            if (hasEmbed) {
+                sentMessage = Client.client.getShardManager().getGuildById("1228461292440780801").getTextChannelById("1231933541017845882").sendMessage(message).setEmbeds(embeds).complete();
+            } else {
+                sentMessage = Client.client.getShardManager().getGuildById("1228461292440780801").getTextChannelById("1231933541017845882").sendMessage(message).complete();
+            }
+
 
 
             // Erfolg zurücksenden
             JsonNode response = mapper.createObjectNode()
-                    .put("type", "response")
-                    .put("status", "success")
-                    .set("payload", mapper.createObjectNode()
-                            .put("messageId", sentMessage.getId())
-                            .put("info", "Message sent"));
+                    .put("messageId", sentMessage.getId())
+                    .put("info", WSresponseStatus.MESSAGE_SENT.getDescription());
+            BackendDispatcher.responseSuccess(response);
 
-            BackendDispatcher.sendMessage(response.toString());
         }
         catch (Exception e) {
-            System.out.println(e);
-
-            // Erfolg zurücksenden
             JsonNode response = mapper.createObjectNode()
-                    .put("type", "response")
-                    .put("status", "error")
-                    .set("payload", mapper.createObjectNode()
-                            .put("code", "SEND_FAILED")
-                            .put("message", e.getMessage()));
-
-            BackendDispatcher.sendMessage(response.toString());
+                    .put("code", "SEND_FAILED")
+                    .put("message", e.getMessage());
+            BackendDispatcher.responseError(response);
         }
     }
 }

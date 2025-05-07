@@ -1,6 +1,7 @@
 package ch.greenleaf.template.embed;
 
 import ch.greenleaf.template.message.Message;
+import net.dv8tion.jda.api.EmbedBuilder;
 
 import java.awt.*;
 import java.time.LocalDateTime;
@@ -111,5 +112,9 @@ public class Embed extends Message {
 
     public void setColor(Color color) {
         this.color = color;
+    }
+
+    public EmbedBuilder convert(Embed embed) {
+        return EmbedManager.convertToBuilder(embed);
     }
 }
