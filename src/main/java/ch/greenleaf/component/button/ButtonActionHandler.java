@@ -20,7 +20,7 @@ public class ButtonActionHandler {
     }
 
     // Methode, die beim Button-Druck aufgerufen wird
-    public void action(@NotNull ButtonInteractionEvent event, List<ButtonAction> assignedActions) {
+    public void action(@NotNull ButtonInteractionEvent event, @NotNull List<ButtonAction> assignedActions) {
         //event.deferReply(true).queue(); // prevents
         if (assignedActions.isEmpty()) {
             event.reply("No actions were found for this interaction.").setEphemeral(true).queue(); // Return error message when this Button does not have any action.

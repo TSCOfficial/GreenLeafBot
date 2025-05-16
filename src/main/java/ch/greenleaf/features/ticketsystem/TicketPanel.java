@@ -56,7 +56,7 @@ class TicketPanel {
 
         assert channelTicketPanel != null;
         channelTicketPanel.sendMessage("")
-                          .setEmbeds(EmbedManager.convertToBuilder(embed).build())
+                          .setEmbeds(EmbedManager.EmbedToMessageEmbed(embed))
                           .addActionRow(ButtonManager.build(button))
                           .queue();
     }

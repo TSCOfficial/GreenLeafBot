@@ -4,7 +4,7 @@ package ch.greenleaf.component.button;
 import ch.greenleaf.template.embed.Embed;
 import ch.greenleaf.template.embed.EmbedManager;
 import ch.greenleaf.template.embed.Field;
-import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 
 /**
  * These are the possible actions a user can define for a button interaction.
@@ -32,13 +32,13 @@ public class ButtonActions {
         embed.addField(new Field(null, null, false));
         embed.addField(new Field("Erfolg", "Nachricht gesendet!", true));
 
-        EmbedBuilder builder = EmbedManager.convertToBuilder(embed);
+        MessageEmbed messageEmbed = EmbedManager.EmbedToMessageEmbed(embed);
 
 //        TextChannel channel = event.getGuild().getTextChannelById(embed.getChannelId()); // TODO enable possibility not only Text Channels
 //
         event.reply(
                 embed.getMessage())
-                .setEmbeds(builder.build())
+                .setEmbeds(messageEmbed)
                 .setEphemeral(embed.isEphemeral()).queue();
     };
 

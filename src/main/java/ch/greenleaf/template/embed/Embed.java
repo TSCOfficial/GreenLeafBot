@@ -1,7 +1,7 @@
 package ch.greenleaf.template.embed;
 
 import ch.greenleaf.template.message.Message;
-import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 
 import java.awt.*;
 import java.time.LocalDateTime;
@@ -14,6 +14,7 @@ public class Embed extends Message {
     private String description;
     private List<Field> fields = new ArrayList<>();
     private String author;
+    private String authorUrl;
     private String authorIcon;
     private String imageUrl;
     private String thumbnailUrl;
@@ -28,6 +29,14 @@ public class Embed extends Message {
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public String getAuthorUrl() {
+        return authorUrl;
+    }
+
+    public void setAuthorUrl(String authorUrl) {
+        this.authorUrl = authorUrl;
     }
 
     public String getAuthorIcon() {
@@ -114,7 +123,7 @@ public class Embed extends Message {
         this.color = color;
     }
 
-    public EmbedBuilder convert(Embed embed) {
-        return EmbedManager.convertToBuilder(embed);
+    public MessageEmbed convert(Embed embed) {
+        return EmbedManager.EmbedToMessageEmbed(embed);
     }
 }
