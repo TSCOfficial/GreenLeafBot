@@ -25,7 +25,7 @@ public class Client {
 
     public static WebSocketClientHandler webSocket;
 
-    public final Dotenv config;
+    public final Dotenv config; // todo SETUP .env FILE !!!
 
     public final ShardManager shardManager;
 

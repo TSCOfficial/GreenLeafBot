@@ -7,21 +7,26 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 
+/**
+ * Handle incoming and outgoing messages from and to the Backend.
+ */
 public class BackendDispatcher {
 
     private static CommandManager commandManager;
-
-    public static void setCommandManager(CommandManager cm) {
-        commandManager = cm;
-    }
 
     private static final ObjectMapper mapper = new ObjectMapper();
 
     private static final Map<String, Consumer<JsonNode>> routes = new HashMap<>();
 
     // Command connection, put(actionName, ... -> execute(registeredCommandName, ...)
+    // actionName -> registered name (API endpoint) in the backend
+    // registeredCommandName -> The name of the Bot command
     static {
-        routes.put("sendMessage", payload -> commandManager.execute("message", payload));
+        routes.put("/messages/send", payload -> commandManager.execute("message", payload));
+    }
+
+    public static void setCommandManager(CommandManager commandManager) {
+        BackendDispatcher.commandManager = commandManager;
     }
 
     /**

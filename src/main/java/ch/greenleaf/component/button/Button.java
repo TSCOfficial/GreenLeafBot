@@ -23,7 +23,6 @@ public class Button {
     private ButtonStyle buttonStyle = ButtonStyle.SECONDARY;
     private EmojiUnion buttonEmoji = null;
     private String buttonId = "0";
-
     private List<ButtonAction> actions = new ArrayList<>();
 
     public void setLabel(String label) {

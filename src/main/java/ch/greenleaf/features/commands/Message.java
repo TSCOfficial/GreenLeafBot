@@ -5,6 +5,7 @@ import ch.greenleaf.Client;
 import ch.greenleaf.ICommand;
 import ch.greenleaf.WSresponseStatus;
 import ch.greenleaf.template.embed.EmbedManager;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.dv8tion.jda.api.entities.MessageEmbed;
@@ -49,13 +50,16 @@ public class Message implements ICommand{
 
     @Override
     public void execute(@NotNull JsonNode payload) {
+        System.out.println("Sent in discord: " + payload);
         ObjectMapper mapper = new ObjectMapper();
 
         MessageCreateBuilder builder = new MessageCreateBuilder();
 
         try {
-            String message = payload.get("message").asText();
-            boolean hasEmbeds = payload.get("embeds") != null;
+            JsonNode json = mapper.readTree(payload.asText());
+            String message = json.get("message").asText();
+            System.out.println(message);
+            boolean hasEmbeds = json.get("embeds") != null;
 
             // Message
             if (!message.isEmpty()) {
@@ -66,16 +70,17 @@ public class Message implements ICommand{
             List<MessageEmbed> embeds = new ArrayList<>();
 
             if (hasEmbeds) {
-                payload.get("embeds").forEach(embedData -> {
+                json.get("embeds").forEach(embedData -> {
                     MessageEmbed embed = EmbedManager.JsonToEmbed(embedData);
                     embeds.add(embed);
                 });
                 builder.setEmbeds(embeds);
             }
 
+            System.out.println("Sending message now");
             // Handle sending message
             net.dv8tion.jda.api.entities.Message sentMessage = Client.client.getShardManager().getGuildById("1228461292440780801").getTextChannelById("1231933541017845882").sendMessage(builder.build()).complete();
-
+            System.out.println("Message sent");
             // Erfolg zurücksenden
             JsonNode response = mapper.createObjectNode()
                     .put("messageId", sentMessage.getId())
@@ -84,6 +89,7 @@ public class Message implements ICommand{
 
         }
         catch (Exception e) {
+            System.out.println(e);
             JsonNode response = mapper.createObjectNode()
                     .put("code", "SEND_FAILED")
                     .put("message", e.getMessage());

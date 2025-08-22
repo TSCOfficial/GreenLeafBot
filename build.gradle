@@ -1,10 +1,10 @@
 plugins {
     id 'application'
-    id 'com.github.johnrengelman.shadow' version '8.1.1' // Shadow plugin for building fat JAR
+    id 'com.github.johnrengelman.shadow' version '8.1.1' // Shadow plugin für Fat JAR
 }
 
 application {
-    mainClass = 'ch.greenleaf.Client' // Fully qualified name of your main class
+    mainClass = 'ch.greenleaf.Client' // Dein Entry Point
 }
 
 repositories {
@@ -12,14 +12,15 @@ repositories {
 }
 
 dependencies {
-    implementation('net.dv8tion:JDA:5.2.2')
-    implementation('io.github.cdimascio:dotenv-java:3.1.0')
-    implementation('com.fasterxml.jackson.core:jackson-databind:2.15.2')
-    implementation('org.java-websocket:Java-WebSocket:1.5.3')
+    implementation 'net.dv8tion:JDA:5.2.2'
+    implementation 'io.github.cdimascio:dotenv-java:3.1.0'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
+    implementation 'org.java-websocket:Java-WebSocket:1.5.3'
+    implementation 'com.google.code.gson:gson:2.13.1'
 }
 
 tasks.named('jar') {
-    enabled = false // Disable default jar task
+    enabled = false
 }
 
 tasks.named('shadowJar') {

@@ -59,6 +59,7 @@ public class CommandManager extends ListenerAdapter {
     public void execute(String name, JsonNode payload) {
         for (ICommand command : commands){
             if (command.getName().equals(name)){
+                System.out.println("Command name: " + name);
                 command.execute(payload);
                 return;
             }

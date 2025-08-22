@@ -9,8 +9,11 @@ import net.dv8tion.jda.api.entities.MessageEmbed;
 /**
  * These are the possible actions a user can define for a button interaction.
  */
-public class ButtonActions {
+public class ButtonActions{
 
+    /**
+     *
+     */
     public static final ButtonAction SEND_MESSAGE = event -> {
         String id = event.getButton().getId();
         // fetch Data with according Id
