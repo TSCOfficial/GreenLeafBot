@@ -1,6 +1,9 @@
 package ch.greenleaf.component.button;
 
 
+import ch.greenleaf.interaction.ButtonContext;
+import ch.greenleaf.interaction.InteractionContext;
+import ch.greenleaf.interaction.actions.SendMessage;
 import ch.greenleaf.template.embed.Embed;
 import ch.greenleaf.template.embed.EmbedManager;
 import ch.greenleaf.template.embed.Field;
@@ -9,15 +12,14 @@ import net.dv8tion.jda.api.entities.MessageEmbed;
 /**
  * These are the possible actions a user can define for a button interaction.
  */
-public class ButtonActions{
+public class ButtonActionList {
 
     /**
      *
      */
     public static final ButtonAction SEND_MESSAGE = event -> {
-        String id = event.getButton().getId();
-        // fetch Data with according Id
-        event.getHook().sendMessage("Nachricht gesendet!").queue();
+        InteractionContext ctx = new ButtonContext(event);
+        new SendMessage(ctx);
     };
 
     public static final ButtonAction SEND_EMBED = event -> {
@@ -38,7 +40,7 @@ public class ButtonActions{
         MessageEmbed messageEmbed = EmbedManager.EmbedToMessageEmbed(embed);
 
 //        TextChannel channel = event.getGuild().getTextChannelById(embed.getChannelId()); // TODO enable possibility not only Text Channels
-//
+
         event.reply(
                 embed.getMessage())
                 .setEmbeds(messageEmbed)

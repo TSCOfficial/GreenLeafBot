@@ -12,49 +12,50 @@ import java.util.List;
  * Create a Button object.<br>
  * To add this Button to a Discord Message, use
  * {@code ButtonManager.build(button)} in einer {@code actionrow}
+ *
+ * @author Aaron Frily
  */
 public class Button {
 
     ButtonActionHandler buttonHandler = new ButtonActionHandler();
 
-    // Default values
-    private String buttonLabel = "Open Ticket";
+    private String label = "My Button";
     private boolean isDisabled = false;
-    private ButtonStyle buttonStyle = ButtonStyle.SECONDARY;
-    private EmojiUnion buttonEmoji = null;
-    private String buttonId = "0";
+    private ButtonStyle style = ButtonStyle.SECONDARY;
+    private EmojiUnion emoji = null;
+    private String id = "0";
     private List<ButtonAction> actions = new ArrayList<>();
 
     public void setLabel(String label) {
-        buttonLabel = label;
+        this.label = label;
     }
 
     public String getLabel() {
-        return buttonLabel;
+        return label;
     }
 
     public void setEmoji(EmojiUnion emoji) {
-        buttonEmoji = emoji;
+        this.emoji = emoji;
     }
 
     public EmojiUnion getEmoji() {
-        return buttonEmoji;
+        return emoji;
     }
 
     public void setStyle(ButtonStyle buttonStyle) {
-        this.buttonStyle = buttonStyle;
+        this.style = buttonStyle;
     }
 
     public ButtonStyle getStyle() {
-        return buttonStyle;
+        return style;
     }
 
     public void setId(String id) {
-        buttonId = id;
+        this.id = id;
     }
 
     public String getId() {
-        return buttonId;
+        return id;
     }
 
     public void setDisabled(boolean disabled) {
@@ -73,13 +74,21 @@ public class Button {
         this.actions = actions;
     }
 
+    public net.dv8tion.jda.api.interactions.components.buttons.Button build(){
+        net.dv8tion.jda.api.interactions.components.buttons.Button buttonComponent = net.dv8tion.jda.api.interactions.components.buttons.Button.of(
+                style,
+                id,
+                label,
+                emoji
+        ).withDisabled(isDisabled);
+        return buttonComponent;
+    }
+
     /**
      * Gets triggered when a Button is pressed
      * @param event the {@link ButtonInteractionEvent}
      */
     public void action(@NotNull ButtonInteractionEvent event) {
-//        TicketManager manager = new TicketManager();
-//        manager.createTicket(event);
         buttonHandler.action(event, actions);
     }
 

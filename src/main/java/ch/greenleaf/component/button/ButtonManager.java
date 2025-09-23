@@ -27,16 +27,6 @@ public class ButtonManager extends ListenerAdapter {
         }
     }
 
-    public static Button build(ch.greenleaf.component.button.Button button){
-        Button buttonComponent = Button.of(
-                button.getStyle(),
-                button.getId(),
-                button.getLabel(),
-                button.getEmoji()
-        ).withDisabled(button.isDisabled());
-        return buttonComponent;
-    }
-
     public void add(ch.greenleaf.component.button.Button button) {
         buttons.add(button);
     }
