@@ -1,6 +1,7 @@
 package ch.greenleaf.interaction.actions;
 
 import ch.greenleaf.interaction.InteractionContext;
+import ch.greenleaf.interaction.InteractionResponse;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 
 public class SendMessage{
@@ -24,9 +25,16 @@ public class SendMessage{
 
     private void execute() {
         if (channelId != null) {
-            ctx.sendToChannel(channelId, message);
+            ctx.sendToChannel(
+                    new InteractionResponse.Builder(message)
+                            .sendInChannel(channelId)
+                            .build()
+            );
         } else {
-            ctx.reply(message);
+            ctx.reply(
+                    new InteractionResponse.Builder(message)
+                            .build()
+            );
         }
     }
 }

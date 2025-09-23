@@ -1,6 +1,10 @@
 package ch.greenleaf.interaction;
 
+import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
+import net.dv8tion.jda.api.requests.restaction.MessageCreateAction;
+import net.dv8tion.jda.api.requests.restaction.WebhookMessageCreateAction;
 
 public class ButtonContext implements InteractionContext {
 
@@ -21,12 +25,23 @@ public class ButtonContext implements InteractionContext {
     }
 
     @Override
-    public void reply(String message) {
-        event.getHook().sendMessage(message).queue();
+    public void reply(InteractionResponse response) {
+        WebhookMessageCreateAction<Message> action = event.getHook().sendMessage(response.getMessage());
+
+        if (response.isEphemeral()){
+            action.setEphemeral(response.isEphemeral());
+        }
+
+        action.queue();
+
     }
 
     @Override
-    public void sendToChannel(Long channelId, String message) {
-        event.getJDA().getTextChannelById(channelId).sendMessage(message).queue();
+    public void sendToChannel(InteractionResponse response) {
+        TextChannel channel = event.getJDA().getTextChannelById(response.getChannelId());
+        MessageCreateAction action = channel.sendMessage(response.getMessage());
+
+        action.queue();
     }
+
 }
