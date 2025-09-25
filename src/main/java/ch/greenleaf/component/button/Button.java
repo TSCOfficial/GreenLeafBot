@@ -1,5 +1,7 @@
 package ch.greenleaf.component.button;
 
+import ch.greenleaf.interaction.actions.Action;
+import ch.greenleaf.interaction.actions.InteractionAction;
 import net.dv8tion.jda.api.entities.emoji.EmojiUnion;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.interactions.components.buttons.ButtonStyle;
@@ -17,14 +19,12 @@ import java.util.List;
  */
 public class Button {
 
-    ButtonActionHandler buttonHandler = new ButtonActionHandler();
-
     private String label = "My Button";
     private boolean isDisabled = false;
     private ButtonStyle style = ButtonStyle.SECONDARY;
     private EmojiUnion emoji = null;
     private String id = "0";
-    private List<ButtonAction> actions = new ArrayList<>();
+    private List<InteractionAction> actions = new ArrayList<>();
 
     public void setLabel(String label) {
         this.label = label;
@@ -44,6 +44,22 @@ public class Button {
 
     public void setStyle(ButtonStyle buttonStyle) {
         this.style = buttonStyle;
+    }
+
+    /**
+     * Set the style by its enum contant ordinal (see original: {@link ButtonStyle})<br>
+     * Button Styles:
+     * <ul>
+     * <li>1: PRIMARY, bluprle</li>
+     * <li>2: SECONDARY, gray</li>
+     * <li>3: SUCCESS, green</li>
+     * <li>4: DANGER, red</li>
+     * <li>5: LINK, for a URL</li>
+     * </ul>
+     * @param styleId enum constant ordinal (the style id)
+     */
+    public void setStyle(int styleId) {
+        this.style = ButtonStyle.fromKey(styleId);
     }
 
     public ButtonStyle getStyle() {
@@ -66,11 +82,11 @@ public class Button {
         return isDisabled;
     }
 
-    public List<ButtonAction> getActions() {
+    public List<InteractionAction> getActions() {
         return actions;
     }
 
-    public void setActions(List<ButtonAction> actions) {
+    public void setActions(List<InteractionAction> actions) {
         this.actions = actions;
     }
 
@@ -82,14 +98,6 @@ public class Button {
                 emoji
         ).withDisabled(isDisabled);
         return buttonComponent;
-    }
-
-    /**
-     * Gets triggered when a Button is pressed
-     * @param event the {@link ButtonInteractionEvent}
-     */
-    public void action(@NotNull ButtonInteractionEvent event) {
-        buttonHandler.action(event, actions);
     }
 
 }

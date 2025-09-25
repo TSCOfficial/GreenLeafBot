@@ -1,8 +1,9 @@
 package ch.greenleaf.features.commands;
 
 import ch.greenleaf.*;
+import ch.greenleaf.component.button.Button;
+import ch.greenleaf.interaction.actions.ActionList;
 import ch.greenleaf.template.embed.EmbedManager;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.dv8tion.jda.api.entities.MessageEmbed;
@@ -54,7 +55,18 @@ public class Message implements ICommand{
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        event.reply("You want to send \"" + event.getOption("text").getAsString() + "\".").queue();
+
+        /* devnote:
+        The following button data would be given by the used in the frontend, while creating the button. the DB would save all the data and the button always keeps its ID in th id attribute, which then can be used to select the correct button in the DB and select the corresponding actions.
+        */
+        Button btn = new Button();
+        btn.setId("1");
+        btn.setStyle(2);
+        btn.setLabel("Push me");
+        btn.setActions(List.of(ActionList.SEND_MESSAGE));
+
+        event.reply("You want to send \"" + event.getOption("text").getAsString() + "\".")
+                .addActionRow(btn.build()).queue();
     }
 
     @Override

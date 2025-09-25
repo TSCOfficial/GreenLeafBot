@@ -2,8 +2,7 @@ package ch.greenleaf.features.ticketsystem;
 
 import ch.greenleaf.Client;
 import ch.greenleaf.component.button.Button;
-import ch.greenleaf.component.button.ButtonActionList;
-import ch.greenleaf.component.button.ButtonManager;
+import ch.greenleaf.interaction.actions.ActionList;
 import ch.greenleaf.template.embed.Embed;
 import ch.greenleaf.template.embed.EmbedManager;
 import net.dv8tion.jda.api.entities.Guild;
@@ -49,10 +48,10 @@ class TicketPanel {
         button.setDisabled(false);
 
 
-        button.setActions(List.of(ButtonActionList.SEND_EMBED, ButtonActionList.ADD_ROLE));
+        //button.setActions(List.of(ActionList.SEND_EMBED, ActionList.ADD_ROLE));
 
-        ButtonManager buttonManager = Client.client.buttonManager;
-        buttonManager.add(button); // TODO temporary: later fetch data directly from DB when interaction found
+//        ButtonManager buttonManager = Client.client.buttonManager;
+//        buttonManager.add(button); // TODO temporary: later fetch data directly from DB when interaction found
 
 
         assert channelTicketPanel != null;

@@ -51,6 +51,11 @@ public class InteractionResponse {
             return this;
         }
 
+        public Builder sendInChannel(String channelId){
+            this.channelId = Long.getLong(channelId);
+            return this;
+        }
+
         /**
          * Set the embeds for a response
          * @param embeds The list of embeds

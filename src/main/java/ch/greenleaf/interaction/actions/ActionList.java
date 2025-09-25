@@ -2,34 +2,18 @@ package ch.greenleaf.interaction.actions;
 
 import ch.greenleaf.interaction.InteractionContext;
 import ch.greenleaf.interaction.InteractionResponse;
+import ch.greenleaf.interaction.actions.list.SendMessage;
 import ch.greenleaf.template.embed.Embed;
 import ch.greenleaf.template.embed.Field;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 
-public class SendEmbed {
+import java.util.List;
 
-    private final InteractionContext ctx;
-    private String message;
-    private Long channelId;
+public class ActionList {
 
-    public SendEmbed(InteractionContext ctx) {
-        this.ctx = ctx;
-        fetchDatabase();
-        execute();
-    }
+    public static final InteractionAction SEND_MESSAGE = SendMessage::new;
 
-    private void fetchDatabase() {
-        String id = ctx.getInteractionId();
-        // DB lookup hier (id → message, channelId)
-        message = "Hello? You pushed me!";
-        channelId = null;
-    }
-
-    private void execute() {
-        // get button Id
-        // fetch embed data from database using button id
-        // create embed using the Embed Class and EmbedManager Class
-
+    public static final InteractionAction SEND_EMBED = ctx -> {
         Embed embed = new Embed();
         embed.setMessage("Nachricht gesendet!");
         embed.setTitle("Nachricht gesendet!");
@@ -42,13 +26,22 @@ public class SendEmbed {
 
         MessageEmbed messageEmbed = embed.build();
 
-//        TextChannel channel = event.getGuild().getTextChannelById(embed.getChannelId()); // TODO enable possibility not only Text Channels
-
         ctx.reply(
-                new InteractionResponse.Builder(message)
-                        .addEmbed(messageEmbed)
+                new InteractionResponse.Builder(embed.getMessage())
+                        .sendInChannel(embed.getChannelId())
+                        .setEmbeds(List.of(messageEmbed))
+                        .isEphemeral(embed.isEphemeral())
                         .build()
         );
-    }
-}
+    };
 
+    public static final InteractionAction ADD_ROLE = ctx -> {
+        // Hier kannst du aus ctx z.B. die Member-ID oder Guild-ID auslesen
+        // Für JDA brauchst du ggf. spezielle Methoden in deinem Context,
+        // wenn du Zugriff auf Guild oder Member willst.
+    };
+
+    public static final InteractionAction REMOVE_ROLE = ctx -> {
+        // wie ADD_ROLE, nur andersherum :)
+    };
+}

@@ -31,9 +31,7 @@
     <last-used-providers />
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files>
-      <object connection-id="91b5d4c0-b73a-4865-a191-93ab0d5e8dd8" object-ref="schemas/greenleaf/tables/button" />
-    </open-files>
+    <open-files />
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="91b5d4c0-b73a-4865-a191-93ab0d5e8dd8" />

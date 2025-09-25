@@ -1,4 +1,4 @@
-package ch.greenleaf.interaction.actions;
+package ch.greenleaf.interaction.actions.list;
 
 import ch.greenleaf.interaction.InteractionContext;
 import ch.greenleaf.interaction.InteractionResponse;

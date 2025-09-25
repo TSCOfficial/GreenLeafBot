@@ -1,18 +1,37 @@
 package ch.greenleaf.interaction;
 
+import ch.greenleaf.interaction.actions.ActionList;
+import ch.greenleaf.interaction.actions.InteractionAction;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.requests.restaction.MessageCreateAction;
 import net.dv8tion.jda.api.requests.restaction.WebhookMessageCreateAction;
+import org.jetbrains.annotations.NotNull;
 
-public class SlashContext implements InteractionContext {
+public class SlashContext
+        extends ListenerAdapter
+        implements InteractionContext {
 
     private final SlashCommandInteractionEvent event;
 
     public SlashContext(SlashCommandInteractionEvent event) {
         this.event = event;
     }
+
+    /**
+     * React to Slashcommand interactions
+     * @param event
+     */
+    @Override
+    public void onSlashCommandInteraction(@NotNull SlashCommandInteractionEvent event) {
+        InteractionContext ctx = new SlashContext(event);
+
+        InteractionAction action = ActionList.SEND_MESSAGE; // Beispiel
+        action.execute(ctx);
+    }
+
 
     @Override
     public String getInteractionId() {

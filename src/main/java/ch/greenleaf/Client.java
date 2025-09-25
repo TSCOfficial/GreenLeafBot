@@ -1,11 +1,11 @@
 package ch.greenleaf;
 
 import ch.greenleaf.common.listeners.EventListener;
-import ch.greenleaf.component.button.ButtonManager;
 import ch.greenleaf.features.commands.HelloWorld;
 import ch.greenleaf.features.commands.Message;
 import ch.greenleaf.features.commands.TicketCommand;
 import ch.greenleaf.features.commands.UserInfo;
+import ch.greenleaf.interaction.ButtonContext;
 import io.github.cdimascio.dotenv.Dotenv;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
@@ -28,8 +28,6 @@ public class Client {
     public final Dotenv config; // todo SETUP .env FILE !!!
 
     public final ShardManager shardManager;
-
-    public ButtonManager buttonManager;
 
     public static Client client;
 
@@ -75,9 +73,9 @@ public class Client {
         shardManager.addEventListener(manager);
 
         // Register Buttons
-        buttonManager = new ButtonManager();
+        //buttonManager = new ButtonManager();
         //buttonManager.add(new ButtonOpenTicket());
-        shardManager.addEventListener(buttonManager);
+        shardManager.addEventListener(new ButtonContext());
 
 
 
