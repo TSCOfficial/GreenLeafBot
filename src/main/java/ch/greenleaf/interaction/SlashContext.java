@@ -34,9 +34,9 @@ public class SlashContext
 
 
     @Override
-    public String getInteractionId() {
+    public Integer getInteractionId() {
         // Beispiel: /sendmessage id:10
-        return event.getOption("id").getAsString();
+        return event.getOption("id").getAsInt();
     }
 
     @Override

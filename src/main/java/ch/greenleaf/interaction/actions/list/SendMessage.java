@@ -16,7 +16,7 @@ public class SendMessage{
     }
 
     private void fetchDatabase() {
-        String id = ctx.getInteractionId();
+        Integer id = ctx.getInteractionId();
         // DB lookup hier (id → message, channelId)
         message = "Hello? You pushed me!";
         channelId = null;
@@ -30,6 +30,7 @@ public class SendMessage{
                             .build()
             );
         } else {
+            System.out.println("Message: " + message);
             ctx.reply(
                     new InteractionResponse.Builder(message)
                             .build()

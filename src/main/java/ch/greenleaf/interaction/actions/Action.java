@@ -26,6 +26,7 @@ public class Action {
     }
 
     public void execute(InteractionContext ctx) {
+        System.out.println("executing action: " + type.name());
         ActionRegistry.get(type).execute(ctx);
     }
 }

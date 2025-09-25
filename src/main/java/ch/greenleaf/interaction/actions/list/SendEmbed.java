@@ -19,7 +19,7 @@ public class SendEmbed {
     }
 
     private void fetchDatabase() {
-        String id = ctx.getInteractionId();
+        Integer id = ctx.getInteractionId();
         // DB lookup hier (id → message, channelId)
         message = "Hello? You pushed me!";
         channelId = null;

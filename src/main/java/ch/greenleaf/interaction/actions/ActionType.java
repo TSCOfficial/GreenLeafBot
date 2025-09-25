@@ -4,7 +4,8 @@ public enum ActionType {
     SEND_MESSAGE(101, "message"),
     EDIT_MESSAGE(102, "message"),
     REMOVE_ROLE(201, "role"),
-    ASSIGN_ROLE(202, "role");
+    ASSIGN_ROLE(202, "role"),
+    OPEN_URL(000, null);
 
     private final int id;
     private final String tableName;

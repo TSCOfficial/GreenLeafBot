@@ -4,7 +4,7 @@ public interface InteractionContext {
     /**
      * Get the ID of the Interaction element, that has the saved actions saved in the Database
      */
-    String getInteractionId();
+    Integer getInteractionId();
 
     Long getChannelId();
 
