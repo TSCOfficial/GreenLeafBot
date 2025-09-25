@@ -1,12 +1,10 @@
 package ch.greenleaf.interaction;
 
-import net.dv8tion.jda.api.entities.MessageEmbed;
-
-import java.util.List;
-
 public interface InteractionContext {
-    // Get the ID that refers to the Database record
-    String getActionId();
+    /**
+     * Get the ID of the Interaction element, that has the saved actions saved in the Database
+     */
+    String getInteractionId();
 
     Long getChannelId();
 

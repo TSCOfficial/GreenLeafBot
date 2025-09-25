@@ -18,9 +18,11 @@ public class ButtonRepository {
         List<String> users = new ArrayList<>();
         String sql = "SELECT b FROM button_action b";
 
-        try (Connection conn = Database.connect();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
+        try (
+            Connection conn = Database.connect();
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql)
+        ) {
             while (rs.next()) {
                 users.add(rs.getString("username"));
             }

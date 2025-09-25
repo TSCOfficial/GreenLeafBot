@@ -15,7 +15,7 @@ public class SlashContext implements InteractionContext {
     }
 
     @Override
-    public String getActionId() {
+    public String getInteractionId() {
         // Beispiel: /sendmessage id:10
         return event.getOption("id").getAsString();
     }

@@ -3,11 +3,8 @@ package ch.greenleaf.interaction.actions;
 import ch.greenleaf.interaction.InteractionContext;
 import ch.greenleaf.interaction.InteractionResponse;
 import ch.greenleaf.template.embed.Embed;
-import ch.greenleaf.template.embed.EmbedManager;
 import ch.greenleaf.template.embed.Field;
 import net.dv8tion.jda.api.entities.MessageEmbed;
-
-import java.util.List;
 
 public class SendEmbed {
 
@@ -22,7 +19,7 @@ public class SendEmbed {
     }
 
     private void fetchDatabase() {
-        String id = ctx.getActionId();
+        String id = ctx.getInteractionId();
         // DB lookup hier (id → message, channelId)
         message = "Hello? You pushed me!";
         channelId = null;
@@ -43,7 +40,7 @@ public class SendEmbed {
         embed.addField(new Field(null, null, false));
         embed.addField(new Field("Erfolg", "Nachricht gesendet!", true));
 
-        MessageEmbed messageEmbed = EmbedManager.EmbedToMessageEmbed(embed);
+        MessageEmbed messageEmbed = embed.build();
 
 //        TextChannel channel = event.getGuild().getTextChannelById(embed.getChannelId()); // TODO enable possibility not only Text Channels
 

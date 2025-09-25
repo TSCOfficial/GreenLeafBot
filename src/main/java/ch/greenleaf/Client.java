@@ -33,6 +33,14 @@ public class Client {
 
     public static Client client;
 
+    public static void main(String[] args) {
+        try {
+            client = new Client();
+        } catch (LoginException | URISyntaxException | InterruptedException e){
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
     public Client() throws LoginException, URISyntaxException, InterruptedException {
         config = Dotenv.configure().load();
 
@@ -50,12 +58,7 @@ public class Client {
                 GatewayIntent.GUILD_PRESENCES
                                 );
 
-        //builder.mysqlConnect
-
-
         shardManager = builder.build();
-
-
 
         // Register event listeners
         shardManager.addEventListener(new EventListener());
@@ -89,17 +92,6 @@ public class Client {
 
     public ShardManager getShardManager(){
         return shardManager;
-    }
-
-
-    public static void main(String[] args) {
-        try {
-            client = new Client();
-        } catch (LoginException e){
-            System.out.println("Login error");
-        } catch (URISyntaxException | InterruptedException e) {
-            throw new RuntimeException(e);
-        }
     }
 
 }

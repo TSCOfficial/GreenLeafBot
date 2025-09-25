@@ -2,7 +2,6 @@ package ch.greenleaf.interaction.actions;
 
 import ch.greenleaf.interaction.InteractionContext;
 import ch.greenleaf.interaction.InteractionResponse;
-import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 
 public class SendMessage{
 
@@ -17,7 +16,7 @@ public class SendMessage{
     }
 
     private void fetchDatabase() {
-        String id = ctx.getActionId();
+        String id = ctx.getInteractionId();
         // DB lookup hier (id → message, channelId)
         message = "Hello? You pushed me!";
         channelId = null;

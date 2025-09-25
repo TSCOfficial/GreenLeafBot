@@ -1,9 +1,6 @@
 package ch.greenleaf.features.commands;
 
-import ch.greenleaf.BackendDispatcher;
-import ch.greenleaf.Client;
-import ch.greenleaf.ICommand;
-import ch.greenleaf.WSresponseStatus;
+import ch.greenleaf.*;
 import ch.greenleaf.template.embed.EmbedManager;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -15,6 +12,9 @@ import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 import net.dv8tion.jda.api.utils.messages.MessageCreateBuilder;
 import org.jetbrains.annotations.NotNull;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -45,6 +45,15 @@ public class Message implements ICommand{
 
     @Override
     public void execute(@NotNull SlashCommandInteractionEvent event) {
+        try {
+            Connection conn = Database.connect();
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("select * from button");
+            rs.next();
+            System.out.println(rs.getString("label"));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
         event.reply("You want to send \"" + event.getOption("text").getAsString() + "\".").queue();
     }
 

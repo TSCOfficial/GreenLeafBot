@@ -123,7 +123,7 @@ public class Embed extends Message {
         this.color = color;
     }
 
-    public MessageEmbed convert(Embed embed) {
-        return EmbedManager.EmbedToMessageEmbed(embed);
+    public MessageEmbed build() {
+        return EmbedManager.EmbedToMessageEmbed(this);
     }
 }

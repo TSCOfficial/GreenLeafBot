@@ -14,8 +14,12 @@ public class ButtonContext implements InteractionContext {
         this.event = event;
     }
 
+    /**
+     * Get the ID of the button
+     * @return The button ID
+     */
     @Override
-    public String getActionId() {
+    public String getInteractionId() {
         return event.getButton().getId();
     }
 

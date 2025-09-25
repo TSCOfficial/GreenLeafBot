@@ -37,7 +37,7 @@ public class ButtonActionList {
         embed.addField(new Field(null, null, false));
         embed.addField(new Field("Erfolg", "Nachricht gesendet!", true));
 
-        MessageEmbed messageEmbed = EmbedManager.EmbedToMessageEmbed(embed);
+        MessageEmbed messageEmbed = embed.build();
 
 //        TextChannel channel = event.getGuild().getTextChannelById(embed.getChannelId()); // TODO enable possibility not only Text Channels
 
