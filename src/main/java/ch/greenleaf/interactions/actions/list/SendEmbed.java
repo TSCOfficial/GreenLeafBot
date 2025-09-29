@@ -1,7 +1,7 @@
-package ch.greenleaf.interaction.actions.list;
+package ch.greenleaf.interactions.actions.list;
 
-import ch.greenleaf.interaction.InteractionContext;
-import ch.greenleaf.interaction.InteractionResponse;
+import ch.greenleaf.interactions.InteractionContext;
+import ch.greenleaf.interactions.InteractionResponse;
 import ch.greenleaf.template.embed.Embed;
 import ch.greenleaf.template.embed.Field;
 import net.dv8tion.jda.api.entities.MessageEmbed;
@@ -31,7 +31,7 @@ public class SendEmbed {
         // create embed using the Embed Class and EmbedManager Class
 
         Embed embed = new Embed();
-        embed.setMessage("Nachricht gesendet!");
+        embed.setText("Nachricht gesendet!");
         embed.setTitle("Nachricht gesendet!");
         embed.setDescription("Nachricht gesendet!");
         embed.setFooter("Nachricht gesendet!");

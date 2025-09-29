@@ -1,6 +1,6 @@
-package ch.greenleaf.interaction.actions;
+package ch.greenleaf.interactions.actions;
 
-import ch.greenleaf.interaction.InteractionContext;
+import ch.greenleaf.interactions.InteractionContext;
 
 @FunctionalInterface
 public interface InteractionAction {

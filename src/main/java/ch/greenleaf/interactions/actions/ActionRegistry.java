@@ -1,4 +1,4 @@
-package ch.greenleaf.interaction.actions;
+package ch.greenleaf.interactions.actions;
 
 import java.util.EnumMap;
 import java.util.Map;

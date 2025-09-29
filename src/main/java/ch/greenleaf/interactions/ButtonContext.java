@@ -1,8 +1,7 @@
-package ch.greenleaf.interaction;
+package ch.greenleaf.interactions;
 
-import ch.greenleaf.Database;
 import ch.greenleaf.DatabaseQuery;
-import ch.greenleaf.interaction.actions.Action;
+import ch.greenleaf.interactions.actions.Action;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;

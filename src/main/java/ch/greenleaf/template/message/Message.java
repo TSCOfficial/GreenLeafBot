@@ -1,16 +1,18 @@
 package ch.greenleaf.template.message;
 
+import ch.greenleaf.template.embed.Embed;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class Message {
 
-    private String messageId; // = "message-" + UUID.randomUUID();
-
+    private String id;
     private String guildId;
-
-    private String message;
-
+    private String text;
     private boolean isEphemeral = false;
-
     private String channelId;
+	private List<Embed> embeds = new ArrayList<>();
 
     public String getChannelId() {
         return channelId;
@@ -36,11 +38,27 @@ public class Message {
         isEphemeral = ephemeral;
     }
 
-    public String getMessage() {
-        return message;
+    public String getText() {
+        return text;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setText(String text) {
+        this.text = text;
     }
+	
+	public String getId() {
+		return id;
+	}
+	
+	public void setId(String id) {
+		this.id = id;
+	}
+	
+	public List<Embed> getEmbeds() {
+		return embeds;
+	}
+	
+	public void setEmbeds(List<Embed> embeds) {
+		this.embeds = embeds;
+	}
 }

@@ -1,6 +1,8 @@
 package ch.greenleaf.template.embed;
 
+import ch.greenleaf.Table;
 import ch.greenleaf.template.message.Message;
+import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 
 import java.awt.*;
@@ -122,8 +124,34 @@ public class Embed extends Message {
     public void setColor(Color color) {
         this.color = color;
     }
-
+	
+	/**
+	 * Build the discord-compatible embed
+	 * @return The {@link MessageEmbed}
+	 */
     public MessageEmbed build() {
-        return EmbedManager.EmbedToMessageEmbed(this);
+		EmbedBuilder builder = new EmbedBuilder();
+		builder.setTitle(title);
+		builder.setColor(color);
+		builder.setDescription(description);
+		builder.setThumbnail(thumbnailUrl);
+		builder.setFooter(footer, footerIcon);
+		builder.setTimestamp(timestamp);
+		builder.setAuthor(author, authorUrl, authorUrl);
+		builder.setImage(imageUrl);
+		
+		fields.forEach(field -> {
+				if (field.title() != null && field.value() != null) {
+					builder.addField(
+						field.title(),
+						field.value(),
+						field.inline()
+					);
+				} else {
+					builder.addBlankField(field.inline());
+				}
+			}
+		);
+		return builder.build();
     }
 }

@@ -5,7 +5,7 @@ import ch.greenleaf.features.commands.HelloWorld;
 import ch.greenleaf.features.commands.Message;
 import ch.greenleaf.features.commands.TicketCommand;
 import ch.greenleaf.features.commands.UserInfo;
-import ch.greenleaf.interaction.ButtonContext;
+import ch.greenleaf.interactions.ButtonContext;
 import io.github.cdimascio.dotenv.Dotenv;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;

@@ -1,9 +1,8 @@
 package ch.greenleaf.features.commands;
 
 import ch.greenleaf.*;
-import ch.greenleaf.component.button.Button;
-import ch.greenleaf.interaction.actions.ActionList;
-import ch.greenleaf.template.embed.EmbedManager;
+import ch.greenleaf.components.Button;
+import ch.greenleaf.interactions.actions.ActionList;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.dv8tion.jda.api.entities.MessageEmbed;
@@ -90,13 +89,13 @@ public class Message implements ICommand{
             // Embeds
             List<MessageEmbed> embeds = new ArrayList<>();
 
-            if (hasEmbeds) {
-                json.get("embeds").forEach(embedData -> {
-                    MessageEmbed embed = EmbedManager.JsonToEmbed(embedData);
-                    embeds.add(embed);
-                });
-                builder.setEmbeds(embeds);
-            }
+//            if (hasEmbeds) {
+//                json.get("embeds").forEach(embedData -> {
+//                    MessageEmbed embed = EmbedManager.JsonToEmbed(embedData);
+//                    embeds.add(embed);
+//                });
+//                builder.setEmbeds(embeds);
+//            }
 
             System.out.println("Sending message now");
             // Handle sending message

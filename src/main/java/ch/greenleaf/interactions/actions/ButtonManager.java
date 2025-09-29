@@ -8,14 +8,14 @@
 //
 //public class ButtonManager extends ListenerAdapter {
 //
-//    private List<ch.greenleaf.component.button.Button> buttons = new ArrayList<>();
+//    private List<ch.greenleaf.component.Button> buttons = new ArrayList<>();
 //
 //    @Override
 //    public void onButtonInteraction(ButtonInteractionEvent event) {
 //        System.out.println("Button pressed: " + event.getButton().getId());
 //        System.out.println("Current saved buttons: " + buttons);
 //        String buttonId = event.getButton().getId();
-//        for (ch.greenleaf.component.button.Button button : buttons){ // TODO fetch data directly from database (DTO mapping)
+//        for (ch.greenleaf.component.Button button : buttons){ // TODO fetch data directly from database (DTO mapping)
 //            System.out.println(buttonId);
 //            System.out.println(event.getButton().getId());
 //            if (buttonId.equals(event.getButton().getId())){
@@ -26,7 +26,7 @@
 //        }
 //    }
 //
-//    public void add(ch.greenleaf.component.button.Button button) {
+//    public void add(ch.greenleaf.component.Button button) {
 //        buttons.add(button);
 //    }
 //

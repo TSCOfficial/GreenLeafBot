@@ -1,8 +1,7 @@
-package ch.greenleaf.interaction.actions;
+package ch.greenleaf.interactions.actions;
 
-import ch.greenleaf.interaction.InteractionContext;
-import ch.greenleaf.interaction.InteractionResponse;
-import ch.greenleaf.interaction.actions.list.SendMessage;
+import ch.greenleaf.interactions.InteractionResponse;
+import ch.greenleaf.interactions.actions.list.SendMessage;
 import ch.greenleaf.template.embed.Embed;
 import ch.greenleaf.template.embed.Field;
 import net.dv8tion.jda.api.entities.MessageEmbed;
@@ -15,7 +14,7 @@ public class ActionList {
 
     public static final InteractionAction SEND_EMBED = (action, ctx) -> {
         Embed embed = new Embed();
-        embed.setMessage("Nachricht gesendet!");
+        embed.setText("Nachricht gesendet!");
         embed.setTitle("Nachricht gesendet!");
         embed.setDescription("Nachricht gesendet!");
         embed.setFooter("Nachricht gesendet!");
@@ -27,7 +26,7 @@ public class ActionList {
         MessageEmbed messageEmbed = embed.build();
 
         ctx.reply(
-                new InteractionResponse.Builder(embed.getMessage())
+                new InteractionResponse.Builder(embed.getText())
                         .sendInChannel(embed.getChannelId())
                         .setEmbeds(List.of(messageEmbed))
                         .isEphemeral(embed.isEphemeral())

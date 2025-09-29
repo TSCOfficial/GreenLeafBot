@@ -1,11 +1,8 @@
-package ch.greenleaf.component.button;
+package ch.greenleaf.components;
 
-import ch.greenleaf.interaction.actions.Action;
-import ch.greenleaf.interaction.actions.InteractionAction;
+import ch.greenleaf.interactions.actions.InteractionAction;
 import net.dv8tion.jda.api.entities.emoji.EmojiUnion;
-import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.interactions.components.buttons.ButtonStyle;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;

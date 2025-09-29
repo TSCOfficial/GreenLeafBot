@@ -1,7 +1,7 @@
-package ch.greenleaf.interaction;
+package ch.greenleaf.interactions;
 
-import ch.greenleaf.interaction.actions.ActionList;
-import ch.greenleaf.interaction.actions.InteractionAction;
+import ch.greenleaf.interactions.actions.ActionList;
+import ch.greenleaf.interactions.actions.InteractionAction;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;

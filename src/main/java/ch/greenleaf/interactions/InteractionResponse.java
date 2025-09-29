@@ -1,4 +1,4 @@
-package ch.greenleaf.interaction;
+package ch.greenleaf.interactions;
 
 import net.dv8tion.jda.api.entities.MessageEmbed;
 

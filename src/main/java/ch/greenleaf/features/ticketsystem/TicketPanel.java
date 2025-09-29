@@ -1,15 +1,11 @@
 package ch.greenleaf.features.ticketsystem;
 
 import ch.greenleaf.Client;
-import ch.greenleaf.component.button.Button;
-import ch.greenleaf.interaction.actions.ActionList;
+import ch.greenleaf.components.Button;
 import ch.greenleaf.template.embed.Embed;
-import ch.greenleaf.template.embed.EmbedManager;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.interactions.components.buttons.ButtonStyle;
-
-import java.util.List;
 
 class TicketPanel {
 
@@ -56,7 +52,7 @@ class TicketPanel {
 
         assert channelTicketPanel != null;
         channelTicketPanel.sendMessage("")
-                          .setEmbeds(EmbedManager.EmbedToMessageEmbed(embed))
+                          .setEmbeds(embed.build())
                           .addActionRow(button.build())
                           .queue();
     }

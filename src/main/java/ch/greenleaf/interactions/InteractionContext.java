@@ -1,4 +1,4 @@
-package ch.greenleaf.interaction;
+package ch.greenleaf.interactions;
 
 public interface InteractionContext {
     /**

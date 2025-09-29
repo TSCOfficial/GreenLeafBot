@@ -1,4 +1,4 @@
-package ch.greenleaf.interaction.actions;
+package ch.greenleaf.interactions.actions;
 
 public enum ActionType {
     SEND_MESSAGE(101, "message"),

@@ -1,13 +1,10 @@
-package ch.greenleaf.interaction.actions.list;
+package ch.greenleaf.interactions.actions.list;
 
-import ch.greenleaf.Database;
 import ch.greenleaf.DatabaseQuery;
-import ch.greenleaf.interaction.InteractionContext;
-import ch.greenleaf.interaction.InteractionResponse;
-import ch.greenleaf.interaction.actions.Action;
+import ch.greenleaf.interactions.InteractionContext;
+import ch.greenleaf.interactions.InteractionResponse;
+import ch.greenleaf.interactions.actions.Action;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 public class SendMessage{
@@ -39,13 +36,9 @@ public class SendMessage{
 			ResultSet rs = new DatabaseQuery(action.getDatasourceTable())
 				.where("id", DatabaseQuery.Operator.EQUALS, action.getDatasourceId())
 				.executeQuery();
-//            Connection conn = Database.connect();
-//            PreparedStatement stmt = conn.prepareStatement(
-//                    "SELECT id, text, channel_id, is_ephemeral FROM " +
-//                            + " WHERE id = ?"
-//            );
+
             System.out.println(action.getDatasourceId());
-//            stmt.setInt(1, );
+
 			
             rs.next();
             message = rs.getString(FieldNames.TEXT);
