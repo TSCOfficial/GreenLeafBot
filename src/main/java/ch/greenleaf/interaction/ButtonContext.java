@@ -38,10 +38,12 @@ public class ButtonContext
         try {
             Connection conn = Database.connect();
             PreparedStatement stmt = conn.prepareStatement(
-                    "SELECT * FROM button AS btn"
-                            + "INNER JOIN button_action btn_act ON btn.id = btn_act.button_id"
-                            + "INNER JOIN action act ON btn_act.action_id = act.id"
-                            + "WHERE btn_act.button_id = ?"
+                    """
+                            SELECT * FROM button AS btn
+                            INNER JOIN button_action btn_act ON btn.id = btn_act.button_id
+                            INNER JOIN action act ON btn_act.action_id = act.id
+                            WHERE btn_act.button_id = ?
+                            """
             );
             stmt.setInt(1, getInteractionId());
 
@@ -82,6 +84,7 @@ public class ButtonContext
 
         actions.forEach(action -> action.execute(this));
         System.out.println("Alle aktionen ausgeführt");
+        actions.clear();
     }
 
 
@@ -101,11 +104,11 @@ public class ButtonContext
 
     @Override
     public void reply(InteractionResponse response) {
-        ReplyCallbackAction action = event.reply(response.getMessage());
+        ReplyCallbackAction action = event.reply(response.getMessage()).setEphemeral(response.isEphemeral());
 
-        if (response.isEphemeral()){
-            action.setEphemeral(response.isEphemeral());
-        }
+//        if (response.isEphemeral()){
+//            action.setEphemeral(response.isEphemeral());
+//        }
 
         action.queue();
 

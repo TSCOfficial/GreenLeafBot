@@ -78,9 +78,9 @@ public class InteractionResponse {
 
         /**
          * Set a reply as ephemeral.
-         * [i] This does not work if you don't reply to an interaction
-         * @param ephemeral
-         * @return
+         * [i] This does not work if you don't <b>reply</b> to an interaction
+         * @param ephemeral whether the message is ephemeral or not
+         * @return response Builder
          */
         public Builder isEphemeral(boolean ephemeral) {
             this.ephemeral = ephemeral;

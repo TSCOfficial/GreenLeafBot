@@ -60,9 +60,9 @@ public class Message implements ICommand{
         The following button data would be given by the used in the frontend, while creating the button. the DB would save all the data and the button always keeps its ID in th id attribute, which then can be used to select the correct button in the DB and select the corresponding actions.
         */
         Button btn = new Button();
-        btn.setId("8");
-        btn.setStyle(2);
-        btn.setLabel("Push me");
+        btn.setId("9");
+        btn.setStyle(3);
+        btn.setLabel("Klick me");
         btn.setActions(List.of(ActionList.SEND_MESSAGE));
 
         event.reply("You want to send \"" + event.getOption("text").getAsString() + "\".")
