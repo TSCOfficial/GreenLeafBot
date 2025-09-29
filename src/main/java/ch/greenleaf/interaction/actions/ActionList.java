@@ -13,7 +13,7 @@ public class ActionList {
 
     public static final InteractionAction SEND_MESSAGE = SendMessage::new;
 
-    public static final InteractionAction SEND_EMBED = ctx -> {
+    public static final InteractionAction SEND_EMBED = (action, ctx) -> {
         Embed embed = new Embed();
         embed.setMessage("Nachricht gesendet!");
         embed.setTitle("Nachricht gesendet!");
@@ -35,13 +35,13 @@ public class ActionList {
         );
     };
 
-    public static final InteractionAction ADD_ROLE = ctx -> {
+    public static final InteractionAction ADD_ROLE = (action, ctx) -> {
         // Hier kannst du aus ctx z.B. die Member-ID oder Guild-ID auslesen
         // Für JDA brauchst du ggf. spezielle Methoden in deinem Context,
         // wenn du Zugriff auf Guild oder Member willst.
     };
 
-    public static final InteractionAction REMOVE_ROLE = ctx -> {
+    public static final InteractionAction REMOVE_ROLE = (action, ctx) -> {
         // wie ADD_ROLE, nur andersherum :)
     };
 }

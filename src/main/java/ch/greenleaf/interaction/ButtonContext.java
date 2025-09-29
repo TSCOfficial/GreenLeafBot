@@ -10,6 +10,7 @@ import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.requests.restaction.MessageCreateAction;
 import net.dv8tion.jda.api.requests.restaction.WebhookMessageCreateAction;
+import net.dv8tion.jda.api.requests.restaction.interactions.ReplyCallbackAction;
 import org.jetbrains.annotations.NotNull;
 
 import java.sql.*;
@@ -45,9 +46,8 @@ public class ButtonContext
                             """
             );
             stmt.setInt(1, getInteractionId());
-            System.out.println(stmt.toString());
 
-            try (var rs = stmt.executeQuery()) {
+            try (ResultSet rs = stmt.executeQuery()) {
                 System.out.println("Reading responses");
                 System.out.println(rs.getMetaData());
 
@@ -63,7 +63,9 @@ public class ButtonContext
                         Object value = rs.getObject(i);
                         row.put(columnName, value);
                     }
-                    System.out.println(row);
+                    System.out.println(rs.getInt("id"));
+                    System.out.println(rs.getInt("type"));
+                    System.out.println(rs.getInt("datasource_id"));
                     actions.add(new Action(
                             rs.getInt("id"),
                             rs.getInt("type"),
@@ -101,7 +103,7 @@ public class ButtonContext
 
     @Override
     public void reply(InteractionResponse response) {
-        WebhookMessageCreateAction<Message> action = event.getHook().sendMessage(response.getMessage());
+        ReplyCallbackAction action = event.reply(response.getMessage());
 
         if (response.isEphemeral()){
             action.setEphemeral(response.isEphemeral());

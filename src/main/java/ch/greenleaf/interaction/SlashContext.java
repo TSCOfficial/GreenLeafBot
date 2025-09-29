@@ -29,7 +29,7 @@ public class SlashContext
         InteractionContext ctx = new SlashContext(event);
 
         InteractionAction action = ActionList.SEND_MESSAGE; // Beispiel
-        action.execute(ctx);
+        //action.execute(ctx);
     }
 
 

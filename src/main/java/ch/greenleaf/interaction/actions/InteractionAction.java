@@ -4,6 +4,6 @@ import ch.greenleaf.interaction.InteractionContext;
 
 @FunctionalInterface
 public interface InteractionAction {
-    void execute(InteractionContext ctx);
+    void execute(Action action, InteractionContext ctx);
 }
 

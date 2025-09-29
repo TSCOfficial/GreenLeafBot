@@ -28,9 +28,9 @@ public class ActionRegistry {
     }
 
     /**
-     * Get the selected interaction action from the registry using the action tye
+     * Get the selected interaction action from the registry using the action tyep
      * @param type Corresponding action type
-     * @return The selected interaction action
+     * @return The selected interaction action code that can be executed
      */
     public static InteractionAction get(ActionType type) {
         InteractionAction action = REGISTRY.get(type);

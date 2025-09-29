@@ -11,6 +11,10 @@ public class Action {
         this.id = id;
         this.type = ActionType.fromTypeId(typeId);
         this.datasourceId = datasourceId;
+        System.out.println("========");
+        System.out.println(id);
+        System.out.println(type.name());
+        System.out.println(datasourceId);
     }
 
     public int getId() {
@@ -27,6 +31,6 @@ public class Action {
 
     public void execute(InteractionContext ctx) {
         System.out.println("executing action: " + type.name());
-        ActionRegistry.get(type).execute(ctx);
+        ActionRegistry.get(type).execute(this, ctx);
     }
 }
