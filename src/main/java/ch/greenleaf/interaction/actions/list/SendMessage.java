@@ -46,7 +46,7 @@ public class SendMessage{
 
             ResultSet rs = stmt.executeQuery();
             rs.next();
-            message = rs.getString("text");
+            message = rs.getString(FieldNames.TEXT);
             channelId = rs.getLong("channel_id");
             isEphemeral = rs.getBoolean("is_ephemeral");
 
@@ -77,6 +77,14 @@ public class SendMessage{
                             .isEphemeral(isEphemeral)
                             .build()
             );
+        }
+    }
+
+    private static final class FieldNames {
+        public static final String TEXT = "text";
+
+        private FieldNames() {
+
         }
     }
 }

@@ -2,14 +2,10 @@ package ch.greenleaf.interaction;
 
 import ch.greenleaf.Database;
 import ch.greenleaf.interaction.actions.Action;
-import ch.greenleaf.interaction.actions.ActionList;
-import ch.greenleaf.interaction.actions.InteractionAction;
-import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.requests.restaction.MessageCreateAction;
-import net.dv8tion.jda.api.requests.restaction.WebhookMessageCreateAction;
 import net.dv8tion.jda.api.requests.restaction.interactions.ReplyCallbackAction;
 import org.jetbrains.annotations.NotNull;
 

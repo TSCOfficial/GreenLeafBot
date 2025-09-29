@@ -19,9 +19,9 @@ public class ButtonRepository {
         String sql = "SELECT b FROM button_action b";
 
         try (
-            Connection conn = Database.connect();
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(sql)
+                Connection conn = Database.connect();
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(sql)
         ) {
             while (rs.next()) {
                 users.add(rs.getString("username"));
