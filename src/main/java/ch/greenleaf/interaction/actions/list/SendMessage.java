@@ -1,6 +1,7 @@
 package ch.greenleaf.interaction.actions.list;
 
 import ch.greenleaf.Database;
+import ch.greenleaf.DatabaseQuery;
 import ch.greenleaf.interaction.InteractionContext;
 import ch.greenleaf.interaction.InteractionResponse;
 import ch.greenleaf.interaction.actions.Action;
@@ -35,16 +36,17 @@ public class SendMessage{
      */
     private void fetchDatabase() {
         try {
-            Connection conn = Database.connect();
-            PreparedStatement stmt = conn.prepareStatement(
-                    "SELECT id, text, channel_id, is_ephemeral FROM " + action.getDatasourceTable()
-                            + " WHERE id = ?"
-            );
+			ResultSet rs = new DatabaseQuery(action.getDatasourceTable())
+				.where("id", DatabaseQuery.Operator.EQUALS, action.getDatasourceId())
+				.executeQuery();
+//            Connection conn = Database.connect();
+//            PreparedStatement stmt = conn.prepareStatement(
+//                    "SELECT id, text, channel_id, is_ephemeral FROM " +
+//                            + " WHERE id = ?"
+//            );
             System.out.println(action.getDatasourceId());
-            stmt.setInt(1, action.getDatasourceId());
-            System.out.println(stmt);
-
-            ResultSet rs = stmt.executeQuery();
+//            stmt.setInt(1, );
+			
             rs.next();
             message = rs.getString(FieldNames.TEXT);
             channelId = rs.getLong("channel_id");

@@ -1,6 +1,7 @@
 package ch.greenleaf.interaction;
 
 import ch.greenleaf.Database;
+import ch.greenleaf.DatabaseQuery;
 import ch.greenleaf.interaction.actions.Action;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
@@ -32,47 +33,35 @@ public class ButtonContext
         //InteractionAction action = ActionList.SEND_MESSAGE; // Beispiel, aus DB laden
 
         try {
-            Connection conn = Database.connect();
-            PreparedStatement stmt = conn.prepareStatement(
-                    """
-                            SELECT * FROM button AS btn
-                            INNER JOIN button_action btn_act ON btn.id = btn_act.button_id
-                            INNER JOIN action act ON btn_act.action_id = act.id
-                            WHERE btn_act.button_id = ?
-                            """
-            );
-            stmt.setInt(1, getInteractionId());
+            ResultSet rs = new DatabaseQuery("button")
+				.select("action.id", "type", "datasource_id")
+				.join(
+					DatabaseQuery.JoinType.INNER,
+					"button_action",
+					"button.id", DatabaseQuery.Operator.EQUALS, "button_action.button_id")
+				.join(
+					DatabaseQuery.JoinType.INNER,
+					"action",
+					"button_action.action_id", DatabaseQuery.Operator.EQUALS, "action.id" )
+				.where("button_action.button_id", DatabaseQuery.Operator.EQUALS, getInteractionId())
+				.executeQuery();
+            
+            System.out.println("Reading responses");
+            System.out.println(rs.getMetaData());
 
-            try (ResultSet rs = stmt.executeQuery()) {
-                System.out.println("Reading responses");
-                System.out.println(rs.getMetaData());
-
-                ResultSetMetaData meta = rs.getMetaData();
-                int columnCount = meta.getColumnCount();
-
-                while (rs.next()) {
-                    System.out.println("Response: ");
-
-                    Map<String, Object> row = new HashMap<>();
-                    for (int i = 1; i <= columnCount; i++) {
-                        String columnName = meta.getColumnLabel(i); // oder getColumnName(i)
-                        Object value = rs.getObject(i);
-                        row.put(columnName, value);
-                    }
-                    System.out.println(rs.getInt("id"));
-                    System.out.println(rs.getInt("type"));
-                    System.out.println(rs.getInt("datasource_id"));
-                    actions.add(new Action(
-                            rs.getInt("id"),
-                            rs.getInt("type"),
-                            rs.getInt("datasource_id")
-                    ));
-                }
-            } catch (Exception e) {
-                System.out.println(e);
+            while (rs.next()) {
+                System.out.println("Response: ");
+				
+                System.out.println(rs.getInt("id"));
+                System.out.println(rs.getInt("type"));
+                System.out.println(rs.getInt("datasource_id"));
+                actions.add(new Action(
+                        rs.getInt("id"),
+                        rs.getInt("type"),
+                        rs.getInt("datasource_id")
+                ));
             }
 
-            // Based on the saved actiontype,the correct action-table will be resolved
         } catch (Exception e) {
             System.out.println(e);
         }

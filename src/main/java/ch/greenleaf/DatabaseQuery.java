@@ -7,6 +7,7 @@ public class DatabaseQuery {
 
     private final String table;
     private final List<String> selectFields = new ArrayList<>();
+    private final List<String> joins = new ArrayList<>();
     private final List<String> whereClauses = new ArrayList<>();
     private final List<Object> params = new ArrayList<>();
     private final Map<String, Object> updateFields = new LinkedHashMap<>();
@@ -25,16 +26,78 @@ public class DatabaseQuery {
     }
 
     /**
+     * Define what type of join needs
+     */
+    public enum JoinType {
+        NORMAL (""),
+        INNER ("INNER"),
+        LEFT ("LEFT"),
+        RIGHT ("RIGHT"),
+        FULL ("FULL");
+
+        private final String name;
+
+        JoinType(String name) {
+            this.name = name;
+        }
+
+        public String getName() {
+            return name;
+        }
+    }
+
+
+    /**
+     * All available operators that can be used in a query
+     */
+    public enum Operator {
+        // Comparison
+        EQUALS("=" ),
+        NOT_EQUALS("<>" ),
+        GREATER_THAN(">" ),
+        GREATER_OR_EQUAL(">=" ),
+        LESS_THAN("<" ),
+        LESS_OR_EQUAL("<=" ),
+
+        // Pattern Matching
+        LIKE("LIKE" ),
+        NOT_LIKE("NOT LIKE" ),
+        REGEXP("REGEXP" ),
+
+        // Amounts
+        IN("IN" ),
+        NOT_IN("NOT IN" ),
+        BETWEEN("BETWEEN" ),
+        NOT_BETWEEN("NOT BETWEEN" ),
+
+        // Null pointer check
+        IS_NULL("IS NULL" ),
+        IS_NOT_NULL("IS NOT NULL" ),
+        EXISTS("EXISTS" ),
+        NOT_EXISTS("NOT EXISTS" );
+
+        private final String symbol;
+
+        Operator(String symbol) {
+            this.symbol = symbol;
+        }
+
+        public String getSymbol() {
+            return symbol;
+        }
+    }
+
+    /**
      * Execute a query on the database
      * @param table The database table to execute the query on
      */
-    private DatabaseQuery(String table) {
+    public DatabaseQuery(String table) {
         this.table = table;
     }
 
     /**
      * Define the query as a select
-     * @param fields All fields to be selected
+     * @param fields All fields to be selected. If left empty, it selects all ( * )
      * @return The database query
      */
     public DatabaseQuery select(String... fields) {
@@ -50,8 +113,8 @@ public class DatabaseQuery {
      * @param value The value to check for
      * @return The database query
      */
-    public DatabaseQuery where(String column, String operator, Object value) {
-        whereClauses.add(column + " " + operator + " ?");
+    public DatabaseQuery where(String column, Operator operator, Object value) {
+        whereClauses.add(column + " " + operator.getSymbol() + " ?");
         params.add(value);
         return this;
     }
@@ -88,6 +151,33 @@ public class DatabaseQuery {
         type = QueryType.DELETE;
         return this;
     }
+
+    /**
+     * Add a <b>normal</b> join from a foreign table to the original table
+     * @param table The table to join to
+     * @param originalRef The original table column reference
+     * @param operator The operator used to join the correct records
+     * @param foreignRef The foreign table column reference
+     * @return The database query
+     */
+    public DatabaseQuery join(String table, String originalRef, Operator operator, String foreignRef) {
+        return join(JoinType.NORMAL, table, originalRef, operator, foreignRef);
+    }
+
+    /**
+     * Add a <b>specific</b> join from a foreign table to the original table
+     * @param joinType Select the specific join type
+     * @param table The table to join to
+     * @param originalRef The original table column reference
+     * @param operator The operator used to join the correct records
+     * @param foreignRef The foreign table column reference
+     * @return The database query
+     */
+    public DatabaseQuery join(JoinType joinType, String table, String originalRef, Operator operator, String foreignRef) {
+        joins.add(joinType.getName() + " JOIN " + table + " ON " + originalRef + " " + operator.getSymbol() + " " + foreignRef);
+        return this;
+    }
+
 
     /**
      * Execute the database query
@@ -128,6 +218,11 @@ public class DatabaseQuery {
     private String buildSelect() {
         String fields = selectFields.isEmpty() ? "*" : String.join(", ", selectFields);
         String sql = "SELECT " + fields + " FROM " + table;
+
+        if (!joins.isEmpty()) {
+            sql += " " + String.join(" ", joins);
+        }
+
         if (!whereClauses.isEmpty()) {
             sql += " WHERE " + String.join(" AND ", whereClauses);
         }
@@ -139,9 +234,9 @@ public class DatabaseQuery {
      * @return The insert query
      */
     private String buildInsert() {
-        String cols = String.join(", ", updateFields.keySet());
-        String qs = String.join(", ", Collections.nCopies(updateFields.size(), "?"));
-        return "INSERT INTO " + table + " (" + cols + ") VALUES (" + qs + ")";
+        String columns = String.join(", ", updateFields.keySet());
+        String queryString = String.join(", ", Collections.nCopies(updateFields.size(), "?"));
+        return "INSERT INTO " + table + " (" + columns + ") VALUES (" + queryString + ")";
     }
 
     /**
