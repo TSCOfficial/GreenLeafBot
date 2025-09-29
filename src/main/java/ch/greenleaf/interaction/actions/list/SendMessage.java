@@ -27,15 +27,11 @@ public class SendMessage{
         try {
             Connection conn = Database.connect();
             PreparedStatement stmt = conn.prepareStatement(
-                    """
-                            SELECT id, text, channel_id FROM ?
-                            WHERE id = ?
-                            """
+                    "SELECT id, text, channel_id FROM " + action.getDatasourceTable()
+                            + " WHERE id = ?"
             );
-            System.out.println(action.getDatasourceTable());
             System.out.println(action.getDatasourceId());
-            stmt.setString(1, action.getDatasourceTable());
-            stmt.setInt(2, action.getDatasourceId());
+            stmt.setInt(1, action.getDatasourceId());
             System.out.println(stmt);
 
             ResultSet rs = stmt.executeQuery();

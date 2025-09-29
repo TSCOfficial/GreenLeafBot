@@ -38,12 +38,10 @@ public class ButtonContext
         try {
             Connection conn = Database.connect();
             PreparedStatement stmt = conn.prepareStatement(
-                    """
-                            SELECT * FROM button AS btn
-                            INNER JOIN button_action btn_act ON btn.id = btn_act.button_id
-                            INNER JOIN action act ON btn_act.action_id = act.id
-                            WHERE btn_act.button_id = ?
-                            """
+                    "SELECT * FROM button AS btn"
+                            + "INNER JOIN button_action btn_act ON btn.id = btn_act.button_id"
+                            + "INNER JOIN action act ON btn_act.action_id = act.id"
+                            + "WHERE btn_act.button_id = ?"
             );
             stmt.setInt(1, getInteractionId());
 
