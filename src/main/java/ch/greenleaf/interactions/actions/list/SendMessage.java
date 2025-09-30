@@ -57,11 +57,11 @@ public class SendMessage{
 			
 			// Append all connected embeds
 			do {
-				long embed_id = rs.getLong(Table.MessageEmbed.EMBED_ID);
+				int embed_id = rs.getInt(Table.MessageEmbed.EMBED_ID);
 				System.out.println(embed_id);
 				
 				if (embed_id != 0) {
-					Embed embed = new Embed().generateById(embed_id);
+					Embed embed = new Embed().getById(embed_id);
 					message.addEmbed(embed);
 				}
 			} while (rs.next());

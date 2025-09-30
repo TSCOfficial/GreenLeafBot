@@ -15,7 +15,7 @@ import java.util.List;
 
 public class Embed extends Message {
 
-	private Long id;
+	private int id;
     private String title;
     private String description;
     private List<Field> fields = new ArrayList<>();
@@ -184,11 +184,11 @@ public class Embed extends Message {
     }
 	
 	/**
-	 * Build a message embed by getting all attributes from the database using only the ID
+	 * Get all attributes from the database using the ID
 	 * @param id The embed id
 	 * @return The built embed
 	 */
-	public Embed generateById(Long id) {
+	public Embed getById(int id) {
 		try {
 			ResultSet rs = new DatabaseQuery(Table.Embed.SELF)
 				.select()

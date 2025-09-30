@@ -25,7 +25,7 @@ public enum ActionType {
         return tableName;
     }
 
-    public static ActionType fromTypeId(int id) {
+    public static ActionType getById(int id) {
         for (ActionType t : values()) {
             if (t.id == id) {
                 return t;

@@ -1,6 +1,7 @@
 package ch.greenleaf.interactions;
 
 import ch.greenleaf.DatabaseQuery;
+import ch.greenleaf.Table;
 import ch.greenleaf.interactions.actions.Action;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
@@ -33,32 +34,24 @@ public class ButtonContext
 
         try {
             ResultSet rs = new DatabaseQuery("button")
-				.select("action.id", "type", "datasource_id")
+				.select()
 				.join(
 					DatabaseQuery.JoinType.INNER,
-					"button_action",
-					"button.id", DatabaseQuery.Operator.EQUALS, "button_action.button_id")
-				.join(
-					DatabaseQuery.JoinType.INNER,
-					"action",
-					"button_action.action_id", DatabaseQuery.Operator.EQUALS, "action.id" )
-				.where("button_action.button_id", DatabaseQuery.Operator.EQUALS, getInteractionId())
+					Table.ButtonAction.SELF,
+					Table.define(Table.Button.SELF, Table.Button.ID), DatabaseQuery.Operator.EQUALS, Table.define(Table.ButtonAction.SELF, Table.ButtonAction.BUTTON_ID))
+				.where(Table.define(Table.ButtonAction.SELF, Table.ButtonAction.BUTTON_ID), DatabaseQuery.Operator.EQUALS, getInteractionId())
 				.executeQuery();
             
             System.out.println("Reading responses");
-            System.out.println(rs.getMetaData());
+            
 
             while (rs.next()) {
-                System.out.println("Response: ");
+				int action_id = rs.getInt(Table.ButtonAction.ACTION_ID);
+				System.out.println(action_id);
 				
-                System.out.println(rs.getInt("id"));
-                System.out.println(rs.getInt("type"));
-                System.out.println(rs.getInt("datasource_id"));
-                actions.add(new Action(
-                        rs.getInt("id"),
-                        rs.getInt("type"),
-                        rs.getInt("datasource_id")
-                ));
+				Action action = new Action().getById(action_id);
+				
+                actions.add(action);
             }
 
         } catch (Exception e) {
@@ -68,7 +61,7 @@ public class ButtonContext
 
         actions.forEach(action -> action.execute(this));
         System.out.println("Alle aktionen ausgeführt");
-        actions.clear();
+        actions.clear(); // Due that this class stays the same all the online time of the bot, after each Interaction, the used action list needs to be cleared!
     }
 
 
