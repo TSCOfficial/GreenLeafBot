@@ -49,20 +49,22 @@ public class SendMessage{
 			// Get values
 			String text = rs.getString(Table.Message.TEXT);
 			boolean isEphemeral = rs.getBoolean(Table.Message.IS_EPHEMERAL);
-			Long embed_id = rs.getLong(Table.MessageEmbed.EMBED_ID);
+			channelId = rs.getLong(Table.Message.CHANNEL_ID);
 			
 			// Build the message itself
             message.setText(text);
             message.setEphemeral(isEphemeral);
 			
-			System.out.println(embed_id);
-			
-			if (embed_id != 0) {
-				Embed embed = new Embed().generateById(embed_id);
-				message.addEmbed(embed);
-			}
-			
-			channelId = rs.getLong(Table.Message.CHANNEL_ID);
+			// Append all connected embeds
+			do {
+				long embed_id = rs.getLong(Table.MessageEmbed.EMBED_ID);
+				System.out.println(embed_id);
+				
+				if (embed_id != 0) {
+					Embed embed = new Embed().generateById(embed_id);
+					message.addEmbed(embed);
+				}
+			} while (rs.next());
 
         } catch (Exception e) {
             System.out.println(e);
