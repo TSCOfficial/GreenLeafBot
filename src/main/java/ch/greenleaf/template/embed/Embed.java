@@ -1,17 +1,21 @@
 package ch.greenleaf.template.embed;
 
+import ch.greenleaf.DatabaseQuery;
 import ch.greenleaf.Table;
 import ch.greenleaf.template.message.Message;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;
+import org.jetbrains.annotations.Nullable;
 
 import java.awt.*;
+import java.sql.ResultSet;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Embed extends Message {
 
+	private Long id;
     private String title;
     private String description;
     private List<Field> fields = new ArrayList<>();
@@ -64,10 +68,34 @@ public class Embed extends Message {
     public void setFields(List<Field> fields) {
         this.fields = fields;
     }
-
+	
+	/**
+	 * Add a field using the {@link Field}
+	 * @param field The {@link Field}, containing all field attributes
+	 */
     public void addField(Field field) {
         this.fields.add(field);
     }
+	
+	/**
+	 * Add a field using the direct attributes
+	 * @param title The fields title
+	 * @param value The fields value
+	 * @param isInline Whether the field is inline or not
+	 */
+	private void addField(@Nullable String title, @Nullable String value, boolean isInline) {
+		Field field = new Field(title, value, isInline);
+		this.fields.add(field);
+	}
+	
+	/**
+	 * Add a blank field
+	 * @param isInline Whether the field is inline or not
+	 */
+	private void addBlankField(boolean isInline) {
+		Field field = new Field(null, null, isInline);
+		this.fields.add(field);
+	}
 
     public String getFooter() {
         return footer;
@@ -145,13 +173,41 @@ public class Embed extends Message {
 					builder.addField(
 						field.title(),
 						field.value(),
-						field.inline()
+						field.isInline()
 					);
 				} else {
-					builder.addBlankField(field.inline());
+					builder.addBlankField(field.isInline());
 				}
 			}
 		);
 		return builder.build();
     }
+	
+	/**
+	 * Build a message embed by getting all attributes from the database using only the ID
+	 * @param id The embed id
+	 * @return The built embed
+	 */
+	public Embed generateById(Long id) {
+		try {
+			ResultSet rs = new DatabaseQuery(Table.Embed.SELF)
+				.select()
+				.where(Table.Embed.ID, DatabaseQuery.Operator.EQUALS, id)
+				.executeQuery();
+			
+			rs.next();
+			
+			this.id = id;
+			this.title = rs.getString(Table.Embed.TITLE);
+			this.description = rs.getString((Table.Embed.DESCRIPTION));
+			this.author = rs.getString(Table.Embed.AUTHOR);
+			this.footer = rs.getString(Table.Embed.FOOTER);
+			
+			return this;
+
+		} catch (Exception e) {
+			System.out.println(e);
+			return null;
+		}
+	}
 }

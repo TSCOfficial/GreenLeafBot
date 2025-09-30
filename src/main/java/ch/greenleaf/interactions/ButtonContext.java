@@ -88,11 +88,7 @@ public class ButtonContext
 
     @Override
     public void reply(InteractionResponse response) {
-        ReplyCallbackAction action = event.reply(response.getMessage()).setEphemeral(response.isEphemeral());
-
-//        if (response.isEphemeral()){
-//            action.setEphemeral(response.isEphemeral());
-//        }
+        ReplyCallbackAction action = event.reply(response.getMessage()).setEphemeral(response.isEphemeral()).addEmbeds(response.getEmbeds());
 
         action.queue();
 

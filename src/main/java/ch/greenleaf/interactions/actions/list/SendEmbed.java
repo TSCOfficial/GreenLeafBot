@@ -46,7 +46,7 @@ public class SendEmbed {
 
         ctx.reply(
                 new InteractionResponse.Builder(message)
-                        .addEmbed(messageEmbed)
+                        //.addEmbed(messageEmbed)
                         .build()
         );
     }

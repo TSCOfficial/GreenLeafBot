@@ -27,8 +27,7 @@ public class ActionList {
 
         ctx.reply(
                 new InteractionResponse.Builder(embed.getText())
-                        .sendInChannel(embed.getChannelId())
-                        .setEmbeds(List.of(messageEmbed))
+                        //.setEmbeds(List.of(messageEmbed))
                         .isEphemeral(embed.isEphemeral())
                         .build()
         );

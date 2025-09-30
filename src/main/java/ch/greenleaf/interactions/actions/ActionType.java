@@ -1,8 +1,10 @@
 package ch.greenleaf.interactions.actions;
 
+import ch.greenleaf.Table;
+
 public enum ActionType {
-    SEND_MESSAGE(101, "message"),
-    EDIT_MESSAGE(102, "message"),
+    SEND_MESSAGE(101, Table.Message.SELF),
+    EDIT_MESSAGE(102, Table.Message.SELF),
     REMOVE_ROLE(201, "role"),
     ASSIGN_ROLE(202, "role"),
     OPEN_URL(000, null);

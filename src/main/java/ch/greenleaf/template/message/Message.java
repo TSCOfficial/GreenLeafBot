@@ -6,51 +6,33 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Message {
-
-    private String id;
-    private String guildId;
-    private String text;
-    private boolean isEphemeral = false;
-    private String channelId;
-	private List<Embed> embeds = new ArrayList<>();
-
-    public String getChannelId() {
-        return channelId;
-    }
-
-    public void setChannelId(String channelId) {
-        this.channelId = channelId;
-    }
-
-    public String getGuildId() {
-        return guildId;
-    }
-
-    public void setGuildId(String guildId) {
-        this.guildId = guildId;
-    }
-
-    public boolean isEphemeral() {
-        return isEphemeral;
-    }
-
-    public void setEphemeral(boolean ephemeral) {
-        isEphemeral = ephemeral;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
 	
-	public String getId() {
+	private Integer id;
+	private String text;
+	private boolean isEphemeral = false;
+	private List<Embed> embeds = new ArrayList<>();
+	
+	public boolean isEphemeral() {
+		return isEphemeral;
+	}
+	
+	public void setEphemeral(boolean ephemeral) {
+		isEphemeral = ephemeral;
+	}
+	
+	public String getText() {
+		return text;
+	}
+	
+	public void setText(String text) {
+		this.text = text;
+	}
+	
+	public Integer getId() {
 		return id;
 	}
 	
-	public void setId(String id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	
@@ -61,4 +43,9 @@ public class Message {
 	public void setEmbeds(List<Embed> embeds) {
 		this.embeds = embeds;
 	}
+	
+	public void addEmbed(Embed embed) {
+		this.embeds.add(embed);
+	}
+	
 }

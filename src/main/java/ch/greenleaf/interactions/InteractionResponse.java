@@ -1,5 +1,7 @@
 package ch.greenleaf.interactions;
 
+import ch.greenleaf.Table;
+import ch.greenleaf.template.embed.Embed;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 
 import java.util.List;
@@ -61,8 +63,8 @@ public class InteractionResponse {
          * @param embeds The list of embeds
          * @return response Builder
          */
-        public Builder setEmbeds(List<MessageEmbed> embeds) {
-            this.embeds = embeds;
+        public Builder setEmbeds(List<Embed> embeds) {
+			this.embeds = embeds.stream().map(Embed::build).toList();
             return this;
         }
 
@@ -71,8 +73,8 @@ public class InteractionResponse {
          * @param embeds The embed to be added
          * @return response Builder
          */
-        public Builder addEmbed(MessageEmbed embeds) {
-            this.embeds.add(embeds);
+        public Builder addEmbed(Embed embeds) {
+            this.embeds.add(embeds.build());
             return this;
         }
 
