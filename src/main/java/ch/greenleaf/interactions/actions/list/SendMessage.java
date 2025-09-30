@@ -37,7 +37,7 @@ public class SendMessage{
         try {
 			ResultSet rs = new DatabaseQuery(action.getDatasourceTable())
 				.join(
-					DatabaseQuery.JoinType.INNER,
+					DatabaseQuery.JoinType.LEFT, // LEFT REQUIRED! Even if a message does not have an embed (therefore not in message_embed) it should still be outputted in that query (left join = All left + matching existing right)
 					Table.MessageEmbed.SELF,
 					Table.Message.ID, DatabaseQuery.Operator.EQUALS, Table.MessageEmbed.MESSAGE_ID
 				)
@@ -46,10 +46,15 @@ public class SendMessage{
 			
             rs.next();
 			
+			System.out.println(action.getDatasourceTable());
+			
 			// Get values
 			String text = rs.getString(Table.Message.TEXT);
 			boolean isEphemeral = rs.getBoolean(Table.Message.IS_EPHEMERAL);
 			channelId = rs.getLong(Table.Message.CHANNEL_ID);
+			
+			System.out.println(text);
+			System.out.println(channelId);
 			
 			// Build the message itself
             message.setText(text);
