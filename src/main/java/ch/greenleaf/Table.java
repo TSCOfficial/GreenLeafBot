@@ -119,6 +119,23 @@ public abstract class Table {
 		}
 	}
 	
+	public static final class Command {
+		public static final String SELF = "command";
+		public static final String ID = "id";
+		public static final String NAME = "name";
+		public static final String DESCRIPTION = "description";
+		
+		private Command() {
+		
+		}
+	}
+	
+	public static final class CommandAction {
+		public static final String SELF = "command_action";
+		public static final String COMMAND_ID = "command_id";
+		public static final String ACTION_ID = "action_id";
+	}
+	
 	/**
 	 * This method allows to clear ambiguous column calls by using the SQL <code>table.column</code> syntax
 	 * @param table The table name

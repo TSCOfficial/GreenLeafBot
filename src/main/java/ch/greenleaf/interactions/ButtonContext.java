@@ -35,7 +35,7 @@ public class ButtonContext
     public void onButtonInteraction(@NotNull ButtonInteractionEvent event) {
         this.event = event;
         try {
-            ResultSet rs = new DatabaseQuery("button")
+            ResultSet rs = new DatabaseQuery(Table.Button.SELF)
 				.select()
 				.join(
 					DatabaseQuery.JoinType.INNER,
@@ -69,12 +69,12 @@ public class ButtonContext
      * @return The button ID
      */
     @Override
-    public Integer getInteractionId() {
-        return Integer.valueOf(event.getButton().getId());
+    public long getInteractionId() {
+        return Long.parseLong(event.getButton().getId());
     }
 
     @Override
-    public Long getChannelId() {
+    public long getChannelId() {
         return event.getChannel().getIdLong();
     }
 

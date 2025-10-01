@@ -1,5 +1,8 @@
 package ch.greenleaf.interactions;
 
+import ch.greenleaf.DatabaseQuery;
+import ch.greenleaf.Table;
+import ch.greenleaf.interactions.actions.Action;
 import ch.greenleaf.interactions.actions.ActionList;
 import ch.greenleaf.interactions.actions.InteractionAction;
 import net.dv8tion.jda.api.entities.Guild;
@@ -13,37 +16,63 @@ import net.dv8tion.jda.api.requests.restaction.MessageCreateAction;
 import net.dv8tion.jda.api.requests.restaction.WebhookMessageCreateAction;
 import org.jetbrains.annotations.NotNull;
 
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+
 public class SlashContext
         extends ListenerAdapter
         implements InteractionContext {
 
-    private final SlashCommandInteractionEvent event;
-
-    public SlashContext(SlashCommandInteractionEvent event) {
-        this.event = event;
-    }
-
-    /**
+    private SlashCommandInteractionEvent event;
+	
+	private final List<Action> actions = new ArrayList<>();
+	
+	/**
      * React to Slashcommand interactions
      * @param event
      */
     @Override
     public void onSlashCommandInteraction(@NotNull SlashCommandInteractionEvent event) {
-        InteractionContext ctx = new SlashContext(event);
-
-        InteractionAction action = ActionList.SEND_MESSAGE; // Beispiel
-        //action.execute(ctx);
+		this.event = event;
+		try {
+			ResultSet rs = new DatabaseQuery(Table.Command.SELF)
+				.select()
+				.join(
+					DatabaseQuery.JoinType.INNER,
+					Table.CommandAction.SELF,
+					Table.define(Table.Command.SELF, Table.Command.ID), DatabaseQuery.Operator.EQUALS, Table.define(Table.CommandAction.SELF, Table.CommandAction.COMMAND_ID))
+				.where(Table.define(Table.CommandAction.SELF, Table.CommandAction.COMMAND_ID), DatabaseQuery.Operator.EQUALS, getInteractionId())
+				.executeQuery();
+			
+			while (rs.next()) {
+				int action_id = rs.getInt(Table.CommandAction.ACTION_ID);
+				System.out.println(action_id);
+				
+				Action action = new Action().getById(action_id);
+				
+				actions.add(action);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+		actions.forEach(action -> action.execute(this));
+		System.out.println("Alle aktionen ausgeführt");
+		actions.clear(); // Due that this class stays the same all the online time of the bot, after each Interaction, the used action list needs to be cleared!
     }
 
 
     @Override
-    public Integer getInteractionId() {
+    public long getInteractionId() {
         // Beispiel: /sendmessage id:10
-        return event.getOption("id").getAsInt();
+        return event.getCommandIdLong();
     }
 
     @Override
-    public Long getChannelId() {
+    public long getChannelId() {
         return event.getChannel().getIdLong();
     }
 

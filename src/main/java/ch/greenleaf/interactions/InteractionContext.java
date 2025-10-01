@@ -8,9 +8,9 @@ public interface InteractionContext {
     /**
      * Get the ID of the Interaction element, that has the saved actions saved in the Database
      */
-    Integer getInteractionId();
+    long getInteractionId();
 
-    Long getChannelId();
+    long getChannelId();
 
     void reply(InteractionResponse response);
 

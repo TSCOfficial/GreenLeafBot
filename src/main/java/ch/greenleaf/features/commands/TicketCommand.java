@@ -1,6 +1,5 @@
 package ch.greenleaf.features.commands;
 
-import ch.greenleaf.ICommand;
 import ch.greenleaf.features.ticketsystem.TicketManager;
 import com.fasterxml.jackson.databind.JsonNode;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;

@@ -1,6 +1,6 @@
 package ch.greenleaf;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import ch.greenleaf.features.commands.ICommand;
 import net.dv8tion.jda.api.events.interaction.command.CommandAutoCompleteInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.session.ReadyEvent;

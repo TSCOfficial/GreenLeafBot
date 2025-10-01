@@ -1,6 +1,5 @@
 package ch.greenleaf.features.commands;
 
-import ch.greenleaf.ICommand;
 import ch.greenleaf.common.time.Timestamps;
 import ch.greenleaf.common.time.ToDiscordTimestamp;
 import com.fasterxml.jackson.databind.JsonNode;

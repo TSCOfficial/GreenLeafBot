@@ -42,7 +42,7 @@ public class Client {
     public Client() throws LoginException, URISyntaxException, InterruptedException {
         config = Dotenv.configure().load();
 
-        URI backendUri = new URI("ws://localhost:8080/ws/bot");
+        URI backendUri = new URI(config.get("WS_URI"));
         webSocket = new WebSocketClientHandler(backendUri);
         webSocket.connectBlocking();
 
