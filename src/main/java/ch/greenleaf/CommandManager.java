@@ -1,6 +1,7 @@
 package ch.greenleaf;
 
 import ch.greenleaf.features.commands.ICommand;
+import ch.greenleaf.features.commands.custom.CustomCommands;
 import net.dv8tion.jda.api.events.interaction.command.CommandAutoCompleteInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.session.ReadyEvent;
@@ -18,7 +19,7 @@ import java.util.stream.Collectors;
 public class CommandManager extends ListenerAdapter {
 	
 	// Existing slash commands
-    private List<ICommand> commands = new ArrayList<>();
+    private static List<ICommand> commands = new ArrayList<>();
 	
 	/**
 	 * Load all existing slash commands
@@ -26,6 +27,10 @@ public class CommandManager extends ListenerAdapter {
 	 */
     @Override
     public void onReady(@NotNull ReadyEvent event) {
+		// Load custom DB commands first
+		CustomCommands.load();
+		
+		// Create existing & customs
         for (ICommand command : commands){
             if(command.getOptions() == null) {
                 event.getJDA().upsertCommand(
@@ -42,7 +47,7 @@ public class CommandManager extends ListenerAdapter {
 
             System.out.println("Loading " + command.getName() + " slashcommand.");
         }
-
+		
     }
 
     /**
@@ -51,6 +56,7 @@ public class CommandManager extends ListenerAdapter {
      */
     @Override
     public void onSlashCommandInteraction(@NotNull SlashCommandInteractionEvent event) {
+		System.out.println("CommandManager event");
         for (ICommand command : commands){
             if (command.getName().equals(event.getName())){
                 command.execute(event);
@@ -96,7 +102,7 @@ public class CommandManager extends ListenerAdapter {
 	 * Add a slashcommand
 	 * @param command
 	 */
-    public void add(ICommand command) {
+    public static void add(ICommand command) {
         commands.add(command);
     }
 }

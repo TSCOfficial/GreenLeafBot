@@ -69,8 +69,8 @@ public class ButtonContext
      * @return The button ID
      */
     @Override
-    public long getInteractionId() {
-        return Long.parseLong(event.getButton().getId());
+    public String getInteractionId() {
+        return event.getButton().getId();
     }
 
     @Override

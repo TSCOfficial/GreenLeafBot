@@ -20,6 +20,9 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * <i>[!] Slash commands have a special kind of ID due that it's not possible to add a custom ID. Their ID is their full command name (command + subgroup + subcommand)</i>
+ */
 public class SlashContext
         extends ListenerAdapter
         implements InteractionContext {
@@ -34,6 +37,7 @@ public class SlashContext
      */
     @Override
     public void onSlashCommandInteraction(@NotNull SlashCommandInteractionEvent event) {
+		System.out.println("SlashContext event");
 		this.event = event;
 		try {
 			ResultSet rs = new DatabaseQuery(Table.Command.SELF)
@@ -66,9 +70,9 @@ public class SlashContext
 
 
     @Override
-    public long getInteractionId() {
+    public String getInteractionId() {
         // Beispiel: /sendmessage id:10
-        return event.getCommandIdLong();
+        return event.getFullCommandName();
     }
 
     @Override

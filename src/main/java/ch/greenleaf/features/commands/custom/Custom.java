@@ -1,5 +1,6 @@
-package ch.greenleaf.features.commands;
+package ch.greenleaf.features.commands.custom;
 
+import ch.greenleaf.features.commands.ICommand;
 import com.fasterxml.jackson.databind.JsonNode;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
@@ -8,15 +9,27 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import java.util.Map;
 
-public class AddRole implements ICommand {
+public class Custom implements ICommand {
+	
+	private String name;
+	private String description;
+
 	@Override
 	public String getName() {
-		return "addrole";
+		return name;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 	@Override
 	public String getDescription() {
-		return "Füge eine Rolle hinzu";
+		return description;
+	}
+	
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	
 	@Override

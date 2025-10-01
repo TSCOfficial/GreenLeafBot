@@ -1,13 +1,11 @@
-package ch.greenleaf.common.idgenerator;
+package ch.greenleaf.common;
 
 import java.util.UUID;
 
 /**
- * Generate an ID for a Button.
- * The Button ID offers the possibility to search for a specific set of settings, that was set by the guild
- * administrator, in the database.
+ * Generate an ID for an object.
  */
-public class Id {
+public class ID {
 
     public static String generate(Object object){
         StringBuilder id = new StringBuilder();
@@ -17,11 +15,9 @@ public class Id {
         return id.toString();
     }
 
-    public static String generate(Object object, String guildId){
+    public static String generate(String value){
         StringBuilder id = new StringBuilder();
-        id.append(object.getClass().getSimpleName());
-        id.append("-");
-        id.append(guildId);
+        id.append(value);
         id.append("-");
         id.append(UUIDString());
         return id.toString();

@@ -12,8 +12,6 @@ import java.util.function.Consumer;
  */
 public class BackendDispatcher {
 
-    private static CommandManager commandManager;
-
     private static final ObjectMapper mapper = new ObjectMapper();
 
     private static final Map<String, Consumer<JsonNode>> routes = new HashMap<>();
@@ -24,10 +22,6 @@ public class BackendDispatcher {
 //    static {
 //        routes.put("/messages/send", payload -> commandManager.execute("message", payload));
 //    }
-
-    public static void setCommandManager(CommandManager commandManager) {
-        BackendDispatcher.commandManager = commandManager;
-    }
 
     /**
      * Handles the incoming messages from the WebSocket.

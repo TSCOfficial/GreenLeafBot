@@ -6,6 +6,7 @@ import ch.greenleaf.features.commands.Message;
 import ch.greenleaf.features.commands.TicketCommand;
 import ch.greenleaf.features.commands.UserInfo;
 import ch.greenleaf.interactions.ButtonContext;
+import ch.greenleaf.interactions.SlashContext;
 import io.github.cdimascio.dotenv.Dotenv;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
@@ -62,20 +63,18 @@ public class Client {
         shardManager.addEventListener(new EventListener());
 
         // Register Slashcommands
-        CommandManager manager = new CommandManager();
-        manager.add(new HelloWorld());
-        manager.add(new Message());
-        manager.add(new UserInfo());
-        manager.add(new TicketCommand());
+		CommandManager.add(new HelloWorld());
+		CommandManager.add(new Message());
+		CommandManager.add(new UserInfo());
+		CommandManager.add(new TicketCommand());
 
-        BackendDispatcher.setCommandManager(manager);
-
-        shardManager.addEventListener(manager);
+        shardManager.addEventListener(new CommandManager());
 
         // Register Buttons
         //buttonManager = new ButtonManager();
         //buttonManager.add(new ButtonOpenTicket());
         shardManager.addEventListener(new ButtonContext());
+		shardManager.addEventListener(new SlashContext());
 
 
 
