@@ -12,10 +12,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Manage slash commands
+ */
 public class CommandManager extends ListenerAdapter {
-
+	
+	// Existing slash commands
     private List<ICommand> commands = new ArrayList<>();
-
+	
+	/**
+	 * Load all existing slash commands
+	 * @param event Ready event firing at Client start-up
+	 */
     @Override
     public void onReady(@NotNull ReadyEvent event) {
         for (ICommand command : commands){
@@ -38,7 +46,7 @@ public class CommandManager extends ListenerAdapter {
     }
 
     /**
-     * Gets triggered as soon as a Slashcommand got executed
+     * Gets triggered as soon as a slash command is executed
      * @param event SlashCommandInteractionEvent
      */
     @Override
@@ -52,7 +60,7 @@ public class CommandManager extends ListenerAdapter {
     }
 
     /**
-     * Use for Backend Interaction.
+     * Use for backend interaction.
      * @param name Command name
      * @param payload Command data
      */
@@ -65,7 +73,11 @@ public class CommandManager extends ListenerAdapter {
             }
         }
     }
-
+	
+	/**
+	 * Execute the autocompletion for a slash command
+	 * @param event When an autocompletion is triggered by discord
+	 */
     @Override
     public void onCommandAutoCompleteInteraction(@NotNull CommandAutoCompleteInteractionEvent event) {
         for (ICommand command : commands) {
@@ -93,8 +105,12 @@ public class CommandManager extends ListenerAdapter {
             }
         }
     }
-
-
+	
+	
+	/**
+	 * Add a slashcommand
+	 * @param command
+	 */
     public void add(ICommand command) {
         commands.add(command);
     }

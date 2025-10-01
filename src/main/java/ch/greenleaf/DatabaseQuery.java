@@ -4,12 +4,22 @@ import java.sql.*;
 import java.util.*;
 
 public class DatabaseQuery {
-
+	// Query table
     private final String table;
+	
+	// Fields to select
     private final List<String> selectFields = new ArrayList<>();
+	
+	// Joins to execute
     private final List<String> joins = new ArrayList<>();
+	
+	// Where clauses to extract only wanted results
     private final List<String> whereClauses = new ArrayList<>();
+	
+	// Parameters to insert into the where clause & update statement
     private final List<Object> params = new ArrayList<>();
+	
+	// Fields to update
     private final Map<String, Object> updateFields = new LinkedHashMap<>();
 
     // Default query type
@@ -26,7 +36,7 @@ public class DatabaseQuery {
     }
 
     /**
-     * Define what type of join needs
+     * Define what type of join is needed
      */
     public enum JoinType {
         NORMAL (""),
@@ -41,7 +51,7 @@ public class DatabaseQuery {
             this.name = name;
         }
 
-        public String getName() {
+        private String getName() {
             return name;
         }
     }
@@ -82,7 +92,7 @@ public class DatabaseQuery {
             this.symbol = symbol;
         }
 
-        public String getSymbol() {
+        private String getSymbol() {
             return symbol;
         }
     }
@@ -182,7 +192,7 @@ public class DatabaseQuery {
     /**
      * Execute the database query
      * @return The database results
-     * @throws SQLException
+     * @throws SQLException Happens when the Database refuses the connection or is not reachable
      */
     public ResultSet executeQuery() throws SQLException {
         Connection conn = Database.connect();
@@ -191,12 +201,12 @@ public class DatabaseQuery {
         return stmt.executeQuery();
     }
 
-    public int executeUpdate() throws SQLException {
-        Connection conn = Database.connect();
-        PreparedStatement stmt = conn.prepareStatement(buildSQL());
-        setParameters(stmt);
-        return stmt.executeUpdate();
-    }
+//    public int executeUpdate() throws SQLException {
+//        Connection conn = Database.connect();
+//        PreparedStatement stmt = conn.prepareStatement(buildSQL());
+//        setParameters(stmt);
+//        return stmt.executeUpdate();
+//    }
 
     /**
      * Builds the SQl query depending on the query type
@@ -269,7 +279,7 @@ public class DatabaseQuery {
     /**
      * Insert the parameters in the prepared query statement
      * @param stmt The query statement
-     * @throws SQLException
+     * @throws SQLException Happens when the parameter or field array index is out of range
      */
     private void setParameters(PreparedStatement stmt) throws SQLException {
         int i = 1;

@@ -12,10 +12,14 @@ import java.sql.ResultSet;
 
 public class SendMessage{
 
+	// The action that contains the action data (action table and id)
     private final Action action;
+	
+	// The Interaction context (i.e. Button, Slash, ...)
     private final InteractionContext ctx;
+	
+	// The message object
 	private Message message = new Message();
-    private Long channelId;
 
     /**
      * <h1>Message action</h1>
@@ -37,7 +41,7 @@ public class SendMessage{
         try {
 			ResultSet rs = new DatabaseQuery(action.getDatasourceTable())
 				.join(
-					DatabaseQuery.JoinType.LEFT, // LEFT REQUIRED! Even if a message does not have an embed (therefore not in message_embed) it should still be outputted in that query (left join = All left + matching existing right)
+					DatabaseQuery.JoinType.LEFT, // LEFT JOIN REQUIRED! Even if a message does not have an embed (therefore not in message_embed) it should still be outputted in that query (left join = All left + matching existing right)
 					Table.MessageEmbed.SELF,
 					Table.Message.ID, DatabaseQuery.Operator.EQUALS, Table.MessageEmbed.MESSAGE_ID
 				)
@@ -51,7 +55,7 @@ public class SendMessage{
 			// Get values
 			String text = rs.getString(Table.Message.TEXT);
 			boolean isEphemeral = rs.getBoolean(Table.Message.IS_EPHEMERAL);
-			channelId = rs.getLong(Table.Message.CHANNEL_ID);
+			long channelId = rs.getLong(Table.Message.CHANNEL_ID);
 			
 			System.out.println(text);
 			System.out.println(channelId);
@@ -59,6 +63,7 @@ public class SendMessage{
 			// Build the message itself
             message.setText(text);
             message.setEphemeral(isEphemeral);
+			message.setChannelId(channelId);
 			
 			// Append all connected embeds
 			do {
@@ -89,7 +94,6 @@ public class SendMessage{
             );
 
         } else {
-            System.out.println("Message: " + message);
             ctx.reply(
                     new InteractionResponse.Builder(message.getText())
 						.isEphemeral(message.isEphemeral())

@@ -15,56 +15,121 @@ import java.util.List;
 
 public class Embed extends Message {
 
+	// Intern embed id
 	private int id;
+	
+	// Embed title
     private String title;
+	
+	// Embed description
     private String description;
+	
+	// Embed fields
     private List<Field> fields = new ArrayList<>();
+	
+	// Embed author name
     private String author;
+	
+	// Embed author URL
     private String authorUrl;
+	
+	// Embed author icon
     private String authorIcon;
+	
+	// Embed image URL
     private String imageUrl;
+	
+	// Embed thumbnail URL
     private String thumbnailUrl;
+	
+	// Embed footer text
     private String footer;
+	
+	// Embed footer icon
     private String footerIcon;
+	
+	// Embed footer timestamp
     private LocalDateTime timestamp;
+	
+	// Embed color
     private Color color;
-
+	
+	/**
+	 * Get the embed author name
+	 * @return Author name
+	 */
     public String getAuthor() {
         return author;
     }
-
+	
+	/**
+	 * Set the embed author name
+	 * @param author Author name
+	 */
     public void setAuthor(String author) {
         this.author = author;
     }
-
+	
+	/**
+	 * Get the author URL
+	 * @return Author URL
+	 */
     public String getAuthorUrl() {
         return authorUrl;
     }
-
+	
+	/**
+	 * Set the author URL
+	 * @param authorUrl Author URL
+	 */
     public void setAuthorUrl(String authorUrl) {
         this.authorUrl = authorUrl;
     }
-
+	
+	/**
+	 * Get the author icon
+	 * @return Author icon
+	 */
     public String getAuthorIcon() {
         return authorIcon;
     }
-
+	
+	/**
+	 * Set the author icon
+	 * @param authorIcon Author icon
+	 */
     public void setAuthorIcon(String authorIcon) {
         this.authorIcon = authorIcon;
     }
-
+	
+	/**
+	 * Get the description text
+	 * @return Description text
+	 */
     public String getDescription() {
         return description;
     }
-
+	
+	/**
+	 * Set the description text
+	 * @param description Description text
+	 */
     public void setDescription(String description) {
         this.description = description;
     }
-
+	
+	/**
+	 * Get all embed fields
+	 * @return All fields
+	 */
     public List<Field> getFields() {
         return fields;
     }
-
+	
+	/**
+	 * Set embed fields
+	 * @param fields Fields
+	 */
     public void setFields(List<Field> fields) {
         this.fields = fields;
     }
@@ -96,59 +161,115 @@ public class Embed extends Message {
 		Field field = new Field(null, null, isInline);
 		this.fields.add(field);
 	}
-
+	
+	/**
+	 * Get footer text
+	 * @return Footer text
+	 */
     public String getFooter() {
         return footer;
     }
-
+	
+	/**
+	 * Set footer text
+	 * @param footer Footer text
+	 */
     public void setFooter(String footer) {
         this.footer = footer;
     }
-
+	
+	/**
+	 * Get footer icon
+	 * @return footer icon
+	 */
     public String getFooterIcon() {
         return footerIcon;
     }
-
+	
+	/**
+	 * Set footer icon
+	 * @param footerIcon Footer icon
+	 */
     public void setFooterIcon(String footerIcon) {
         this.footerIcon = footerIcon;
     }
-
+	
+	/**
+	 * Get image URL
+	 * @return Image URL
+	 */
     public String getImageUrl() {
         return imageUrl;
     }
-
+	
+	/**
+	 * Set image URL
+	 * @param imageUrl Image URL
+	 */
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
-
+	
+	/**
+	 * Get thumbnail URL
+	 * @return Thumbnail URL
+	 */
     public String getThumbnailUrl() {
         return thumbnailUrl;
     }
-
+	
+	/**
+	 * Set thumbnail URL
+	 * @param thumbnailUrl Thumbnail URL
+	 */
     public void setThumbnailUrl(String thumbnailUrl) {
         this.thumbnailUrl = thumbnailUrl;
     }
-
+	
+	/**
+	 * Get timestamp
+	 * @return Timestamp
+	 */
     public LocalDateTime getTimestamp() {
         return timestamp;
     }
-
+	
+	/**
+	 * Set timestamp
+	 * @param timestamp Timestamp
+	 */
     public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
     }
-
+	
+	/**
+	 * Get title
+	 * @return Title
+	 */
     public String getTitle() {
         return title;
     }
-
+	
+	/**
+	 * Set title
+	 * @param title Title
+	 */
     public void setTitle(String title) {
         this.title = title;
     }
-
+	
+	/**
+	 * Get color
+	 * @return Color
+	 */
     public Color getColor() {
         return color;
     }
-
+	
+	/**
+	 * Set color
+	 * @param color Color
+	 */
     public void setColor(Color color) {
         this.color = color;
     }
