@@ -109,6 +109,16 @@ public abstract class Table {
 		}
 	}
 	
+	public static final class Role {
+		public static final String SELF = "role";
+		public static final String ID = "id";
+		public static final String ROLE_ID = "role_id";
+		
+		private Role() {
+		
+		}
+	}
+	
 	/**
 	 * This method allows to clear ambiguous column calls by using the SQL <code>table.column</code> syntax
 	 * @param table The table name

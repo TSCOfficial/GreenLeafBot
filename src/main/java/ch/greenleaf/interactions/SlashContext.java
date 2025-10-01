@@ -2,7 +2,10 @@ package ch.greenleaf.interactions;
 
 import ch.greenleaf.interactions.actions.ActionList;
 import ch.greenleaf.interactions.actions.InteractionAction;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Message;
+import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -63,5 +66,15 @@ public class SlashContext
 
         action.queue();
     }
+	
+	@Override
+	public Member getAuthor() {
+		return event.getMember();
+	}
+	
+	@Override
+	public Guild getGuild() {
+		return event.getGuild();
+	}
 }
 

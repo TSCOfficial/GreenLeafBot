@@ -57,10 +57,7 @@ public class SendMessage{
 			boolean isEphemeral = rs.getBoolean(Table.Message.IS_EPHEMERAL);
 			long channelId = rs.getLong(Table.Message.CHANNEL_ID);
 			
-			System.out.println(text);
-			System.out.println(channelId);
-			
-			// Build the message itself
+			// Implement values in message object
             message.setText(text);
             message.setEphemeral(isEphemeral);
 			message.setChannelId(channelId);
@@ -68,7 +65,6 @@ public class SendMessage{
 			// Append all connected embeds
 			do {
 				int embed_id = rs.getInt(Table.MessageEmbed.EMBED_ID);
-				System.out.println(embed_id);
 				
 				if (embed_id != 0) {
 					Embed embed = new Embed().getById(embed_id);
@@ -77,7 +73,7 @@ public class SendMessage{
 			} while (rs.next());
 
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
     }
 
@@ -85,10 +81,10 @@ public class SendMessage{
      * Execute the action
      */
     private void execute() {
-        if (channelId != null && channelId != 0) {
+        if (message.getChannelId() != 0) {
             ctx.sendToChannel(
                     new InteractionResponse.Builder(message.getText())
-						.sendInChannel(channelId)
+						.sendInChannel(message.getChannelId())
 						.setEmbeds(message.getEmbeds())
 						.build()
             );

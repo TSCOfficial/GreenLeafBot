@@ -58,21 +58,6 @@ public class CommandManager extends ListenerAdapter {
             }
         }
     }
-
-    /**
-     * Use for backend interaction.
-     * @param name Command name
-     * @param payload Command data
-     */
-    public void execute(String name, JsonNode payload) {
-        for (ICommand command : commands){
-            if (command.getName().equals(name)){
-                System.out.println("Command name: " + name);
-                command.execute(payload);
-                return;
-            }
-        }
-    }
 	
 	/**
 	 * Execute the autocompletion for a slash command

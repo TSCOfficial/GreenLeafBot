@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.function.Consumer;
 
 /**
- * Handle incoming and outgoing messages from and to the Backend.
+ * Handle incoming and outgoing messages from and to the backend
  */
 public class BackendDispatcher {
 
@@ -21,9 +21,9 @@ public class BackendDispatcher {
     // Command connection, put(actionName, ... -> execute(registeredCommandName, ...)
     // actionName -> registered name (API endpoint) in the backend
     // registeredCommandName -> The name of the Bot command
-    static {
-        routes.put("/messages/send", payload -> commandManager.execute("message", payload));
-    }
+//    static {
+//        routes.put("/messages/send", payload -> commandManager.execute("message", payload));
+//    }
 
     public static void setCommandManager(CommandManager commandManager) {
         BackendDispatcher.commandManager = commandManager;

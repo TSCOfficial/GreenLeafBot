@@ -24,6 +24,7 @@ public class ActionRegistry {
 	
     static {
         REGISTRY.put(ActionType.SEND_MESSAGE, ActionList.SEND_MESSAGE);
+		REGISTRY.put(ActionType.ADD_ROLE, ActionList.ADD_ROLE);
     }
 
     /**

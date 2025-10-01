@@ -3,6 +3,9 @@ package ch.greenleaf.interactions;
 import ch.greenleaf.DatabaseQuery;
 import ch.greenleaf.Table;
 import ch.greenleaf.interactions.actions.Action;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -13,6 +16,9 @@ import org.jetbrains.annotations.NotNull;
 import java.sql.*;
 import java.util.*;
 
+/**
+ * This context applies to Buttons, allowing them to execute an action by resolving the registered actions from its given button ID that is saved in the database.
+ */
 public class ButtonContext
         extends ListenerAdapter
         implements InteractionContext {
@@ -22,16 +28,12 @@ public class ButtonContext
     private final List<Action> actions = new ArrayList<>();
 
     /**
-     * React to Button interactions
+     * React to Button interactions<br>
      * @param event The interaction event
      */
     @Override
     public void onButtonInteraction(@NotNull ButtonInteractionEvent event) {
         this.event = event;
-
-        // DB Lookup: welche Action ist mit diesem Button verknüpft?
-        //InteractionAction action = ActionList.SEND_MESSAGE; // Beispiel, aus DB laden
-
         try {
             ResultSet rs = new DatabaseQuery("button")
 				.select()
@@ -41,10 +43,7 @@ public class ButtonContext
 					Table.define(Table.Button.SELF, Table.Button.ID), DatabaseQuery.Operator.EQUALS, Table.define(Table.ButtonAction.SELF, Table.ButtonAction.BUTTON_ID))
 				.where(Table.define(Table.ButtonAction.SELF, Table.ButtonAction.BUTTON_ID), DatabaseQuery.Operator.EQUALS, getInteractionId())
 				.executeQuery();
-            
-            System.out.println("Reading responses");
-            
-
+			
             while (rs.next()) {
 				int action_id = rs.getInt(Table.ButtonAction.ACTION_ID);
 				System.out.println(action_id);
@@ -55,7 +54,7 @@ public class ButtonContext
             }
 
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
 
 
@@ -94,5 +93,14 @@ public class ButtonContext
 
         action.queue();
     }
-
+	
+	@Override
+	public Member getAuthor() {
+		return event.getMember();
+	}
+	
+	@Override
+	public Guild getGuild() {
+		return event.getGuild();
+	}
 }

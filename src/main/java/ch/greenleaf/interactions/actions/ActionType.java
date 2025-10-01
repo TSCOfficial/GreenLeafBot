@@ -2,12 +2,15 @@ package ch.greenleaf.interactions.actions;
 
 import ch.greenleaf.Table;
 
+/**
+ * Manage available actions, their id and their table-names
+ */
 public enum ActionType {
+	// Messages, ID 100+
     SEND_MESSAGE(101, Table.Message.SELF),
-    EDIT_MESSAGE(102, Table.Message.SELF),
-    REMOVE_ROLE(201, "role"),
-    ASSIGN_ROLE(202, "role"),
-    OPEN_URL(000, null);
+	
+	// Roles, ID 200+
+    ADD_ROLE(201, Table.Role.SELF);
 
     private final int id;
     private final String tableName;
