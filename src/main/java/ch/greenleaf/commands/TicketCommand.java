@@ -1,4 +1,4 @@
-package ch.greenleaf.features.commands;
+package ch.greenleaf.commands;
 
 import ch.greenleaf.features.ticketsystem.TicketManager;
 import com.fasterxml.jackson.databind.JsonNode;

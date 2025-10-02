@@ -1,4 +1,4 @@
-package ch.greenleaf.features.commands.custom;
+package ch.greenleaf.commands.custom;
 
 import ch.greenleaf.CommandManager;
 import ch.greenleaf.DatabaseQuery;

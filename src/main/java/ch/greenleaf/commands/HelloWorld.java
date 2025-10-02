@@ -1,4 +1,4 @@
-package ch.greenleaf.features.commands;
+package ch.greenleaf.commands;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import net.dv8tion.jda.api.entities.channel.Channel;

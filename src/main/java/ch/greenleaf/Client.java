@@ -1,10 +1,10 @@
 package ch.greenleaf;
 
 import ch.greenleaf.common.listeners.EventListener;
-import ch.greenleaf.features.commands.HelloWorld;
-import ch.greenleaf.features.commands.Message;
-import ch.greenleaf.features.commands.TicketCommand;
-import ch.greenleaf.features.commands.UserInfo;
+import ch.greenleaf.commands.HelloWorld;
+import ch.greenleaf.commands.Message;
+import ch.greenleaf.commands.TicketCommand;
+import ch.greenleaf.commands.UserInfo;
 import ch.greenleaf.interactions.ButtonContext;
 import ch.greenleaf.interactions.SlashContext;
 import io.github.cdimascio.dotenv.Dotenv;

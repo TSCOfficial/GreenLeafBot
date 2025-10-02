@@ -1,7 +1,7 @@
 package ch.greenleaf;
 
-import ch.greenleaf.features.commands.ICommand;
-import ch.greenleaf.features.commands.custom.CustomCommands;
+import ch.greenleaf.commands.ICommand;
+import ch.greenleaf.commands.custom.CustomCommands;
 import net.dv8tion.jda.api.events.interaction.command.CommandAutoCompleteInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.session.ReadyEvent;

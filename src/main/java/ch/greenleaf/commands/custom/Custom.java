@@ -1,6 +1,6 @@
-package ch.greenleaf.features.commands.custom;
+package ch.greenleaf.commands.custom;
 
-import ch.greenleaf.features.commands.ICommand;
+import ch.greenleaf.commands.ICommand;
 import com.fasterxml.jackson.databind.JsonNode;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;

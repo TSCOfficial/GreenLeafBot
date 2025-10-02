@@ -1,7 +1,7 @@
-package ch.greenleaf.features.commands;
+package ch.greenleaf.commands;
 
-import ch.greenleaf.common.time.Timestamps;
-import ch.greenleaf.common.time.ToDiscordTimestamp;
+import ch.greenleaf.common.time.TimestampType;
+import ch.greenleaf.common.time.Timestamp;
 import com.fasterxml.jackson.databind.JsonNode;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
@@ -62,8 +62,8 @@ public class UserInfo implements ICommand {
 
         long accountCreatedEpochtime = member.getUser().getTimeCreated().toEpochSecond();
         globalUserInfos.add(
-                "**Created**: " + ToDiscordTimestamp.convert(accountCreatedEpochtime, Timestamps.LONGDATE)
-                        + "(" + ToDiscordTimestamp.convert(accountCreatedEpochtime, Timestamps.TIMESINCE) + ")"
+                "**Created**: " + Timestamp.convert(accountCreatedEpochtime, TimestampType.LONGDATE)
+                        + "(" + Timestamp.convert(accountCreatedEpochtime, TimestampType.RELATIVE) + ")"
                            );
         globalUserInfos.add("[**Avatar**](" + member.getUser().getAvatarUrl() + ")");
 
