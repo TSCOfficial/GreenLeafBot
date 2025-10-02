@@ -1,26 +1,30 @@
 package ch.greenleaf.interactions.actions;
 
 import ch.greenleaf.Table;
+import ch.greenleaf.interactions.actions.list.AddRole;
+import ch.greenleaf.interactions.actions.list.SendMessage;
+
+import java.util.Objects;
 
 /**
  * Manage available actions, their id and their table-names
  */
 public enum ActionType {
-	// Messages, ID 100+
-    SEND_MESSAGE(101, Table.Message.SELF),
+	// Message actions
+    SEND_MESSAGE(SendMessage.ID, Table.Message.SELF),
 	
-	// Roles, ID 200+
-    ADD_ROLE(201, Table.Role.SELF);
+	// Role actions
+    ADD_ROLE(AddRole.ID, Table.Role.SELF);
 
-    private final int id;
+    private final String id;
     private final String tableName;
 
-    ActionType(int id, String tableName) {
+    ActionType(String id, String tableName) {
         this.id = id;
         this.tableName = tableName;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
@@ -28,10 +32,10 @@ public enum ActionType {
         return tableName;
     }
 
-    public static ActionType getById(int id) {
-        for (ActionType t : values()) {
-            if (t.id == id) {
-                return t;
+    public static ActionType getById(String id) {
+        for (ActionType type : values()) {
+            if (Objects.equals(type.id, id)) {
+                return type;
             }
         }
         throw new IllegalArgumentException("Unknown action type: " + id);

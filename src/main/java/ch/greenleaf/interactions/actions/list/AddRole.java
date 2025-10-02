@@ -13,6 +13,9 @@ import net.dv8tion.jda.api.entities.UserSnowflake;
 import java.sql.ResultSet;
 
 public class AddRole {
+	
+	// Action endpoint ID
+	public static final String ID = "/role/add";
 
 	// The action that contains the action data (action table and id)
     private final Action action;

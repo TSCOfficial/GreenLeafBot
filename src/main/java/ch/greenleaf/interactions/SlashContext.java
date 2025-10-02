@@ -14,6 +14,7 @@ import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEve
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.requests.restaction.MessageCreateAction;
 import net.dv8tion.jda.api.requests.restaction.WebhookMessageCreateAction;
+import net.dv8tion.jda.api.requests.restaction.interactions.ReplyCallbackAction;
 import org.jetbrains.annotations.NotNull;
 
 import java.sql.ResultSet;
@@ -82,14 +83,10 @@ public class SlashContext
 
     @Override
     public void reply(InteractionResponse response) {
-        WebhookMessageCreateAction<Message> action = event.getHook().sendMessage(response.getMessage());
-
-        if (response.isEphemeral()){
-            action.setEphemeral(response.isEphemeral());
-        }
-
-        action.queue();
-
+		ReplyCallbackAction action = event.reply(response.getMessage())
+			.setEphemeral(response.isEphemeral())
+			.addEmbeds(response.getEmbeds());
+		action.queue();
     }
 
     @Override

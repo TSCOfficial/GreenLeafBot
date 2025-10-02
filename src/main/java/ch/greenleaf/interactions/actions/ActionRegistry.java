@@ -28,16 +28,21 @@ public class ActionRegistry {
     }
 
     /**
-     * Get the selected interaction action from the registry using the action tyep
+     * Get the selected interaction action from the registry using the action type
      * @param type Corresponding action type
      * @return The selected interaction action code that can be executed
      */
-    public static InteractionAction get(ActionType type) {
+    public static InteractionAction getByType(ActionType type) {
         InteractionAction action = REGISTRY.get(type);
+
         if (action == null) {
             throw new IllegalArgumentException("No action registered for type " + type);
         }
         return action;
     }
+	
+//	public static InteractionAction getById(String id) {
+//
+//	}
 }
 

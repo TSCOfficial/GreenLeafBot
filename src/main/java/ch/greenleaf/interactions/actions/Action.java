@@ -15,7 +15,7 @@ public class Action {
 	
 	}
 	
-    public Action(int id, int typeId, int datasourceId) {
+    public Action(int id, String typeId, int datasourceId) {
         this.id = id;
         this.type = ActionType.getById(typeId);
         this.datasourceId = datasourceId;
@@ -39,7 +39,7 @@ public class Action {
 
     public void execute(InteractionContext ctx) {
         System.out.println("executing action: " + type.name());
-        ActionRegistry.get(type).execute(this, ctx);
+        ActionRegistry.getByType(type).execute(this, ctx);
     }
 	
 	/**
@@ -58,7 +58,7 @@ public class Action {
 			
 			rs.next();
 			
-			int type = rs.getInt(Table.Action.TYPE);
+			String type = rs.getString(Table.Action.TYPE);
 			
 			System.out.println(rs.getMetaData());
 			

@@ -11,6 +11,9 @@ import ch.greenleaf.template.message.Message;
 import java.sql.ResultSet;
 
 public class SendMessage{
+	
+	// Action endpoint ID
+	public static final String ID = "/message/send";
 
 	// The action that contains the action data (action table and id)
     private final Action action;
@@ -61,6 +64,8 @@ public class SendMessage{
             message.setText(text);
             message.setEphemeral(isEphemeral);
 			message.setChannelId(channelId);
+			
+			System.out.println("Created message with text: " + text);
 			
 			// Append all connected embeds
 			do {
