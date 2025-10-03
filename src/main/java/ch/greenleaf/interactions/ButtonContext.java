@@ -40,12 +40,12 @@ public class ButtonContext
 				.join(
 					DatabaseQuery.JoinType.INNER,
 					Table.ButtonAction.SELF,
-					Table.define(Table.Button.SELF, Table.Button.ID), DatabaseQuery.Operator.EQUALS, Table.define(Table.ButtonAction.SELF, Table.ButtonAction.BUTTON_ID))
-				.where(Table.define(Table.ButtonAction.SELF, Table.ButtonAction.BUTTON_ID), DatabaseQuery.Operator.EQUALS, getInteractionId())
+					Table.define(Table.Button.SELF, Table.Button.ID), DatabaseQuery.Operator.EQUALS,  Table.ButtonAction.BUTTON_ID)
+				.where(Table.ButtonAction.BUTTON_ID, DatabaseQuery.Operator.EQUALS, getInteractionId())
 				.executeQuery();
 			
             while (rs.next()) {
-				int action_id = rs.getInt(Table.ButtonAction.ACTION_ID);
+				String action_id = rs.getString(Table.ButtonAction.ACTION_ID);
 				System.out.println(action_id);
 				
 				Action action = new Action().getById(action_id);

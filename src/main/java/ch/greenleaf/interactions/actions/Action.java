@@ -7,15 +7,15 @@ import ch.greenleaf.interactions.InteractionContext;
 import java.sql.ResultSet;
 
 public class Action {
-    private int id;
+    private String id;
     private ActionType type;
-    private int datasourceId;
+    private String datasourceId;
 
 	public Action() {
 	
 	}
 	
-    public Action(int id, String typeId, int datasourceId) {
+    public Action(String id, String typeId, String datasourceId) {
         this.id = id;
         this.type = ActionType.getById(typeId);
         this.datasourceId = datasourceId;
@@ -25,7 +25,7 @@ public class Action {
         System.out.println(datasourceId);
     }
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
@@ -33,7 +33,7 @@ public class Action {
         return type.getTableName();
     }
 
-    public int getDatasourceId() {
+    public String getDatasourceId() {
         return datasourceId;
     }
 
@@ -47,7 +47,7 @@ public class Action {
 	 * @param id The embed id
 	 * @return The built embed
 	 */
-	public Action getById(int id) {
+	public Action getById(String id) {
 		try {
 			ResultSet rs = new DatabaseQuery(Table.Action.SELF)
 				.select()
@@ -68,7 +68,7 @@ public class Action {
 			
 			this.id = id;
 			this.type = ActionType.getById(typeId);
-			this.datasourceId = rs.getInt((Table.Action.DATASOURCE_ID));
+			this.datasourceId = rs.getString((Table.Action.DATASOURCE_ID));
 			
 			return this;
 			

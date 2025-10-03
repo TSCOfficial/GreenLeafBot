@@ -54,7 +54,7 @@ public class SlashContext
 				.executeQuery();
 			
 			while (rs.next()) {
-				int action_id = rs.getInt(Table.CommandAction.ACTION_ID);
+				String action_id = rs.getString(Table.CommandAction.ACTION_ID);
 				System.out.println(action_id);
 				
 				Action action = new Action().getById(action_id);

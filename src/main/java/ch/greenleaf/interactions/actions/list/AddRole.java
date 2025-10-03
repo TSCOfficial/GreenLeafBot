@@ -23,7 +23,7 @@ public class AddRole {
 	
 	public enum Variable {
 		ROLE_ID,
-		USER_ID;
+		USER_ID
 	}
 	
 	// Action endpoint ID

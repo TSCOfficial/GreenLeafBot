@@ -4,9 +4,11 @@ import ch.greenleaf.DatabaseQuery;
 import ch.greenleaf.Table;
 import ch.greenleaf.interactions.InteractionContext;
 import ch.greenleaf.interactions.InteractionResponse;
+import ch.greenleaf.interactions.Resolver;
 import ch.greenleaf.interactions.actions.Action;
 import ch.greenleaf.template.embed.Embed;
 import ch.greenleaf.template.message.Message;
+import net.dv8tion.jda.api.entities.channel.Channel;
 
 import java.sql.ResultSet;
 
@@ -14,6 +16,10 @@ import java.sql.ResultSet;
  * Send a message
  */
 public class SendMessage{
+	
+	public enum Variable {
+		CHANNEL_ID
+	}
 	
 	// Action endpoint ID
 	public static final String ID = "/message/send";
@@ -63,10 +69,13 @@ public class SendMessage{
 			boolean isEphemeral = rs.getBoolean(Table.Message.IS_EPHEMERAL);
 			long channelId = rs.getLong(Table.Message.CHANNEL_ID);
 			
+			Channel temp_channel = Resolver.resolveChannel(ctx, Variable.CHANNEL_ID.name(), channelId);
+			System.out.println(temp_channel.getName());
+			
 			// Implement values in message object
             message.setText(text);
             message.setEphemeral(isEphemeral);
-			message.setChannelId(channelId);
+			message.setChannelId(temp_channel.getIdLong());
 			
 			System.out.println("Created message with text: " + text);
 			
