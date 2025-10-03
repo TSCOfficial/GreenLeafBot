@@ -58,7 +58,7 @@ public class Action {
 			
 			rs.next();
 			
-			String type = rs.getString(Table.Action.TYPE);
+			String type = rs.getString(Table.Action.TYPE_ID);
 			
 			System.out.println(rs.getMetaData());
 			

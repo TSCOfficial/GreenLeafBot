@@ -11,7 +11,7 @@ public abstract class Table {
 	public static final class Action {
 		public static final String SELF = "action";
 		public static final String ID = "id";
-		public static final String TYPE = "type_id";
+		public static final String TYPE_ID = "type_id";
 		public static final String DATASOURCE_ID = "datasource_id";
 		
 		private Action() {
@@ -109,6 +109,9 @@ public abstract class Table {
 		}
 	}
 	
+	/**
+	 * Role table
+	 */
 	public static final class Role {
 		public static final String SELF = "role";
 		public static final String ID = "id";
@@ -119,6 +122,9 @@ public abstract class Table {
 		}
 	}
 	
+	/**
+	 * Command table
+	 */
 	public static final class Command {
 		public static final String SELF = "command";
 		public static final String ID = "id";
@@ -130,10 +136,30 @@ public abstract class Table {
 		}
 	}
 	
+	/**
+	 * Command-action join table
+	 */
 	public static final class CommandAction {
 		public static final String SELF = "command_action";
 		public static final String COMMAND_ID = "command_id";
 		public static final String ACTION_ID = "action_id";
+	}
+	
+	/**
+	 * Command-option table
+	 */
+	public static final class CommandOption {
+		public static final String SELF = "command_option";
+		public static final String ID = "id";
+		public static final String COMMAND_ID = "command_id";
+		public static final String TYPE_KEY = "type_key";
+		public static final String NAME = "name";
+		public static final String DESCRIPTION = "description";
+		public static final String MIN_LENGTH = "min_length";
+		public static final String MAX_LENGTH = "max_length";
+		public static final String MIN_VALUE = "min_value";
+		public static final String MAX_VALUE = "max_value";
+		public static final String IS_REQUIRED = "is_required";
 	}
 	
 	/**
