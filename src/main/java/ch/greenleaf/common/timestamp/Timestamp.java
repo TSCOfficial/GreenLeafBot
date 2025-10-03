@@ -1,4 +1,4 @@
-package ch.greenleaf.common.time;
+package ch.greenleaf.common.timestamp;
 
 import org.jetbrains.annotations.NotNull;
 

@@ -1,7 +1,7 @@
 package ch.greenleaf.commands;
 
-import ch.greenleaf.common.time.TimestampType;
-import ch.greenleaf.common.time.Timestamp;
+import ch.greenleaf.common.timestamp.TimestampType;
+import ch.greenleaf.common.timestamp.Timestamp;
 import com.fasterxml.jackson.databind.JsonNode;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;

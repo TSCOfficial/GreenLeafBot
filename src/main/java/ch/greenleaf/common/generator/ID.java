@@ -1,4 +1,4 @@
-package ch.greenleaf.common;
+package ch.greenleaf.common.generator;
 
 import java.util.UUID;
 

@@ -1,4 +1,4 @@
-package ch.greenleaf.common.time;
+package ch.greenleaf.common.timestamp;
 
 public enum TimestampType {
     SHORTDATE, // 01/05/2025
