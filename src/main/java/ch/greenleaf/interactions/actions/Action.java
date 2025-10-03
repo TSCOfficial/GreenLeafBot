@@ -51,6 +51,10 @@ public class Action {
 		try {
 			ResultSet rs = new DatabaseQuery(Table.Action.SELF)
 				.select()
+//				.join(
+//					Table.ActionType.SELF,
+//					Table.Action.TYPE_ID, DatabaseQuery.Operator.EQUALS, Table.define(Table.ActionType.SELF, Table.ActionType.ID)
+//				)
 				.where(Table.Action.ID, DatabaseQuery.Operator.EQUALS, id)
 				.executeQuery();
 			
@@ -58,12 +62,12 @@ public class Action {
 			
 			rs.next();
 			
-			String type = rs.getString(Table.Action.TYPE_ID);
+			String typeId = rs.getString(Table.Action.TYPE_ID);
 			
 			System.out.println(rs.getMetaData());
 			
 			this.id = id;
-			this.type = ActionType.getById(type);
+			this.type = ActionType.getById(typeId);
 			this.datasourceId = rs.getInt((Table.Action.DATASOURCE_ID));
 			
 			return this;

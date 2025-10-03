@@ -6,21 +6,17 @@ package ch.greenleaf;
 public abstract class Table {
 	
 	/**
-	 * Action table
+	 * Actions
 	 */
 	public static final class Action {
 		public static final String SELF = "action";
 		public static final String ID = "id";
 		public static final String TYPE_ID = "type_id";
 		public static final String DATASOURCE_ID = "datasource_id";
-		
-		private Action() {
-		
-		}
 	}
 	
 	/**
-	 * Button table
+	 * Buttons
 	 */
 	public static final class Button {
 		public static final String SELF = "button";
@@ -31,27 +27,19 @@ public abstract class Table {
 		public static final String EMOJI = "emoji";
 		public static final String URL = "url";
 		public static final String IS_DISABLED = "is_disabled";
-		
-		private Button() {
-		
-		}
 	}
 	
 	/**
-	 * Button-Action join table
+	 * Joins the buttons with actions
 	 */
 	public static final class ButtonAction {
 		public static final String SELF = "button_action";
 		public static final String BUTTON_ID = "button_id";
 		public static final String ACTION_ID = "action_id";
-		
-		private ButtonAction() {
-		
-		}
 	}
 	
 	/**
-	 * Embed table
+	 * Embeds
 	 */
 	public static final class Embed {
 		public static final String SELF = "embed";
@@ -60,14 +48,10 @@ public abstract class Table {
 		public static final String DESCRIPTION = "description";
 		public static final String AUTHOR = "author_name";
 		public static final String FOOTER = "footer_text";
-		
-		private Embed() {
-		
-		}
 	}
 	
 	/**
-	 * Field-embed table
+	 * Embed fields
 	 */
 	public static final class FieldEmbed {
 		public static final String SELF = "field_embed";
@@ -75,14 +59,10 @@ public abstract class Table {
 		public static final String EMBED_ID = "embed_id";
 		public static final String NAME = "name";
 		public static final String VALUR = "value";
-		
-		private FieldEmbed() {
-		
-		}
 	}
 	
 	/**
-	 * Message table
+	 * Messages
 	 */
 	public static final class Message {
 		public static final String SELF = "message";
@@ -90,54 +70,38 @@ public abstract class Table {
 		public static final String TEXT = "text";
 		public static final String CHANNEL_ID = "channel_id";
 		public static final String IS_EPHEMERAL = "is_ephemeral";
-		
-		private Message() {
-		
-		}
 	}
 	
 	/**
-	 * Message-Embed join table
+	 * Joins the messages with the embeds
 	 */
 	public static final class MessageEmbed {
 		public static final String SELF = "message_embed";
 		public static final String MESSAGE_ID = "message_id";
 		public static final String EMBED_ID = "embed_id";
-		
-		private MessageEmbed() {
-		
-		}
 	}
 	
 	/**
-	 * Role table
+	 * Roles
 	 */
 	public static final class Role {
 		public static final String SELF = "role";
 		public static final String ID = "id";
 		public static final String ROLE_ID = "role_id";
-		
-		private Role() {
-		
-		}
 	}
 	
 	/**
-	 * Command table
+	 * Commands
 	 */
 	public static final class Command {
 		public static final String SELF = "command";
 		public static final String ID = "id";
 		public static final String NAME = "name";
 		public static final String DESCRIPTION = "description";
-		
-		private Command() {
-		
-		}
 	}
 	
 	/**
-	 * Command-action join table
+	 * Joins the commands with the actions
 	 */
 	public static final class CommandAction {
 		public static final String SELF = "command_action";
@@ -146,7 +110,7 @@ public abstract class Table {
 	}
 	
 	/**
-	 * Command-option table
+	 * Command options
 	 */
 	public static final class CommandOption {
 		public static final String SELF = "command_option";
@@ -160,6 +124,33 @@ public abstract class Table {
 		public static final String MIN_VALUE = "min_value";
 		public static final String MAX_VALUE = "max_value";
 		public static final String IS_REQUIRED = "is_required";
+	}
+	
+	/**
+	 * Action types
+	 */
+	public static final class ActionType {
+		public static final String SELF = "action_type";
+		public static final String ID = "id";
+	}
+	
+	/**
+	 * Action type variables
+	 */
+	public static final class ActionTypeVariable {
+		public static final String SELF = "action_type_variable";
+		public static final String ID = "id";
+		public static final String ACTION_TYPE_ID = "action_type_id";
+		public static final String VARIABLE_KEY = "variable_key";
+	}
+	
+	/**
+	 * Joins the command options with the action type variables
+	 */
+	public static final class CommandOptionActionTypeVariable {
+		public static final String SELF = "command_option_action_type_variable";
+		public static final String ACTION_TYPE_VARIABLE_ID = "action_type_variable_id";
+		public static final String COMMAND_OPTION_ID = "command_option_id";
 	}
 	
 	/**

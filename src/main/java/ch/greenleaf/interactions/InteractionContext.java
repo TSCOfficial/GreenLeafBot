@@ -3,6 +3,9 @@ package ch.greenleaf.interactions;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.interactions.commands.OptionMapping;
+
+import java.util.Optional;
 
 public interface InteractionContext {
     /**
@@ -19,5 +22,9 @@ public interface InteractionContext {
 	Member getAuthor();
 	
 	Guild getGuild();
+	
+	default OptionMapping getOption(String variableKey) {
+		return null;
+	}
 }
 

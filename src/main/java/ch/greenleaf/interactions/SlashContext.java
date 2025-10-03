@@ -12,6 +12,8 @@ import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.dv8tion.jda.api.interactions.commands.OptionMapping;
+import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 import net.dv8tion.jda.api.requests.restaction.MessageCreateAction;
 import net.dv8tion.jda.api.requests.restaction.WebhookMessageCreateAction;
 import net.dv8tion.jda.api.requests.restaction.interactions.ReplyCallbackAction;
@@ -20,6 +22,7 @@ import org.jetbrains.annotations.NotNull;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * <i>[!] Slash commands have a special kind of ID due that it's not possible to add a custom ID. Their ID is their full command name (command + subgroup + subcommand)</i>
@@ -105,6 +108,49 @@ public class SlashContext
 	@Override
 	public Guild getGuild() {
 		return event.getGuild();
+	}
+	
+	/**
+	 * Get an option by its attributed action type variable key<br>
+	 * The key is resolved back to the saved option name and the options value is read out
+	 * @param variableKey Action variable key
+	 * @return Value of the option
+	 */
+	@Override
+	public OptionMapping getOption(String variableKey) {
+		try {
+			ResultSet rs = new DatabaseQuery(Table.ActionTypeVariable.SELF)
+				.select()
+				.join(
+					DatabaseQuery.JoinType.INNER,
+					Table.CommandOptionActionTypeVariable.SELF,
+					Table.define(Table.ActionTypeVariable.SELF, Table.ActionTypeVariable.ID),
+					DatabaseQuery.Operator.EQUALS,
+					Table.CommandOptionActionTypeVariable.ACTION_TYPE_VARIABLE_ID
+				)
+				.join(
+					DatabaseQuery.JoinType.INNER,
+					Table.CommandOption.SELF,
+					Table.CommandOptionActionTypeVariable.COMMAND_OPTION_ID,
+					DatabaseQuery.Operator.EQUALS,
+					Table.define(Table.CommandOption.SELF, Table.CommandOption.ID)
+				)
+				.where(
+					Table.ActionTypeVariable.VARIABLE_KEY,
+					DatabaseQuery.Operator.EQUALS,
+					variableKey
+				).executeQuery();
+			
+			rs.next();
+			
+			String optionName = rs.getString(Table.CommandOption.NAME);
+			
+			System.out.println(optionName);
+			
+			return event.getOption(optionName);
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 }
 

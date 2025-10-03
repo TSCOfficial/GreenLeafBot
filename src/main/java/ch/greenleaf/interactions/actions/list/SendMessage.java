@@ -10,6 +10,9 @@ import ch.greenleaf.template.message.Message;
 
 import java.sql.ResultSet;
 
+/**
+ * Send a message
+ */
 public class SendMessage{
 	
 	// Action endpoint ID

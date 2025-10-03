@@ -4,15 +4,27 @@ import ch.greenleaf.DatabaseQuery;
 import ch.greenleaf.Table;
 import ch.greenleaf.interactions.InteractionContext;
 import ch.greenleaf.interactions.InteractionResponse;
+import ch.greenleaf.interactions.Resolver;
 import ch.greenleaf.interactions.actions.Action;
 import ch.greenleaf.template.embed.Embed;
 import ch.greenleaf.template.message.Message;
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.UserSnowflake;
+import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 
 import java.sql.ResultSet;
+import java.util.Optional;
 
+/**
+ * Add a role
+ */
 public class AddRole {
+	
+	public enum Variable {
+		ROLE_ID,
+		USER_ID;
+	}
 	
 	// Action endpoint ID
 	public static final String ID = "/role/add";
@@ -23,8 +35,11 @@ public class AddRole {
 	// The Interaction context (i.e. Button, Slash, ...)
     private final InteractionContext ctx;
 	
-	// The role object
+	// The role
 	private Role role;
+	
+	// The member to add the role to
+	private Member member;
 
     /**
      * <h1>Message action</h1>
@@ -55,8 +70,10 @@ public class AddRole {
 			// Get values
 			long role_id = rs.getLong(Table.Role.ROLE_ID);
 			
-			// Implement values in role object
-			role = ctx.getGuild().getRoleById(role_id);
+			role = Resolver.resolveRole(ctx, Variable.ROLE_ID.name(), role_id);
+			System.out.println(role.getName());
+			
+			member = ctx.getAuthor(); // Default: Interaction author
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -67,7 +84,7 @@ public class AddRole {
      * Add the role to the command author
      */
     private void execute() {
-        ctx.getGuild().addRoleToMember((UserSnowflake) ctx.getAuthor(), role).queue();
+        ctx.getGuild().addRoleToMember((UserSnowflake) member, role).queue();
     }
 }
 

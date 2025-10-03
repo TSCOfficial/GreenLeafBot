@@ -27,10 +27,10 @@ public class CustomCommands {
 				.executeQuery();
 			
 			while (rs.next()) {
-				String name = rs.getString(Table.Command.NAME);
+				String name = rs.getString(Table.define(Table.Command.SELF, Table.Command.NAME));
 				String description = rs.getString(Table.Command.DESCRIPTION);
-				String optionName = rs.getString(Table.CommandOption.NAME);
-				String optionDescription = rs.getString(Table.CommandOption.DESCRIPTION);
+				String optionName = rs.getString(Table.define(Table.CommandOption.SELF, Table.CommandOption.NAME));
+				String optionDescription = rs.getString(Table.define(Table.CommandOption.SELF, Table.CommandOption.DESCRIPTION));
 				boolean optionIsRequired = rs.getBoolean(Table.CommandOption.IS_REQUIRED);
 				String optionTypeKey = rs.getString(Table.CommandOption.TYPE_KEY);
 				OptionType optionType = null;
