@@ -60,34 +60,35 @@ public class SendMessage{
 				.where(Table.Message.ID, DatabaseQuery.Operator.EQUALS, action.getDatasourceId())
 				.executeQuery();
 			
-            rs.next();
-			
-			System.out.println(action.getDatasourceTable());
-			
-			// Get values
-			String text = rs.getString(Table.Message.TEXT);
-			boolean isEphemeral = rs.getBoolean(Table.Message.IS_EPHEMERAL);
-			long channelId = rs.getLong(Table.Message.CHANNEL_ID);
-			
-			Channel temp_channel = Resolver.resolveChannel(ctx, Variable.CHANNEL_ID.name(), channelId);
-			System.out.println(temp_channel.getName());
-			
-			// Implement values in message object
-            message.setText(text);
-            message.setEphemeral(isEphemeral);
-			message.setChannelId(temp_channel.getIdLong());
-			
-			System.out.println("Created message with text: " + text);
-			
 			// Append all connected embeds
-			do {
+			while (rs.next()) {
+				System.out.println(action.getDatasourceTable());
+				
+				// Get values
+				String text = rs.getString(Table.Message.TEXT);
+				boolean isEphemeral = rs.getBoolean(Table.Message.IS_EPHEMERAL);
+				long channelId = rs.getLong(Table.Message.CHANNEL_ID);
+				
+				Channel temp_channel = Resolver.resolveChannel(ctx, Variable.CHANNEL_ID.name(), channelId);
+				System.out.println(temp_channel.getName());
+				
+				// Implement values in message object
+				message.setText(text);
+				message.setEphemeral(isEphemeral);
+				message.setChannelId(temp_channel.getIdLong());
+				
+				System.out.println("Created message with text: " + text);
+				
 				int embed_id = rs.getInt(Table.MessageEmbed.EMBED_ID);
 				
 				if (embed_id != 0) {
 					Embed embed = new Embed().getById(embed_id);
 					message.addEmbed(embed);
 				}
-			} while (rs.next());
+				/* current problem: When multiple action have the same action type, the action code saves the previous settings except overwritten (Here: message stays the same object)
+				But if I reset everything at the end of the loop, the embeds wont be able to be appended to the same messages if there are multiple!
+				 */
+			}
 
         } catch (Exception e) {
             e.printStackTrace();
