@@ -101,17 +101,13 @@ public class SendMessage{
     private void execute() {
         if (message.getChannelId() != 0) {
             ctx.sendToChannel(
-                    new InteractionResponse.Builder(message.getText())
-						.sendInChannel(message.getChannelId())
-						.setEmbeds(message.getEmbeds())
+                    new InteractionResponse.Builder().message(message)
 						.build()
             );
 
         } else {
             ctx.reply(
-                    new InteractionResponse.Builder(message.getText())
-						.isEphemeral(message.isEphemeral())
-						.setEmbeds(message.getEmbeds())
+                    new InteractionResponse.Builder().message(message)
 						.build()
             );
         }

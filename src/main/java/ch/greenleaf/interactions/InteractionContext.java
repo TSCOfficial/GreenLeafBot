@@ -16,6 +16,8 @@ public interface InteractionContext {
     long getChannelId();
 
     void reply(InteractionResponse response);
+	
+	void edit(InteractionResponse response);
 
     void sendToChannel(InteractionResponse response);
 

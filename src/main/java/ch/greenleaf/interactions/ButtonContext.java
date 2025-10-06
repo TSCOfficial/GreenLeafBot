@@ -3,9 +3,9 @@ package ch.greenleaf.interactions;
 import ch.greenleaf.DatabaseQuery;
 import ch.greenleaf.Table;
 import ch.greenleaf.interactions.actions.Action;
+import ch.greenleaf.template.message.Message;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
@@ -80,16 +80,20 @@ public class ButtonContext
 
     @Override
     public void reply(InteractionResponse response) {
-        ReplyCallbackAction action = event.reply(response.getMessage()).setEphemeral(response.isEphemeral()).addEmbeds(response.getEmbeds());
-
+		Message msg = response.message();
+        ReplyCallbackAction action = event.reply(msg.getText()).setEphemeral(msg.isEphemeral()).addEmbeds(msg.getEmbeds());
         action.queue();
-
     }
+	
+	@Override
+	public void edit(InteractionResponse response) {
+	}
 
     @Override
     public void sendToChannel(InteractionResponse response) {
-        TextChannel channel = event.getJDA().getTextChannelById(response.getChannelId());
-        MessageCreateAction action = channel.sendMessage(response.getMessage());
+		Message msg = response.message();
+        TextChannel channel = event.getJDA().getTextChannelById(msg.getChannelId());
+        MessageCreateAction action = channel.sendMessage(msg.getText());
 
         action.queue();
     }

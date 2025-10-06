@@ -1,96 +1,52 @@
 package ch.greenleaf.interactions;
 
-import ch.greenleaf.Table;
-import ch.greenleaf.template.embed.Embed;
-import net.dv8tion.jda.api.entities.MessageEmbed;
+import ch.greenleaf.components.Button;
+import ch.greenleaf.template.message.Message;
+import net.dv8tion.jda.api.interactions.components.LayoutComponent;
 
-import java.util.List;
+import java.util.Optional;
 
-public class InteractionResponse {
-    private final String message;
-    private final Long channelId;
-    private final List<MessageEmbed> embeds;
-    private final boolean ephemeral;
-
-    private InteractionResponse(Builder builder) {
-        this.message = builder.message;
-        this.channelId = builder.channelId;
-        this.embeds = builder.embeds;
-        this.ephemeral = builder.ephemeral;
-    }
-
-    public String getMessage() { return message; }
-    public Long getChannelId() { return channelId; }
-    public List<MessageEmbed> getEmbeds() { return embeds; }
-    public boolean isEphemeral() { return ephemeral; }
-
-    /**
-     * Build the Response with different attributes such as a message, embeds, etc.
-     */
-    public static class Builder {
-        private String message = null;
-        private Long channelId = null;
-        private List<MessageEmbed> embeds = null;
-        private boolean ephemeral = false;
-
-        /**
-         * Empty Builder constructor
-         */
-        public Builder (){
-
-        }
-
-        /**
-         * Builder constructor for a quick message
-         * @param message The message to be added to the response
-         */
-        public Builder(String message) {
-            this.message = message;
-        }
-
-        public Builder sendInChannel(Long channelId){
-            this.channelId = channelId;
-            return this;
-        }
-
-        public Builder sendInChannel(String channelId){
-            this.channelId = Long.getLong(channelId);
-            return this;
-        }
-
-        /**
-         * Set the embeds for a response
-         * @param embeds The list of embeds
-         * @return response Builder
-         */
-        public Builder setEmbeds(List<Embed> embeds) {
-			this.embeds = embeds.stream().map(Embed::build).toList();
-            return this;
-        }
-
-        /**
-         * Add an embed to a response
-         * @param embeds The embed to be added
-         * @return response Builder
-         */
-        public Builder addEmbed(Embed embeds) {
-            this.embeds.add(embeds.build());
-            return this;
-        }
-
-        /**
-         * Set a reply as ephemeral.
-         * [i] This does not work if you don't <b>reply</b> to an interaction
-         * @param ephemeral whether the message is ephemeral or not
-         * @return response Builder
-         */
-        public Builder isEphemeral(boolean ephemeral) {
-            this.ephemeral = ephemeral;
-            return this;
-        }
-
-        public InteractionResponse build() {
-            return new InteractionResponse(this);
-        }
-    }
+public record InteractionResponse(
+	Message message,
+	Button button
+) {
+	public InteractionResponse(Builder builder) {
+		this(
+			builder.message,
+			builder.button
+		);
+	}
+	
+	/**
+	 * Build the Response with different attributes such as a message, embeds, etc.
+	 */
+	public static class Builder {
+		private Message message;
+		private Button button;
+		
+		/**
+		 * Handle a message
+		 * @param message Message object
+		 * @return Interaction response
+		 */
+		public Builder message(Message message) {
+			this.message = message;
+			return this;
+		}
+		
+		/**
+		 * Handle a button
+		 * @param button Button object
+		 * @return Interaction response
+		 */
+		public Builder button(Button button) {
+			this.button = button;
+			return this;
+		}
+		
+		
+		public InteractionResponse build() {
+			return new InteractionResponse(this);
+		}
+	}
 }

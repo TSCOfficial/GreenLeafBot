@@ -1,6 +1,8 @@
 package ch.greenleaf.template.message;
 
+import ch.greenleaf.Table;
 import ch.greenleaf.template.embed.Embed;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +26,7 @@ public class Message {
 	private boolean isEphemeral = false;
 	
 	// The messages embeds
-	private List<Embed> embeds = new ArrayList<>();
+	private List<MessageEmbed> embeds = new ArrayList<>();
 	
 	/**
 	 * Get if the message is ephemeral or not
@@ -79,7 +81,7 @@ public class Message {
 	 * <i>[!] Any embed need to be made Discord-compatible by using {@link Embed#build()}, before sending.</i>
 	 * @return All embeds
 	 */
-	public List<Embed> getEmbeds() {
+	public List<MessageEmbed> getEmbeds() {
 		return embeds;
 	}
 	
@@ -89,7 +91,7 @@ public class Message {
 	 * @param embeds The embeds to set
 	 */
 	public void setEmbeds(List<Embed> embeds) {
-		this.embeds = embeds;
+		this.embeds = embeds.stream().map(Embed::build).toList();
 	}
 	
 	/**
@@ -98,7 +100,7 @@ public class Message {
 	 * @param embed The embed to append
 	 */
 	public void addEmbed(Embed embed) {
-		this.embeds.add(embed);
+		this.embeds.add(embed.build());
 	}
 	
 	/**
