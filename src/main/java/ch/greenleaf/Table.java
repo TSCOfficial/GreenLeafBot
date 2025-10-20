@@ -127,6 +127,16 @@ public abstract class Table {
 	}
 	
 	/**
+	 * Command option autocomplete
+	 */
+	public static final class CommandOptionChoice {
+		public static final String SELF = "command_option_choice";
+		public static final String ID = "id";
+		public static final String COMMAND_OPTION_ID = "command_option_id";
+		public static final String VALUE = "value";
+	}
+	
+	/**
 	 * Action types
 	 */
 	public static final class ActionType {
@@ -151,6 +161,7 @@ public abstract class Table {
 		public static final String SELF = "command_option_action_type_variable";
 		public static final String ACTION_TYPE_VARIABLE_ID = "action_type_variable_id";
 		public static final String COMMAND_OPTION_ID = "command_option_id";
+		public static final String ACTION_ID = "action_id";
 	}
 	
 	/**

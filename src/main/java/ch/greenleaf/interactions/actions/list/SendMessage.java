@@ -18,7 +18,8 @@ import java.sql.ResultSet;
 public class SendMessage{
 	
 	public enum Variable {
-		CHANNEL_ID
+		CHANNEL_ID,
+		MESSAGE_TEXT
 	}
 	
 	// Action endpoint ID
@@ -69,15 +70,17 @@ public class SendMessage{
 				boolean isEphemeral = rs.getBoolean(Table.Message.IS_EPHEMERAL);
 				long channelId = rs.getLong(Table.Message.CHANNEL_ID);
 				
-				Channel temp_channel = Resolver.resolveChannel(ctx, Variable.CHANNEL_ID.name(), channelId);
-				System.out.println(temp_channel.getName());
+				// Overwrite database values with variable input (slashCommand options)
+				Channel opt_channel = Resolver.resolveChannel(ctx, action, Variable.CHANNEL_ID.name(), channelId);
+				String opt_message_text = Resolver.resolveString(ctx, action, Variable.MESSAGE_TEXT.name(), text);
 				
 				// Implement values in message object
-				message.setText(text);
+				message.setText(opt_message_text);
 				message.setEphemeral(isEphemeral);
-				message.setChannelId(temp_channel.getIdLong());
+				message.setChannelId(opt_channel.getIdLong()); // todo error: opt_channel is null ?!?
+				// todo possible causes: wrong database inserts, fetch in Resolver -> getOption not 100% correct
 				
-				System.out.println("Created message with text: " + text);
+				System.out.println("Created message with text: " + opt_message_text);
 				
 				int embed_id = rs.getInt(Table.MessageEmbed.EMBED_ID);
 				

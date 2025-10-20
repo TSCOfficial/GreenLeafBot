@@ -1,10 +1,7 @@
 package ch.greenleaf;
 
+import ch.greenleaf.commands.*;
 import ch.greenleaf.common.listeners.EventListener;
-import ch.greenleaf.commands.HelloWorld;
-import ch.greenleaf.commands.Message;
-import ch.greenleaf.commands.TicketCommand;
-import ch.greenleaf.commands.UserInfo;
 import ch.greenleaf.interactions.ButtonContext;
 import ch.greenleaf.interactions.SlashContext;
 import io.github.cdimascio.dotenv.Dotenv;
@@ -63,12 +60,12 @@ public class Client {
         shardManager.addEventListener(new EventListener());
 
         // Register Slashcommands
-		CommandManager.add(new HelloWorld());
-		CommandManager.add(new Message());
-		CommandManager.add(new UserInfo());
-		CommandManager.add(new TicketCommand());
+		SlashCommandManager.add(new HelloWorld());
+		SlashCommandManager.add(new Message());
+		SlashCommandManager.add(new UserInfo());
+		SlashCommandManager.add(new TicketCommand());
 
-        shardManager.addEventListener(new CommandManager());
+        shardManager.addEventListener(new SlashCommandManager());
 
         // Register Buttons
         //buttonManager = new ButtonManager();

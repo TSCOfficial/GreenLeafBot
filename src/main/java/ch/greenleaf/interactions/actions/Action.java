@@ -43,9 +43,9 @@ public class Action {
     }
 	
 	/**
-	 * Build a message embed by getting all attributes from the database using only the ID
-	 * @param id The embed id
-	 * @return The built embed
+	 * Get the action data from the database
+	 * @param id The action id
+	 * @return The action containing all needed data
 	 */
 	public Action getById(String id) {
 		try {

@@ -1,6 +1,6 @@
 package ch.greenleaf.commands.custom;
 
-import ch.greenleaf.commands.ICommand;
+import ch.greenleaf.commands.ISlashCommand;
 import com.fasterxml.jackson.databind.JsonNode;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
@@ -11,7 +11,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Custom implements ICommand {
+/**
+ * A custom slash command object<br>
+ * To use the command option, the
+ */
+public class SlashCommand implements ISlashCommand {
 	
 	// Command name
 	private String name;

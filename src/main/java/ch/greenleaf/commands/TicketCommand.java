@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import java.util.Map;
 
-public class TicketCommand implements ICommand {
+public class TicketCommand implements ISlashCommand {
 
     @Override
     public String getName() {

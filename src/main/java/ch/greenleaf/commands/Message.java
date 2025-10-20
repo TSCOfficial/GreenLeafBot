@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class Message implements ICommand{
+public class Message implements ISlashCommand {
 
     @Override
     public String getName() {

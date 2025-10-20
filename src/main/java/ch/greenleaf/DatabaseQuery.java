@@ -16,6 +16,9 @@ public class DatabaseQuery {
 	// Where clauses to extract only wanted results
     private final List<String> whereClauses = new ArrayList<>();
 	
+	// Order a select by its value numeral ranking
+	private final Map<String, OrderBy> selectOrder = new HashMap<>();
+	
 	// Parameters to insert into the where clause & update statement
     private final List<Object> params = new ArrayList<>();
 	
@@ -34,6 +37,25 @@ public class DatabaseQuery {
         UPDATE,
         DELETE
     }
+	
+	/**
+	 * Define in what order the select query should be executed<br>
+	 * <i>Help text is not relevant for programming. Its only goal is to be shown when selecting an enum option in the popup window.</i>
+	 */
+	public enum OrderBy {
+		ASCENDED ("asc", "from low to high, lowest number/character first"),
+		DESCENDED ("desc", "from high to low, high number/character first");
+		
+		private final String name;
+		
+		OrderBy(String name, String helpText) {
+			this.name = name;
+		}
+		
+		private String getName() {
+			return name;
+		}
+	}
 
     /**
      * Define what type of join is needed
@@ -128,6 +150,11 @@ public class DatabaseQuery {
         params.add(value);
         return this;
     }
+	
+	public DatabaseQuery orderBy(String fieldName, OrderBy order) {
+		selectOrder.put(fieldName, order);
+		return this;
+	}
 
     /**
      * Define the query as an insert
@@ -236,6 +263,13 @@ public class DatabaseQuery {
         if (!whereClauses.isEmpty()) {
             sql += " WHERE " + String.join(" AND ", whereClauses);
         }
+		
+		if (!selectOrder.isEmpty()) {
+			List<String> orderArray = selectOrder.entrySet().stream()
+				.map(entry -> entry.getKey() + " " + entry.getValue().getName()).toList();
+			sql += " ORDER BY " + String.join(" ,", orderArray);
+		}
+		System.out.println(sql);
         return sql;
     }
 

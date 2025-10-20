@@ -70,7 +70,7 @@ public class AddRole {
 			// Get values
 			long role_id = rs.getLong(Table.Role.ROLE_ID);
 			
-			role = Resolver.resolveRole(ctx, Variable.ROLE_ID.name(), role_id);
+			role = Resolver.resolveRole(ctx, action, Variable.ROLE_ID.name(), role_id);
 			System.out.println(role.getName());
 			
 			member = ctx.getAuthor(); // Default: Interaction author

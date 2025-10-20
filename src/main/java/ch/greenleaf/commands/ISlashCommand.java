@@ -8,7 +8,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import java.util.List;
 import java.util.Map;
 
-public interface ICommand {
+public interface ISlashCommand {
 
     /**
      * Get the name of a slashcommand.

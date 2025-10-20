@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class HelloWorld implements ICommand{
+public class HelloWorld implements ISlashCommand {
 
     @Override
     public String getName() {

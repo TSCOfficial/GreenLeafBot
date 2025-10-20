@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class UserInfo implements ICommand {
+public class UserInfo implements ISlashCommand {
 
 
     @Override

@@ -15,6 +15,7 @@ import net.dv8tion.jda.api.requests.restaction.interactions.ReplyCallbackAction;
 import org.jetbrains.annotations.NotNull;
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -116,10 +117,17 @@ public class SlashContext
 	 * @return Value of the option
 	 */
 	@Override
-	public OptionMapping getOption(String variableKey) {
+	public OptionMapping getOption(String actionId, String variableKey) {
 		try {
 			ResultSet rs = new DatabaseQuery(Table.ActionTypeVariable.SELF)
 				.select()
+				.join(
+					DatabaseQuery.JoinType.INNER,
+					Table.Action.SELF,
+					Table.define(Table.ActionTypeVariable.SELF, Table.ActionTypeVariable.ACTION_TYPE_ID),
+					DatabaseQuery.Operator.EQUALS,
+					Table.Action.TYPE_ID
+				)
 				.join(
 					DatabaseQuery.JoinType.INNER,
 					Table.CommandOptionActionTypeVariable.SELF,
@@ -138,17 +146,35 @@ public class SlashContext
 					Table.ActionTypeVariable.VARIABLE_KEY,
 					DatabaseQuery.Operator.EQUALS,
 					variableKey
-				).executeQuery();
+				)
+				.where(
+					Table.define(Table.Action.SELF, Table.Action.ID),
+					DatabaseQuery.Operator.EQUALS,
+					actionId
+				)
+				.where(
+					Table.define(Table.CommandOptionActionTypeVariable.SELF, Table.CommandOptionActionTypeVariable.ACTION_ID),
+					DatabaseQuery.Operator.EQUALS,
+					actionId
+				)
+				.executeQuery();
 			
 			rs.next();
+			
+			System.out.println("OPTION RESULT SET:");
+			System.out.println("GetOption] Variable key: " + rs.getString("variable_key"));
+			System.out.println("GetOption] action id: " + rs.getString("action.id"));
+			System.out.println("END OF OPTION RESULT SET");
 			
 			String optionName = rs.getString(Table.CommandOption.NAME);
 			
 			System.out.println(optionName);
 			
 			return event.getOption(optionName);
-		} catch (Exception e) {
-			throw new RuntimeException(e);
+		}
+		catch (SQLException e) {
+			System.out.println("Empty result set");
+			return null;
 		}
 	}
 }

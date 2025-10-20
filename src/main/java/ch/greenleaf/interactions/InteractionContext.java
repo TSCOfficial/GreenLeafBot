@@ -25,7 +25,7 @@ public interface InteractionContext {
 	
 	Guild getGuild();
 	
-	default OptionMapping getOption(String variableKey) {
+	default OptionMapping getOption(String actionId, String variableKey) {
 		return null;
 	}
 }

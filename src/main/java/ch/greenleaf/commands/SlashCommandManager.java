@@ -1,7 +1,6 @@
-package ch.greenleaf;
+package ch.greenleaf.commands;
 
-import ch.greenleaf.commands.ICommand;
-import ch.greenleaf.commands.custom.CustomCommands;
+import ch.greenleaf.commands.custom.CustomSlashCommandManager;
 import net.dv8tion.jda.api.events.interaction.command.CommandAutoCompleteInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.session.ReadyEvent;
@@ -16,10 +15,10 @@ import java.util.stream.Collectors;
 /**
  * Manage slash commands
  */
-public class CommandManager extends ListenerAdapter {
+public class SlashCommandManager extends ListenerAdapter {
 	
 	// Existing slash commands
-    private static List<ICommand> commands = new ArrayList<>();
+    private static List<ISlashCommand> slashCommands = new ArrayList<>();
 	
 	/**
 	 * Load all existing slash commands
@@ -28,10 +27,10 @@ public class CommandManager extends ListenerAdapter {
     @Override
     public void onReady(@NotNull ReadyEvent event) {
 		// Load custom DB commands first
-		CustomCommands.load();
+		CustomSlashCommandManager.load(); // adds the custom slash commands to the slashCommands variable
 		
 		// Create existing & customs
-        for (ICommand command : commands){
+        for (ISlashCommand command : slashCommands){
             if(command.getOptions() == null) {
                 event.getJDA().upsertCommand(
                         command.getName(),
@@ -57,7 +56,7 @@ public class CommandManager extends ListenerAdapter {
     @Override
     public void onSlashCommandInteraction(@NotNull SlashCommandInteractionEvent event) {
 		System.out.println("CommandManager event");
-        for (ICommand command : commands){
+        for (ISlashCommand command : slashCommands){
             if (command.getName().equals(event.getName())){
                 command.execute(event);
                 return;
@@ -71,7 +70,7 @@ public class CommandManager extends ListenerAdapter {
 	 */
     @Override
     public void onCommandAutoCompleteInteraction(@NotNull CommandAutoCompleteInteractionEvent event) {
-        for (ICommand command : commands) {
+        for (ISlashCommand command : slashCommands) {
             if (command.getName().equals(event.getName())) {
                 String focusedOptionName = event.getFocusedOption().getName();
                 List<?> choices = command.getAutocomplete().getOrDefault(focusedOptionName, List.of());
@@ -102,7 +101,7 @@ public class CommandManager extends ListenerAdapter {
 	 * Add a slashcommand
 	 * @param command
 	 */
-    public static void add(ICommand command) {
-        commands.add(command);
+    public static void add(ISlashCommand command) {
+        slashCommands.add(command);
     }
 }
