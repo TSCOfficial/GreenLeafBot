@@ -63,7 +63,7 @@ public class SendMessage{
 			
 			// Append all connected embeds
 			while (rs.next()) {
-				System.out.println(action.getDatasourceTable());
+				System.out.println("[FETCH action datasource table] " + action.getDatasourceTable());
 				
 				// Get values
 				String text = rs.getString(Table.Message.TEXT);
@@ -71,6 +71,8 @@ public class SendMessage{
 				long channelId = rs.getLong(Table.Message.CHANNEL_ID);
 				
 				// Overwrite database values with variable input (slashCommand options)
+				System.out.println("[FETCH text] " + text);
+				System.out.println("[FETCH channelId] " + channelId);
 				Channel opt_channel = Resolver.resolveChannel(ctx, action, Variable.CHANNEL_ID.name(), channelId);
 				String opt_message_text = Resolver.resolveString(ctx, action, Variable.MESSAGE_TEXT.name(), text);
 				

@@ -162,8 +162,8 @@ public class SlashContext
 			rs.next();
 			
 			System.out.println("OPTION RESULT SET:");
-			System.out.println("GetOption] Variable key: " + rs.getString("variable_key"));
-			System.out.println("GetOption] action id: " + rs.getString("action.id"));
+			System.out.println("[GetOption] Variable key: " + rs.getString("variable_key"));
+			System.out.println("[GetOption] action id: " + rs.getString("action.id"));
 			System.out.println("END OF OPTION RESULT SET");
 			
 			String optionName = rs.getString(Table.CommandOption.NAME);
