@@ -8,9 +8,9 @@ import java.util.Properties;
 public class Database {
     // init database constants
     private static final String DATABASE_DRIVER = "com.mysql.cj.jdbc.Driver";
-    private static final String DATABASE_URL = "jdbc:mysql://localhost:3306/greenleaf";
-    private static final String USERNAME = "GreenLeafBot";
-    private static final String PASSWORD = "discord.GreenLeaf#Global";
+    private static final String DATABASE_URL = Client.getConfig().get("DB_URL");
+    private static final String USERNAME = Client.getConfig().get("DB_USER");
+    private static final String PASSWORD = Client.getConfig().get("DB_PASSWORD"); //
 
     // init connection object
     private static Connection connection;

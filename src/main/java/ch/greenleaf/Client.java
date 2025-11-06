@@ -23,8 +23,6 @@ public class Client {
 
     public static WebSocketClientHandler webSocket;
 
-    public final Dotenv config; // todo SETUP .env FILE !!!
-
     public final ShardManager shardManager;
 
     public static Client client;
@@ -38,13 +36,11 @@ public class Client {
     }
 
     public Client() throws LoginException, URISyntaxException, InterruptedException {
-        config = Dotenv.configure().load();
-
-        URI backendUri = new URI(config.get("WS_URI"));
+        URI backendUri = new URI(getConfig().get("WS_URI"));
         webSocket = new WebSocketClientHandler(backendUri);
         webSocket.connectBlocking();
 
-        DefaultShardManagerBuilder builder = DefaultShardManagerBuilder.createDefault(config.get("TOKEN"));
+        DefaultShardManagerBuilder builder = DefaultShardManagerBuilder.createDefault(getConfig().get("TOKEN"));
 
         builder.setStatus(OnlineStatus.DO_NOT_DISTURB);
         builder.setActivity(Activity.customStatus("Updating..."));
@@ -80,8 +76,8 @@ public class Client {
         System.out.println("Bot is now online!");
     }
 
-    public Dotenv getConfig(){
-        return config;
+    public static Dotenv getConfig(){
+        return Dotenv.configure().load();
     }
 
     public ShardManager getShardManager(){
