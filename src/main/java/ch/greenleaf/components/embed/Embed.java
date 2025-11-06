@@ -1,8 +1,8 @@
-package ch.greenleaf.template.embed;
+package ch.greenleaf.components.embed;
 
 import ch.greenleaf.DatabaseQuery;
 import ch.greenleaf.Table;
-import ch.greenleaf.template.message.Message;
+import ch.greenleaf.components.message.Message;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import org.jetbrains.annotations.Nullable;

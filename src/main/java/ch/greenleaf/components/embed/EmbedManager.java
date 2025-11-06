@@ -1,4 +1,4 @@
-//package ch.greenleaf.template.embed;
+//package ch.greenleaf.components.embed;
 //
 //import com.fasterxml.jackson.databind.JsonNode;
 //import net.dv8tion.jda.api.EmbedBuilder;
@@ -12,7 +12,7 @@
 //public class EmbedManager
 //{
 //
-//    public static MessageEmbed EmbedToMessageEmbed(ch.greenleaf.template.embed.Embed embed) {
+//    public static MessageEmbed EmbedToMessageEmbed(ch.greenleaf.components.embed.Embed embed) {
 //        EmbedBuilder builder = new EmbedBuilder();
 //        builder.setTitle(embed.getTitle());
 //        builder.setColor(embed.getColor());

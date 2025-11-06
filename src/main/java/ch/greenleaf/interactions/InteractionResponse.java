@@ -1,10 +1,7 @@
 package ch.greenleaf.interactions;
 
-import ch.greenleaf.components.Button;
-import ch.greenleaf.template.message.Message;
-import net.dv8tion.jda.api.interactions.components.LayoutComponent;
-
-import java.util.Optional;
+import ch.greenleaf.components.button.Button;
+import ch.greenleaf.components.message.Message;
 
 public record InteractionResponse(
 	Message message,

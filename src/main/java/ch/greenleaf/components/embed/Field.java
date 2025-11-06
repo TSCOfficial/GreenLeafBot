@@ -1,4 +1,4 @@
-package ch.greenleaf.template.embed;
+package ch.greenleaf.components.embed;
 
 import org.jetbrains.annotations.Nullable;
 

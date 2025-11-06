@@ -1,4 +1,4 @@
-package ch.greenleaf.components;
+package ch.greenleaf.components.button;
 
 import ch.greenleaf.interactions.actions.InteractionAction;
 import net.dv8tion.jda.api.entities.emoji.EmojiUnion;

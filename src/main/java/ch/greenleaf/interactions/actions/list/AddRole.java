@@ -3,18 +3,13 @@ package ch.greenleaf.interactions.actions.list;
 import ch.greenleaf.DatabaseQuery;
 import ch.greenleaf.Table;
 import ch.greenleaf.interactions.InteractionContext;
-import ch.greenleaf.interactions.InteractionResponse;
 import ch.greenleaf.interactions.Resolver;
 import ch.greenleaf.interactions.actions.Action;
-import ch.greenleaf.template.embed.Embed;
-import ch.greenleaf.template.message.Message;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.UserSnowflake;
-import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 
 import java.sql.ResultSet;
-import java.util.Optional;
 
 /**
  * Add a role

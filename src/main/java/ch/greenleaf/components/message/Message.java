@@ -1,7 +1,6 @@
-package ch.greenleaf.template.message;
+package ch.greenleaf.components.message;
 
-import ch.greenleaf.Table;
-import ch.greenleaf.template.embed.Embed;
+import ch.greenleaf.components.embed.Embed;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 
 import java.util.ArrayList;

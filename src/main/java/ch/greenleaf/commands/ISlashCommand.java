@@ -49,6 +49,7 @@ public interface ISlashCommand {
      * Execute a slashcommand from the backend.<br>
      * Write what should happen in the @Overwrite Method.
      * @param payload Backend data
+	 * @deprecated
      */
     void execute(@NotNull JsonNode payload);
 }

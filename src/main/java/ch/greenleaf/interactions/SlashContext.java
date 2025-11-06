@@ -3,7 +3,7 @@ package ch.greenleaf.interactions;
 import ch.greenleaf.DatabaseQuery;
 import ch.greenleaf.Table;
 import ch.greenleaf.interactions.actions.Action;
-import ch.greenleaf.template.message.Message;
+import ch.greenleaf.components.message.Message;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;

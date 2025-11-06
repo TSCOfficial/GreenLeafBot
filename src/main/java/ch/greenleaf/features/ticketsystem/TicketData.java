@@ -1,7 +1,7 @@
 package ch.greenleaf.features.ticketsystem;
 
 import ch.greenleaf.Database;
-import ch.greenleaf.template.embed.Field;
+import ch.greenleaf.components.embed.Field;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.component.ButtonInteractionEvent;

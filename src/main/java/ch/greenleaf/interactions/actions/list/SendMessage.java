@@ -6,8 +6,8 @@ import ch.greenleaf.interactions.InteractionContext;
 import ch.greenleaf.interactions.InteractionResponse;
 import ch.greenleaf.interactions.Resolver;
 import ch.greenleaf.interactions.actions.Action;
-import ch.greenleaf.template.embed.Embed;
-import ch.greenleaf.template.message.Message;
+import ch.greenleaf.components.embed.Embed;
+import ch.greenleaf.components.message.Message;
 import net.dv8tion.jda.api.entities.channel.Channel;
 
 import java.sql.ResultSet;

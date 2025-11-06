@@ -1,7 +1,7 @@
 package ch.greenleaf.commands;
 
 import ch.greenleaf.*;
-import ch.greenleaf.components.Button;
+import ch.greenleaf.components.button.Button;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.dv8tion.jda.api.entities.MessageEmbed;

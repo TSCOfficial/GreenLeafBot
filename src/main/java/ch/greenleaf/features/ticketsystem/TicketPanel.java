@@ -1,8 +1,8 @@
 package ch.greenleaf.features.ticketsystem;
 
 import ch.greenleaf.Client;
-import ch.greenleaf.components.Button;
-import ch.greenleaf.template.embed.Embed;
+import ch.greenleaf.components.button.Button;
+import ch.greenleaf.components.embed.Embed;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 import net.dv8tion.jda.api.interactions.components.buttons.ButtonStyle;
