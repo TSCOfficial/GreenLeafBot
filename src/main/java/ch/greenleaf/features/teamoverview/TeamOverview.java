@@ -18,7 +18,7 @@ import java.util.List;
 
 public class TeamOverview {
 	
-	private long guild_id = 1228461292440780801L;
+	private long guild_id;
 	private long channel_id;
 	private Color color;
 	private String title;
@@ -27,7 +27,8 @@ public class TeamOverview {
 	
 	private List<TeamRole> roles = new ArrayList<>();
 	
-	public TeamOverview() {
+	public TeamOverview(long guild_id) {
+		this.guild_id = guild_id;
 		fetchDatabase();
 		generateOverview();
 	}

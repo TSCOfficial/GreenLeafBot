@@ -32,7 +32,7 @@ public class Trigger implements ISlashCommand{
 	
 	@Override
 	public void execute(@NotNull SlashCommandInteractionEvent event) {
-		new TeamOverview();
+		new TeamOverview(event.getGuild().getIdLong());
 	}
 	
 	@Override
