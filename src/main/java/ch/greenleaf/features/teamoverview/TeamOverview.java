@@ -1,32 +1,84 @@
 package ch.greenleaf.features.teamoverview;
 
 import ch.greenleaf.Client;
+import ch.greenleaf.Database;
+import ch.greenleaf.DatabaseQuery;
+import ch.greenleaf.Table;
 import ch.greenleaf.components.embed.Embed;
-import ch.greenleaf.components.embed.Field;
 import ch.greenleaf.components.message.Message;
 import ch.greenleaf.interactions.actions.list.SendMessage;
-import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.entities.Role;
 
+import java.awt.*;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.*;
+import java.util.List;
 
 public class TeamOverview {
 	
 	private long guild_id = 1228461292440780801L;
-	private long channel_id = 1231933541017845882L;
-	private String not_found = "User not found";
-	private boolean showMemberCount = true;
+	private long channel_id;
+	private Color color;
+	private String title;
+	private String not_found;
+	private boolean showMemberCount;
 	
-	private Map<String, Long> roles = Map.of(
-		"<:dot:1233080294001606716>", 1228461719236509817L, // Devportal Administrator
-		"<:icon_subtext:1261435652260499477>", 1229002243072725073L, // Devportal Moderator
-		"", 1233070430584311909L // GreenLeaf management
-		);
+	private List<TeamRole> roles = new ArrayList<>();
+	
+	public TeamOverview() {
+		fetchDatabase();
+		generateOverview();
+	}
+	
+	public void fetchDatabase() {
+		try {
+			ResultSet rs = new DatabaseQuery(Table.TeamOverview.SELF)
+				.join(
+					Table.TeamOverviewRole.SELF,
+					Table.define(Table.TeamOverview.SELF, Table.TeamOverview.ID),
+					DatabaseQuery.Operator.EQUALS,
+					Table.TeamOverviewRole.TEAMOVERVIEW_ID
+				)
+				.join(
+					Table.Role.SELF,
+					Table.define(Table.TeamOverviewRole.SELF, Table.TeamOverviewRole.ROLE_ID),
+					DatabaseQuery.Operator.EQUALS,
+					Table.define(Table.Role.SELF, Table.Role.ID)
+				).where(Table.TeamOverview.GUILD_ID, DatabaseQuery.Operator.EQUALS, guild_id)
+				.executeQuery();
+			
+			System.out.println("Fetch terminated");
+			while (rs.next()) {
+				channel_id = rs.getLong(Table.TeamOverview.CHANNEL_ID);
+				color = Color.decode(rs.getString(Table.TeamOverview.COLOR));
+				title = rs.getString(Table.TeamOverview.TITLE);
+				not_found = rs.getString(Table.TeamOverview.NO_USER_FOUND_ERROR);
+				showMemberCount = rs.getBoolean(Table.TeamOverview.DISPLAY_MEMBER_COUNT);
+				System.out.println("teamoverview terminated");
+				
+				String icon_name = rs.getString(Table.TeamOverviewRole.ICON_NAME);
+				long icon_id = rs.getLong(Table.TeamOverviewRole.ICON_ID);
+				boolean icon_is_animated = rs.getBoolean(Table.TeamOverviewRole.ICON_IS_ANIMATED);
+				long role_id = rs.getLong(Table.define(Table.Role.SELF, Table.Role.ROLE_ID));
+				
+				System.out.println("Roles terminated");
+				
+				TeamRole teamrole = new TeamRole(role_id, icon_name, icon_id, icon_is_animated);
+				roles.add(teamrole);
+				
+				System.out.println("Added terminated");
+			}
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
 	
 	public void generateOverview() {
 		Embed embed = new Embed();
-		roles.forEach((icon, roleId) -> {
-			Role role = Client.client.getShardManager().getRoleById(roleId);
+		roles.forEach(teamRole -> {
+			Role role = Client.client.getShardManager().getRoleById(teamRole.role_id());
 			List<String> membersWithRole = Client.client.getShardManager().getGuildById(guild_id).getMembersWithRoles(role).stream().map(member -> member.getAsMention()).toList();
 			
 			String fieldValue = String.join(", ", membersWithRole);
@@ -34,9 +86,13 @@ public class TeamOverview {
 				fieldValue = not_found;
 			}
 			
-			StringBuilder fieldTitle = new StringBuilder()
-				.append(icon)
-					.append(role.getName());
+			StringBuilder fieldTitle = new StringBuilder();
+			
+			if (teamRole.icon_name() != null && teamRole.icon_name() != null) {
+				fieldTitle.append("<:" + teamRole.icon_name() + ":" + teamRole.icon_id() + "> ");
+			}
+			
+			fieldTitle.append(role.getName());
 			
 			if (showMemberCount) {
 				fieldTitle.append(" (" + membersWithRole.size() + ")");
@@ -45,6 +101,10 @@ public class TeamOverview {
 			embed.addField(
 				fieldTitle.toString(), fieldValue, true
 			);
+			
+			embed.setTitle(title);
+			embed.setTimestamp(LocalDateTime.now());
+			embed.setColor(color);
 		});
 		embed.build();
 		

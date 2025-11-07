@@ -171,6 +171,11 @@ public abstract class Table {
 		public static final String SELF = "teamoverview";
 		public static final String ID = "id";
 		public static final String GUILD_ID = "guild_id";
+		public static final String CHANNEL_ID = "channel_id";
+		public static final String COLOR = "color";
+		public static final String TITLE = "title";
+		public static final String NO_USER_FOUND_ERROR = "no_user_found_error";
+		public static final String DISPLAY_MEMBER_COUNT = "display_member_count";
 	}
 	
 	/**
