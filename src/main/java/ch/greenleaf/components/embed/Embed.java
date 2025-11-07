@@ -148,7 +148,7 @@ public class Embed extends Message {
 	 * @param value The fields value
 	 * @param isInline Whether the field is inline or not
 	 */
-	private void addField(@Nullable String title, @Nullable String value, boolean isInline) {
+	public void addField(@Nullable String title, @Nullable String value, boolean isInline) {
 		Field field = new Field(title, value, isInline);
 		this.fields.add(field);
 	}
@@ -157,7 +157,7 @@ public class Embed extends Message {
 	 * Add a blank field
 	 * @param isInline Whether the field is inline or not
 	 */
-	private void addBlankField(boolean isInline) {
+	public void addBlankField(boolean isInline) {
 		Field field = new Field(null, null, isInline);
 		this.fields.add(field);
 	}

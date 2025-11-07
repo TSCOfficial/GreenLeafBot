@@ -1,5 +1,6 @@
 package ch.greenleaf.interactions.actions.list;
 
+import ch.greenleaf.Client;
 import ch.greenleaf.DatabaseQuery;
 import ch.greenleaf.Table;
 import ch.greenleaf.interactions.InteractionContext;
@@ -26,10 +27,10 @@ public class SendMessage{
 	public static final String ID = "/message/send";
 
 	// The action that contains the action data (action table and id)
-    private final Action action;
+    private Action action = null;
 	
 	// The Interaction context (i.e. Button, Slash, ...)
-    private final InteractionContext ctx;
+    private InteractionContext ctx = null;
 	
 	// The message object
 	private Message message = new Message();
@@ -46,6 +47,11 @@ public class SendMessage{
         fetchDatabase();
         execute();
     }
+	
+	public SendMessage(Message message) {
+		this.message = message;
+		execute();
+	}
 
     /**
      * Get all needed data from the database
@@ -104,18 +110,23 @@ public class SendMessage{
      * Execute the action
      */
     private void execute() {
-        if (message.getChannelId() != 0) {
-            ctx.sendToChannel(
-                    new InteractionResponse.Builder().message(message)
+		if (ctx == null) {
+			Client.client.getShardManager().getTextChannelById(message.getChannelId()).sendMessage("").addEmbeds(message.getEmbeds()).queue();
+		} else{
+			if (message.getChannelId() != 0) {
+				ctx.sendToChannel(
+					new InteractionResponse.Builder().message(message)
 						.build()
-            );
-
-        } else {
-            ctx.reply(
-                    new InteractionResponse.Builder().message(message)
+				);
+				
+			} else {
+				ctx.reply(
+					new InteractionResponse.Builder().message(message)
 						.build()
-            );
-        }
+				);
+			}
+		}
+    
     }
 }
 

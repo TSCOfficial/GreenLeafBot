@@ -165,6 +165,33 @@ public abstract class Table {
 	}
 	
 	/**
+	 * Team overview table
+	 */
+	public static final class TeamOverview {
+		public static final String SELF = "teamoverview";
+		public static final String ID = "id";
+		public static final String GUILD_ID = "guild_id";
+		public static final String CHANNEL_ID = "channel_id";
+		public static final String COLOR = "color";
+		public static final String TITLE = "title";
+		public static final String NO_USER_FOUND_ERROR = "no_user_found_error";
+		public static final String DISPLAY_MEMBER_COUNT = "display_member_count";
+	}
+	
+	/**
+	 * Joins team overview with role
+	 */
+	public static final class TeamOverviewRole {
+		public static final String SELF = "teamoverview_role";
+		public static final String TEAMOVERVIEW_ID = "teamoverview_id";
+		public static final String ROLE_ID = "role_id";
+		public static final String ICON_NAME = "icon_name";
+		public static final String ICON_ID = "icon_id";
+		public static final String ICON_IS_ANIMATED = "icon_is_animated";
+		public static final String CUSTOM_NAME = "custom_name";
+	}
+	
+	/**
 	 * This method allows to clear ambiguous column calls by using the SQL <code>table.column</code> syntax
 	 * @param table The table name
 	 * @param column The column name

@@ -60,6 +60,7 @@ public class Client {
 		SlashCommandManager.add(new Message());
 		SlashCommandManager.add(new UserInfo());
 		SlashCommandManager.add(new TicketCommand());
+		SlashCommandManager.add(new Trigger()); // TODO remove when finished testing
 
         shardManager.addEventListener(new SlashCommandManager());
 
