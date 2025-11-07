@@ -187,7 +187,8 @@ public abstract class Table {
 		public static final String ROLE_ID = "role_id";
 		public static final String ICON_NAME = "icon_name";
 		public static final String ICON_ID = "icon_id";
-		public static final String ICON_IS_ANIMATED= "icon_is_animated";
+		public static final String ICON_IS_ANIMATED = "icon_is_animated";
+		public static final String CUSTOM_NAME = "custom_name";
 	}
 	
 	/**

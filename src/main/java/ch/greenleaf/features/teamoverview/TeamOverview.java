@@ -59,13 +59,14 @@ public class TeamOverview {
 				System.out.println("teamoverview terminated");
 				
 				String icon_name = rs.getString(Table.TeamOverviewRole.ICON_NAME);
+				String role_custom_name = rs.getString(Table.TeamOverviewRole.CUSTOM_NAME);
 				long icon_id = rs.getLong(Table.TeamOverviewRole.ICON_ID);
 				boolean icon_is_animated = rs.getBoolean(Table.TeamOverviewRole.ICON_IS_ANIMATED);
 				long role_id = rs.getLong(Table.define(Table.Role.SELF, Table.Role.ROLE_ID));
 				
 				System.out.println("Roles terminated");
 				
-				TeamRole teamrole = new TeamRole(role_id, icon_name, icon_id, icon_is_animated);
+				TeamRole teamrole = new TeamRole(role_id, role_custom_name, icon_name, icon_id, icon_is_animated);
 				roles.add(teamrole);
 				
 				System.out.println("Added terminated");
@@ -88,11 +89,15 @@ public class TeamOverview {
 			
 			StringBuilder fieldTitle = new StringBuilder();
 			
-			if (teamRole.icon_name() != null && teamRole.icon_name() != null) {
+			if (teamRole.icon_name() != null && teamRole.icon_id() != null) {
 				fieldTitle.append("<:" + teamRole.icon_name() + ":" + teamRole.icon_id() + "> ");
 			}
 			
-			fieldTitle.append(role.getName());
+			if (teamRole.custom_name() != null) {
+				fieldTitle.append(teamRole.custom_name());
+			} else {
+				fieldTitle.append(role.getName());
+			}
 			
 			if (showMemberCount) {
 				fieldTitle.append(" (" + membersWithRole.size() + ")");
