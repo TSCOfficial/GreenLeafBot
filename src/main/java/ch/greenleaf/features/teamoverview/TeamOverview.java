@@ -112,7 +112,6 @@ public class TeamOverview {
 			embed.setTimestamp(LocalDateTime.now());
 			embed.setColor(color);
 		});
-		embed.build();
 		
 		Message msg = new Message();
 		msg.addEmbed(embed);
