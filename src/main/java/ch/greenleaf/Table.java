@@ -4,7 +4,6 @@ package ch.greenleaf;
  * The collection of all possible database tables and columns
  */
 public abstract class Table {
-	
 	/**
 	 * Actions
 	 */

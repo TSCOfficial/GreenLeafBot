@@ -6,6 +6,7 @@ import ch.greenleaf.DatabaseQuery;
 import ch.greenleaf.Table;
 import ch.greenleaf.components.embed.Embed;
 import ch.greenleaf.components.message.Message;
+import ch.greenleaf.features.Feature;
 import ch.greenleaf.interactions.actions.list.SendMessage;
 import net.dv8tion.jda.api.entities.Role;
 
@@ -16,9 +17,8 @@ import java.time.LocalDateTime;
 import java.util.*;
 import java.util.List;
 
-public class TeamOverview {
+public class TeamOverview extends Feature {
 	
-	private long guild_id;
 	private long channel_id;
 	private Color color;
 	private String title;
@@ -28,7 +28,7 @@ public class TeamOverview {
 	private List<TeamRole> roles = new ArrayList<>();
 	
 	public TeamOverview(long guild_id) {
-		this.guild_id = guild_id;
+		super(guild_id);
 		fetchDatabase();
 		generateOverview();
 	}

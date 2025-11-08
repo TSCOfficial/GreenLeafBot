@@ -2,16 +2,18 @@ package ch.greenleaf.features.appinfo;
 
 import ch.greenleaf.components.embed.Embed;
 import ch.greenleaf.components.message.Message;
+import ch.greenleaf.features.Feature;
 import ch.greenleaf.interactions.actions.list.SendMessage;
 
 import java.awt.*;
 
-public class AppInfo {
+// TODO create an interface/abstract class to manage all features the same way. Every feature has at least a getTemplate() which creates the stuff, and a fetchDatabase() that gets the data from the DB (using the guild_id given by the constructor)
+public class AppInfo extends Feature {
 	
 	private long channel_id = 1231933541017845882L;
 	
 	public AppInfo(long guild_id) {
-		getTemplate();
+		super(guild_id);
 	}
 	
 	private void getTemplate() {
