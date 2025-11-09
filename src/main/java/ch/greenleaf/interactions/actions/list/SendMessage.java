@@ -38,6 +38,7 @@ public class SendMessage extends Action{
      */
     public SendMessage(ActionManager actionManager, InteractionContext ctx) {
         super(actionManager, ctx);
+		System.out.println("SEND MESSAGE CONSTRUCTOR WITH ACTION");
     }
 	
 	/**
@@ -50,6 +51,7 @@ public class SendMessage extends Action{
 	
 	public SendMessage(Message message, InteractionContext ctx) {
 		super(ctx);
+		System.out.println("SEND MESSAGE CONSTRUCTOR WITH MESSAGE");
 		System.out.println("[MESSAGE] " + message);
 		this.message = message;
 	}
@@ -97,6 +99,8 @@ public class SendMessage extends Action{
 				
 				if (opt_channel != null){ // interaction-reply messages does not have channel id
 					message.setChannelId(opt_channel.getIdLong());
+				} else {
+					isReply = true; // if the user did not specify a channel id, its automatically a reply
 				}
 				
 				System.out.println("Created message with text: " + opt_message_text);
@@ -124,7 +128,6 @@ public class SendMessage extends Action{
 				new InteractionResponse.Builder().message(message)
 					.build()
 			);
-			
 		} else {
 			ctx.send(
 				new InteractionResponse.Builder().message(message)
