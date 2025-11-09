@@ -8,7 +8,6 @@ import java.util.List;
 
 /**
  * Create a Message that can be sent to Discord<br>
- * <i>[!] Any embed need to be made Discord-compatible by using {@link Embed#build()}, before sending.</i>
  */
 public class Message {
 	
@@ -19,7 +18,7 @@ public class Message {
 	private long channelId;
 	
 	// The messages text
-	private String text;
+	private String text = "";
 	
 	// Whether the message is ephemeral or not
 	private boolean isEphemeral = false;

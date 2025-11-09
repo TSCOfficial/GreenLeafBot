@@ -1,5 +1,6 @@
 package ch.greenleaf.features;
 
+import ch.greenleaf.interactions.InteractionContext;
 import net.dv8tion.jda.api.events.interaction.GenericInteractionCreateEvent;
 import net.dv8tion.jda.api.events.interaction.component.GenericComponentInteractionCreateEvent;
 
@@ -8,7 +9,7 @@ import net.dv8tion.jda.api.events.interaction.component.GenericComponentInteract
  */
 public abstract class Feature {
 	protected long guild_id;
-	protected GenericInteractionCreateEvent event;
+	protected InteractionContext ctx;
 	
 	public Feature(long guild_id){
 		this.guild_id = guild_id;
@@ -16,8 +17,8 @@ public abstract class Feature {
 		getTemplate();
 	}
 	
-	public Feature(GenericInteractionCreateEvent event){
-		this.event = event;
+	public Feature(InteractionContext ctx){
+		this.ctx = ctx;
 		fetchDatabase();
 		getTemplate();
 	}

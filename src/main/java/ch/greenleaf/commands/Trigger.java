@@ -2,6 +2,8 @@ package ch.greenleaf.commands;
 
 import ch.greenleaf.features.appinfo.AppInfo;
 import ch.greenleaf.features.teamoverview.TeamOverview;
+import ch.greenleaf.interactions.InteractionContext;
+import ch.greenleaf.interactions.SlashContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.component.GenericComponentInteractionCreateEvent;
@@ -34,7 +36,8 @@ public class Trigger implements ISlashCommand{
 	
 	@Override
 	public void execute(@NotNull SlashCommandInteractionEvent event) {
-		new AppInfo(event);
+		InteractionContext ctx = new SlashContext(event);
+		new AppInfo(ctx);
 	}
 	
 	@Override

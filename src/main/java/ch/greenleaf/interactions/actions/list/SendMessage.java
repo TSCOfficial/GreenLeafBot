@@ -47,6 +47,13 @@ public class SendMessage extends Action{
 		this.message = message;
 		execute();
 	}
+	
+	public SendMessage(Message message, InteractionContext ctx) {
+		super(ctx);
+		System.out.println("[MESSAGE] " + message);
+		this.message = message;
+		execute();
+	}
 
     /**
      * Get all needed data from the database
@@ -109,15 +116,20 @@ public class SendMessage extends Action{
 	@Override
     protected void execute() {
 		if (ctx == null) {
+			System.out.println("ctx null");
 			Client.client.getShardManager().getTextChannelById(message.getChannelId()).sendMessage("").addEmbeds(message.getEmbeds()).queue();
 		} else{
 			if (message.getChannelId() != 0) {
+				System.out.println("channel id not null");
+				System.out.println(ctx);
+				System.out.println(message);
 				ctx.sendToChannel(
 					new InteractionResponse.Builder().message(message)
 						.build()
 				);
 				
 			} else {
+				System.out.println("reply");
 				ctx.reply(
 					new InteractionResponse.Builder().message(message)
 						.build()

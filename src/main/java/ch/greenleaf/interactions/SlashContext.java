@@ -30,6 +30,17 @@ public class SlashContext
 	
 	private final List<ActionManager> actions = new ArrayList<>();
 	
+	public SlashContext() {}
+	
+	/**
+	 * Bypass the database and action system by converting a {@link SlashCommandInteractionEvent} to a {@link SlashContext}.
+	 * <i>[!] This is used to normalize the execution of the actions.</i>
+	 * @param event Slash command interaction event
+	 */
+	public SlashContext(SlashCommandInteractionEvent event) {
+		this.event = event;
+	}
+	
 	/**
      * React to Slashcommand interactions
      * @param event
@@ -96,6 +107,7 @@ public class SlashContext
 		Message msg = response.message();
         TextChannel channel = event.getJDA().getTextChannelById(msg.getChannelId());
         MessageCreateAction action = channel.sendMessage(msg.getText());
+		action.setEmbeds(response.message().getEmbeds());
 
         action.queue();
     }

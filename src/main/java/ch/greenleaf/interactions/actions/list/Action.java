@@ -25,6 +25,10 @@ public abstract class Action {
 		execute();
 	}
 	
+	public Action(InteractionContext ctx) {
+		this.ctx = ctx;
+	}
+	
 	protected abstract void fetchDatabase();
 	
 	protected abstract void execute();

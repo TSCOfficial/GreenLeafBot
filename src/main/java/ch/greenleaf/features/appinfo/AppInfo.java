@@ -3,6 +3,7 @@ package ch.greenleaf.features.appinfo;
 import ch.greenleaf.components.embed.Embed;
 import ch.greenleaf.components.message.Message;
 import ch.greenleaf.features.Feature;
+import ch.greenleaf.interactions.InteractionContext;
 import ch.greenleaf.interactions.actions.list.SendMessage;
 import net.dv8tion.jda.api.events.interaction.GenericInteractionCreateEvent;
 
@@ -17,13 +18,13 @@ public class AppInfo extends Feature {
 		super(guild_id);
 	}
 	
-	public AppInfo(GenericInteractionCreateEvent event) {
-		super(event);
+	public AppInfo(InteractionContext ctx) {
+		super(ctx);
 	}
 	
 	@Override
 	protected void fetchDatabase() {
-		channel_id = event.getChannelIdLong();
+		channel_id = ctx.getChannelId();;
 	}
 	
 	@Override
@@ -39,6 +40,6 @@ public class AppInfo extends Feature {
 		msg.addEmbed(embed);
 		msg.setChannelId(channel_id);
 		
-		new SendMessage(msg);
+		new SendMessage(msg, ctx);
 	}
 }
