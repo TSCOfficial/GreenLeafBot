@@ -29,11 +29,10 @@ public class TeamOverview extends Feature {
 	
 	public TeamOverview(long guild_id) {
 		super(guild_id);
-		fetchDatabase();
-		generateOverview();
 	}
 	
-	public void fetchDatabase() {
+	@Override
+	protected void fetchDatabase() {
 		try {
 			ResultSet rs = new DatabaseQuery(Table.TeamOverview.SELF)
 				.join(
@@ -77,7 +76,8 @@ public class TeamOverview extends Feature {
 		}
 	}
 	
-	public void generateOverview() {
+	@Override
+	protected void getTemplate() {
 		Embed embed = new Embed();
 		roles.forEach(teamRole -> {
 			Role role = Client.client.getShardManager().getRoleById(teamRole.role_id());

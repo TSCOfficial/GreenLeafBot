@@ -4,6 +4,7 @@ import ch.greenleaf.features.appinfo.AppInfo;
 import ch.greenleaf.features.teamoverview.TeamOverview;
 import com.fasterxml.jackson.databind.JsonNode;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.events.interaction.component.GenericComponentInteractionCreateEvent;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 import org.jetbrains.annotations.NotNull;
 
@@ -33,7 +34,7 @@ public class Trigger implements ISlashCommand{
 	
 	@Override
 	public void execute(@NotNull SlashCommandInteractionEvent event) {
-		new AppInfo(event.getGuild().getIdLong());
+		new AppInfo(event);
 	}
 	
 	@Override
