@@ -31,5 +31,5 @@ public abstract class Action {
 	
 	protected abstract void fetchDatabase();
 	
-	protected abstract void execute();
+	public abstract void execute();
 }

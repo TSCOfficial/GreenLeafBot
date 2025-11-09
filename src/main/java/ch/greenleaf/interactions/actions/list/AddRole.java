@@ -70,7 +70,7 @@ public class AddRole extends Action{
      * Add the role to the command author
      */
 	@Override
-    protected void execute() {
+    public void execute() {
         ctx.getGuild().addRoleToMember(member, role).queue();
     }
 }
