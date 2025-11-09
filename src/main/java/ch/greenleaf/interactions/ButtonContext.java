@@ -2,7 +2,7 @@ package ch.greenleaf.interactions;
 
 import ch.greenleaf.DatabaseQuery;
 import ch.greenleaf.Table;
-import ch.greenleaf.interactions.actions.Action;
+import ch.greenleaf.interactions.actions.ActionManager;
 import ch.greenleaf.components.message.Message;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
@@ -25,7 +25,7 @@ public class ButtonContext
 
     private ButtonInteractionEvent event = null;
 
-    private final List<Action> actions = new ArrayList<>();
+    private final List<ActionManager> actions = new ArrayList<>();
 
     /**
      * React to Button interactions<br>
@@ -48,7 +48,7 @@ public class ButtonContext
 				String action_id = rs.getString(Table.ButtonAction.ACTION_ID);
 				System.out.println(action_id);
 				
-				Action action = new Action().getById(action_id);
+				ActionManager action = new ActionManager().getById(action_id);
 				
                 actions.add(action);
             }

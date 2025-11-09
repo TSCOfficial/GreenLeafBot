@@ -6,7 +6,7 @@ import ch.greenleaf.Table;
 import ch.greenleaf.interactions.InteractionContext;
 import ch.greenleaf.interactions.InteractionResponse;
 import ch.greenleaf.interactions.Resolver;
-import ch.greenleaf.interactions.actions.Action;
+import ch.greenleaf.interactions.actions.ActionManager;
 import ch.greenleaf.components.embed.Embed;
 import ch.greenleaf.components.message.Message;
 import net.dv8tion.jda.api.entities.channel.Channel;
@@ -16,7 +16,7 @@ import java.sql.ResultSet;
 /**
  * Send a message
  */
-public class SendMessage{
+public class SendMessage extends Action{
 	
 	public enum Variable {
 		CHANNEL_ID,
@@ -25,29 +25,24 @@ public class SendMessage{
 	
 	// Action endpoint ID
 	public static final String ID = "/message/send";
-
-	// The action that contains the action data (action table and id)
-    private Action action = null;
-	
-	// The Interaction context (i.e. Button, Slash, ...)
-    private InteractionContext ctx = null;
 	
 	// The message object
-	private Message message = new Message();
+	private Message message;
 
     /**
      * <h1>Message action</h1>
      * Send a custom message
-     * @param action The connected action containing the required action database table and datasource id
+     * @param actionManager The connected action containing the required action database table and datasource id
      * @param ctx The interaction context, treating the actions differently if the interaction event comes from a Button, a Slashcommand or others
      */
-    public SendMessage(Action action, InteractionContext ctx) {
-        this.action = action;
-        this.ctx = ctx;
-        fetchDatabase();
-        execute();
+    public SendMessage(ActionManager actionManager, InteractionContext ctx) {
+        super(actionManager, ctx);
     }
 	
+	/**
+	 * Constructor for features instead of actions
+	 * @param message Message to be sent
+	 */
 	public SendMessage(Message message) {
 		this.message = message;
 		execute();
@@ -56,20 +51,21 @@ public class SendMessage{
     /**
      * Get all needed data from the database
      */
-    private void fetchDatabase() {
+	@Override
+    protected void fetchDatabase() {
         try {
-			ResultSet rs = new DatabaseQuery(action.getDatasourceTable())
+			ResultSet rs = new DatabaseQuery(actionManager.getDatasourceTable())
 				.join(
 					DatabaseQuery.JoinType.LEFT, // LEFT JOIN REQUIRED! Even if a message does not have an embed (therefore not in message_embed) it should still be outputted in that query (left join = All left + matching existing right)
 					Table.MessageEmbed.SELF,
 					Table.Message.ID, DatabaseQuery.Operator.EQUALS, Table.MessageEmbed.MESSAGE_ID
 				)
-				.where(Table.Message.ID, DatabaseQuery.Operator.EQUALS, action.getDatasourceId())
+				.where(Table.Message.ID, DatabaseQuery.Operator.EQUALS, actionManager.getDatasourceId())
 				.executeQuery();
 			
 			// Append all connected embeds
 			while (rs.next()) {
-				System.out.println("[FETCH action datasource table] " + action.getDatasourceTable());
+				System.out.println("[FETCH action datasource table] " + actionManager.getDatasourceTable());
 				
 				// Get values
 				String text = rs.getString(Table.Message.TEXT);
@@ -79,11 +75,12 @@ public class SendMessage{
 				// Overwrite database values with variable input (slashCommand options)
 				System.out.println("[FETCH text] " + text);
 				System.out.println("[FETCH channelId] " + channelId);
-				Channel opt_channel = Resolver.resolveChannel(ctx, action, Variable.CHANNEL_ID.name(), channelId);
-				String opt_message_text = Resolver.resolveString(ctx, action, Variable.MESSAGE_TEXT.name(), text);
+				Channel opt_channel = Resolver.resolveChannel(ctx, actionManager, Variable.CHANNEL_ID.name(), channelId);
+				String opt_message_text = Resolver.resolveString(ctx, actionManager, Variable.MESSAGE_TEXT.name(), text);
 				
 				System.out.println(opt_channel);
-
+				
+				message = new Message();
 				message.setText(opt_message_text);
 				message.setEphemeral(isEphemeral);
 				
@@ -109,7 +106,8 @@ public class SendMessage{
     /**
      * Execute the action
      */
-    private void execute() {
+	@Override
+    protected void execute() {
 		if (ctx == null) {
 			Client.client.getShardManager().getTextChannelById(message.getChannelId()).sendMessage("").addEmbeds(message.getEmbeds()).queue();
 		} else{

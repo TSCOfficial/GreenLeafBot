@@ -2,7 +2,7 @@ package ch.greenleaf.interactions;
 
 import ch.greenleaf.DatabaseQuery;
 import ch.greenleaf.Table;
-import ch.greenleaf.interactions.actions.Action;
+import ch.greenleaf.interactions.actions.ActionManager;
 import ch.greenleaf.components.message.Message;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
@@ -28,7 +28,7 @@ public class SlashContext
 
     private SlashCommandInteractionEvent event;
 	
-	private final List<Action> actions = new ArrayList<>();
+	private final List<ActionManager> actions = new ArrayList<>();
 	
 	/**
      * React to Slashcommand interactions
@@ -52,7 +52,7 @@ public class SlashContext
 				String action_id = rs.getString(Table.CommandAction.ACTION_ID);
 				System.out.println(action_id);
 				
-				Action action = new Action().getById(action_id);
+				ActionManager action = new ActionManager().getById(action_id);
 				
 				actions.add(action);
 			}

@@ -6,24 +6,13 @@ import ch.greenleaf.interactions.InteractionContext;
 
 import java.sql.ResultSet;
 
-public class Action {
+/**
+ * Manages the actions, so that the correct action-data are fetched and given to the appropriate action
+ */
+public class ActionManager {
     private String id;
     private ActionType type;
     private String datasourceId;
-
-	public Action() {
-	
-	}
-	
-    public Action(String id, String typeId, String datasourceId) {
-        this.id = id;
-        this.type = ActionType.getById(typeId);
-        this.datasourceId = datasourceId;
-        System.out.println("========");
-        System.out.println(id);
-        System.out.println(type.name());
-        System.out.println(datasourceId);
-    }
 
     public String getId() {
         return id;
@@ -51,7 +40,7 @@ public class Action {
 	 * @param id The action id
 	 * @return The action containing all needed data
 	 */
-	public Action getById(String id) {
+	public ActionManager getById(String id) {
 		try {
 			ResultSet rs = new DatabaseQuery(Table.Action.SELF)
 				.select()

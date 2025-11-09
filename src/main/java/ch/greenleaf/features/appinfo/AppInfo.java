@@ -3,10 +3,8 @@ package ch.greenleaf.features.appinfo;
 import ch.greenleaf.components.embed.Embed;
 import ch.greenleaf.components.message.Message;
 import ch.greenleaf.features.Feature;
-import ch.greenleaf.interactions.actions.Action;
 import ch.greenleaf.interactions.actions.list.SendMessage;
 import net.dv8tion.jda.api.events.interaction.GenericInteractionCreateEvent;
-import net.dv8tion.jda.api.events.interaction.component.GenericComponentInteractionCreateEvent;
 
 import java.awt.*;
 

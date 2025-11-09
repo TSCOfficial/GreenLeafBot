@@ -1,12 +1,12 @@
 package ch.greenleaf.interactions;
 
-import ch.greenleaf.interactions.actions.Action;
+import ch.greenleaf.interactions.actions.ActionManager;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.channel.Channel;
 
 public class Resolver {
 	
-	public static Role resolveRole(InteractionContext ctx, Action action, String optionName, long fallbackRoleId) {
+	public static Role resolveRole(InteractionContext ctx, ActionManager action, String optionName, long fallbackRoleId) {
 		System.out.println(optionName);
 		System.out.println(fallbackRoleId);
 		
@@ -24,7 +24,7 @@ public class Resolver {
 		return ctx.getGuild().getRoleById(fallbackRoleId);
 	}
 	
-	public static Channel resolveChannel(InteractionContext ctx, Action action, String optionName, long fallbackChannelId) {
+	public static Channel resolveChannel(InteractionContext ctx, ActionManager action, String optionName, long fallbackChannelId) {
 		System.out.println("[RESOLVER] " + optionName);
 		System.out.println("[RESOLVER] " + fallbackChannelId);
 		
@@ -43,7 +43,7 @@ public class Resolver {
 		return ctx.getGuild().getTextChannelById(fallbackChannelId);
 	}
 	
-	public static String resolveString(InteractionContext ctx, Action action, String optionName, String fallbackText) {
+	public static String resolveString(InteractionContext ctx, ActionManager action, String optionName, String fallbackText) {
 		System.out.println("[Resolver] Resolving " + optionName + " for action " + action.getId());
 		System.out.println("[Resolver] DefaultValue = " + fallbackText);
 		

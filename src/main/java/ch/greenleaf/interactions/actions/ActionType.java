@@ -7,7 +7,7 @@ import ch.greenleaf.interactions.actions.list.SendMessage;
 import java.util.Objects;
 
 /**
- * Manage available actions, their id and their table-names
+ * Manage available actions using their id and their table-names
  */
 public enum ActionType {
 	// Message actions
