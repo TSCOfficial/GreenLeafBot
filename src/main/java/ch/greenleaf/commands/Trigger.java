@@ -37,7 +37,7 @@ public class Trigger implements ISlashCommand{
 	@Override
 	public void execute(@NotNull SlashCommandInteractionEvent event) {
 		InteractionContext ctx = new SlashContext(event);
-		new AppInfo(ctx);
+		new TeamOverview(ctx);
 	}
 	
 	@Override

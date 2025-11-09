@@ -19,6 +19,7 @@ public abstract class Feature {
 	
 	public Feature(InteractionContext ctx){
 		this.ctx = ctx;
+		this.guild_id = ctx.getGuild().getIdLong();
 		fetchDatabase();
 		getTemplate();
 	}

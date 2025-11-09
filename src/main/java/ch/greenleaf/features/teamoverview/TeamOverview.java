@@ -7,6 +7,7 @@ import ch.greenleaf.Table;
 import ch.greenleaf.components.embed.Embed;
 import ch.greenleaf.components.message.Message;
 import ch.greenleaf.features.Feature;
+import ch.greenleaf.interactions.InteractionContext;
 import ch.greenleaf.interactions.actions.list.SendMessage;
 import net.dv8tion.jda.api.entities.Role;
 
@@ -25,14 +26,24 @@ public class TeamOverview extends Feature {
 	private String not_found;
 	private boolean showMemberCount;
 	
-	private List<TeamRole> roles = new ArrayList<>();
+	private List<TeamRole> roles;
 	
 	public TeamOverview(long guild_id) {
 		super(guild_id);
 	}
 	
+	/**
+	 * Use TeamOverview using Interactions<br>
+	 * <i>[!] Guild ID is automaticly set when using this constructor</i>
+	 * @param ctx Interaction Context
+	 */
+	public TeamOverview(InteractionContext ctx) {
+		super(ctx);
+	}
+	
 	@Override
 	protected void fetchDatabase() {
+		roles = new ArrayList<>();
 		try {
 			ResultSet rs = new DatabaseQuery(Table.TeamOverview.SELF)
 				.join(
@@ -117,6 +128,6 @@ public class TeamOverview extends Feature {
 		msg.addEmbed(embed);
 		msg.setChannelId(channel_id);
 		
-		new SendMessage(msg);
+		new SendMessage(msg, ctx).setReply(true).execute();
 	}
 }
