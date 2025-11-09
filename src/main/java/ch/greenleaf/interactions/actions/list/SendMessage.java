@@ -82,11 +82,14 @@ public class SendMessage{
 				Channel opt_channel = Resolver.resolveChannel(ctx, action, Variable.CHANNEL_ID.name(), channelId);
 				String opt_message_text = Resolver.resolveString(ctx, action, Variable.MESSAGE_TEXT.name(), text);
 				
-				// Implement values in message object
+				System.out.println(opt_channel);
+
 				message.setText(opt_message_text);
 				message.setEphemeral(isEphemeral);
-				message.setChannelId(opt_channel.getIdLong()); // todo error: opt_channel is null ?!?
-				// todo possible causes: wrong database inserts, fetch in Resolver -> getOption not 100% correct
+				
+				if (opt_channel != null){ // interaction-reply messages does not have channel id
+					message.setChannelId(opt_channel.getIdLong());
+				}
 				
 				System.out.println("Created message with text: " + opt_message_text);
 				
@@ -96,9 +99,6 @@ public class SendMessage{
 					Embed embed = new Embed().getById(embed_id);
 					message.addEmbed(embed);
 				}
-				/* current problem: When multiple action have the same action type, the action code saves the previous settings except overwritten (Here: message stays the same object)
-				But if I reset everything at the end of the loop, the embeds wont be able to be appended to the same messages if there are multiple!
-				 */
 			}
 
         } catch (Exception e) {

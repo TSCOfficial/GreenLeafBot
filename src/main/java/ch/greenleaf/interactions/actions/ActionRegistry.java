@@ -4,7 +4,7 @@ import java.util.EnumMap;
 import java.util.Map;
 
 /**
- * With the help of this Registry, it is possible to execute an action, that is selected by its enum {@link ActionType}
+ * With the help of this Registry, it is possible to execute an action, that is selected by its attributed enum in {@link ActionType}
  *
  * Usage example:
  * <pre><code>

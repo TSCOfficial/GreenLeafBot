@@ -25,10 +25,10 @@ public abstract class Feature {
 	/**
 	 * Load all data from the database
 	 */
-	protected void fetchDatabase(){}
+	protected abstract void fetchDatabase();
 	
 	/**
 	 * Create the content of the feature
 	 */
-	protected void getTemplate(){}
+	protected abstract void getTemplate();
 }

@@ -36,7 +36,11 @@ public class Action {
     public String getDatasourceId() {
         return datasourceId;
     }
-
+	
+	/**
+	 * Execute the correct action by passing the action data and the event
+	 * @param ctx Interaction context (event)
+	 */
     public void execute(InteractionContext ctx) {
         System.out.println("executing action: " + type.name());
         ActionRegistry.getByType(type).execute(this, ctx);
