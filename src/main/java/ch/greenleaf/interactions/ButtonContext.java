@@ -90,11 +90,12 @@ public class ButtonContext
 	}
 
     @Override
-    public void sendToChannel(InteractionResponse response) {
+    public void send(InteractionResponse response) {
 		Message msg = response.message();
         TextChannel channel = event.getJDA().getTextChannelById(msg.getChannelId());
         MessageCreateAction action = channel.sendMessage(msg.getText());
-
+		action.setEmbeds(response.message().getEmbeds());
+		// todo implement all other message stuff
         action.queue();
     }
 	

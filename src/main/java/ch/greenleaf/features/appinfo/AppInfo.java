@@ -40,6 +40,6 @@ public class AppInfo extends Feature {
 		msg.addEmbed(embed);
 		msg.setChannelId(channel_id);
 		
-		new SendMessage(msg, ctx);
+		new SendMessage(msg, ctx).setReply(true).execute();
 	}
 }

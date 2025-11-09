@@ -1,6 +1,5 @@
 package ch.greenleaf.interactions.actions.list;
 
-import ch.greenleaf.Client;
 import ch.greenleaf.DatabaseQuery;
 import ch.greenleaf.Table;
 import ch.greenleaf.interactions.InteractionContext;
@@ -28,10 +27,12 @@ public class SendMessage extends Action{
 	
 	// The message object
 	private Message message;
+	
+	private boolean isReply = false;
 
     /**
      * <h1>Message action</h1>
-     * Send a custom message
+     * Send a custom message<br>
      * @param actionManager The connected action containing the required action database table and datasource id
      * @param ctx The interaction context, treating the actions differently if the interaction event comes from a Button, a Slashcommand or others
      */
@@ -45,14 +46,17 @@ public class SendMessage extends Action{
 	 */
 	public SendMessage(Message message) {
 		this.message = message;
-		execute();
 	}
 	
 	public SendMessage(Message message, InteractionContext ctx) {
 		super(ctx);
 		System.out.println("[MESSAGE] " + message);
 		this.message = message;
-		execute();
+	}
+	
+	public SendMessage setReply(boolean state) {
+		isReply = state;
+		return this;
 	}
 
     /**
@@ -114,27 +118,18 @@ public class SendMessage extends Action{
      * Execute the action
      */
 	@Override
-    protected void execute() {
-		if (ctx == null) {
-			System.out.println("ctx null");
-			Client.client.getShardManager().getTextChannelById(message.getChannelId()).sendMessage("").addEmbeds(message.getEmbeds()).queue();
-		} else{
-			if (message.getChannelId() != 0) {
-				System.out.println("channel id not null");
-				System.out.println(ctx);
-				System.out.println(message);
-				ctx.sendToChannel(
-					new InteractionResponse.Builder().message(message)
-						.build()
-				);
-				
-			} else {
-				System.out.println("reply");
-				ctx.reply(
-					new InteractionResponse.Builder().message(message)
-						.build()
-				);
-			}
+    public void execute() {
+		if (isReply) {
+			ctx.reply(
+				new InteractionResponse.Builder().message(message)
+					.build()
+			);
+			
+		} else {
+			ctx.send(
+				new InteractionResponse.Builder().message(message)
+					.build()
+			);
 		}
     
     }
